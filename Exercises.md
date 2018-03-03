@@ -1,26 +1,38 @@
-# Intro to R and Rstudio [Mitch]
+# BEES stats course 2018 - intro to R - exercises
+Below is the exercises associated with the content outlined in the overview page (Overview.md)
 
-# Pathname, working directories and projects [Daniel]
+## crash-course to R and Rstudio [Mitch]
 
-(data: Angela plant height)
 
-# Intro to tidyverse [Daniel]
+## project organisation [Daniel]
 
-# Loading and manipulating data [Daniel]
 
-# Plotting with ggplot  [Mitch]
+## intro to tidyverse [Daniel]
 
-# ggplot2 [Mitch]
 
-# Using and writing functions in R [Daniel]
+## loading and manipulating data [Daniel]
 
-# Programming principles: DRY	 [Daniel]
 
-# Intro to R packages - where, how [Mitch]
+## plotting with ggplot  [Mitch]
 
-# Getting help: stackoverflow, MWEs [Mitch]
 
-# Reproducible workflows [Daniel]
+## plotting with ggplot [Mitch]
 
-# Future: [Both]
+
+## using and writing functions in R [Daniel]
+
+
+## programming principles: DRY	 [Daniel]
+
+
+## intro to R packages [Mitch]
+
+
+## getting help: stackoverflow, MWEs [Mitch]
+
+
+## reproducible workflows [Daniel]
+
+
+## continued learning: [Daniel + Mitch]
 
