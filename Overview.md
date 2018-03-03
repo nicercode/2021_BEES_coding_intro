@@ -1,5 +1,5 @@
 # BEES stats course 2018 - intro to R
-Below is an overview of the content we intend to cover - most of it will be taught as "live coding" and there are associated exercises in the exercises page (Exercises.md)
+Below is an overview of the content we intend to cover - most of it will be taught as "live coding" and there are associated exercises in the exercises page ([Exercises.md](https://github.com/nicercode/2018_BEES_regression/blob/master/Exercises.md))
 
 ## Monday:
 

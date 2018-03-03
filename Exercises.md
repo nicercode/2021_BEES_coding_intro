@@ -1,5 +1,5 @@
 # BEES stats course 2018 - intro to R - exercises
-Below is the exercises associated with the content outlined in the overview page (Overview.md)
+Below is the exercises associated with the content outlined in the overview page ([Overview.md](https://github.com/nicercode/2018_BEES_regression/blob/master/Overview.md))
 
 
 ## Crash course and project organisation
