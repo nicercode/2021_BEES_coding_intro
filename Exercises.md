@@ -2,9 +2,9 @@
 Below is the exercises associated with the content outlined in the overview page ([Overview.md](https://github.com/nicercode/2018_BEES_regression/blob/master/Overview.md))
 
 
-## Crash course and project organisation
+## 1. Crash course and project organisation
 
-Challenge:
+Challenge 1.1:
  1. Create an organized project directory for this stats course
  2. Include an RStudio Project in the folder
  3. Download the course data (from Moodle or github)
