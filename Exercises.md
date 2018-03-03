@@ -11,6 +11,7 @@ Challenge 1.1:
  4. Create a file something like 'R_day1.R' 
  5. Write one line of code to make a variable, and then save the object as a .rds file
  6. When you finish put the green post-it on your laptop screen
+ 7. Put up your green sticky when you're done
  
  - don't forget to use your directories (/data, /R, /output)
 
