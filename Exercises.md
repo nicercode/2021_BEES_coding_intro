@@ -1,38 +1,46 @@
 # BEES stats course 2018 - intro to R - exercises
 Below is the exercises associated with the content outlined in the overview page (Overview.md)
 
-## crash-course to R and Rstudio [Mitch]
+
+## Crash course and project organisation
+
+Challenge:
+ 1. Create an organized project directory for this stats course
+ 2. Include an RStudio Project in the folder
+ 3. Download the course data (from Moodle or github)
+ 4. Create a file something like 'R_day1.R' 
+ 5. Write one line of code to make a variable, and then save the object as a .rds file
+ 6. When you finish put the green post-it on your laptop screen
+ 
+ - don't forget to use your directories (/data, /R, /output)
 
 
-## project organisation [Daniel]
+## intro to tidyverse 
 
 
-## intro to tidyverse [Daniel]
+## loading and manipulating data 
 
 
-## loading and manipulating data [Daniel]
+## plotting with ggplot 
 
 
-## plotting with ggplot  [Mitch]
+## plotting with ggplot 
 
 
-## plotting with ggplot [Mitch]
+## using and writing functions in R 
 
 
-## using and writing functions in R [Daniel]
+## programming principles: DRY	
 
 
-## programming principles: DRY	 [Daniel]
+## intro to R packages 
 
 
-## intro to R packages [Mitch]
+## getting help: stackoverflow, MWEs
 
 
-## getting help: stackoverflow, MWEs [Mitch]
+## reproducible workflows 
 
 
-## reproducible workflows [Daniel]
-
-
-## continued learning: [Daniel + Mitch]
+## continued learning
 
