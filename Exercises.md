@@ -6,7 +6,9 @@ Below is the exercises associated with the content outlined in the overview page
 
 ### R Crash course 
 
-Exercise:
+Challenge - make some data:
+1. Make a few variables of different data structure and type
+2. Join them together into a data.frame (you'll need something new)
 
 
 
