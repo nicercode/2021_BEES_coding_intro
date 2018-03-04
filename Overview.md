@@ -33,7 +33,7 @@ Project organisation -- Keeping things undercontrol [Daniel]
 	- Where on your computer: getwd()
 	- What's in the folder: dir() 
 	- dir vs ls
-	- Exercise:
+	- **Challenge:**
 - Projects
 	- How do we organise materials?
 	- What is a meaningful unit for project? (A chapter or analysis)
@@ -58,7 +58,7 @@ Project organisation -- Keeping things undercontrol [Daniel]
 		- **Happy coder rule**: use Rstduio's project files
 		- **Rule: never use setwd**
 		- [Hadley Wickham on opening Rstudio projects](https://youtu.be/boKFxBniUH0) 
-	- Exercise:
+	- **Challenge**
 - **More Rules:**
 	- consistent project structure
 	- data is read-only (and precious)
@@ -67,7 +67,7 @@ Project organisation -- Keeping things undercontrol [Daniel]
 	- top script is simple and readable
 	- readme.md: introduction,
 	- Rmd files: top or inst directory
-- Refs
+- References
 	- http://environmentalcomputing.net/basic-project-management/
 	- http://nicercode.github.io/blog/2013-05-17-organising-my-project/
 	- http://nicercode.github.io/blog/2013-04-05-projects/

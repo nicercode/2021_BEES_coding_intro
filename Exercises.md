@@ -31,32 +31,32 @@ Challenge - projects:
 	- don't forget to use your directories (/data, /R, /output)
 
 
-## intro to tidyverse 
+## Intro to tidyverse 
 
 
-## loading and manipulating data 
+## Loading and manipulating data 
 
 
-## plotting with ggplot 
+## Plotting with ggplot 
 
 
-## plotting with ggplot 
+## Plotting with ggplot 
 
 
-## using and writing functions in R 
+## Using and writing functions in R 
 
 
-## programming principles: DRY	
+## Programming principles: DRY	
 
 
-## intro to R packages 
+## Intro to R packages 
 
 
-## getting help: stackoverflow, MWEs
+## Getting help: stackoverflow, MWEs
 
 
-## reproducible workflows 
+## Reproducible workflows 
 
 
-## continued learning
+## Continued learning
 
