@@ -3,7 +3,7 @@ Below is an overview of the content we intend to cover - most of it will be taug
 
 ## Monday:
 
-crash-course to R and Rstudio [Mitch]
+#### crash-course to R and Rstudio [Mitch]
 
 - console vs script files (.R files)
 - R and Rmd files
@@ -25,7 +25,7 @@ crash-course to R and Rstudio [Mitch]
 	- saving objects
 	- things to avoid (saving, attach/detach)
 
-Project organisation -- Keeping things undercontrol [Daniel]
+#### Project organisation -- Keeping things undercontrol [Daniel]
 
 - Intro
   - Who am I: 2 things - plants, happy coder
@@ -78,7 +78,7 @@ Project organisation -- Keeping things undercontrol [Daniel]
 
 ## Tuesday:
 
-Intro to tidyverse [Daniel]
+#### Intro to tidyverse [Daniel]
 
 - focus on data.frames (tibbles)
 - base vs tidyverse
@@ -96,7 +96,7 @@ rename    – rename variables
 
 It uses elegant code with just the variable names rather than having to index variables by $. For example to create a log transformed variable in base R code, we would use:
 
-Loading and manipulating data [Daniel]
+#### Loading and manipulating data [Daniel]
 
 - readr
 - dplyr
@@ -108,7 +108,7 @@ Loading and manipulating data [Daniel]
 - ?broom
 - ?spread/gather
 
-Plotting with ggplot  [Mitch]
+#### Plotting with ggplot  [Mitch]
 
 - installing and loading the {ggplot2} package
 - data structure (data.frames or tibbles)
@@ -131,7 +131,7 @@ Plotting with ggplot  [Mitch]
 
 ## Wednesday:
 
-Plotting with ggplot [Mitch]
+#### Plotting with ggplot [Mitch]
 
 - geom_abline, geom_ribbon, geom_errorbar
 - geom_smooth (lm, loess, gam)
@@ -142,7 +142,7 @@ Plotting with ggplot [Mitch]
 - opinion: incredibly powerful and efficient for visualising lots of information, BUT, really fine-scale aesthetics can be diminishing returns...
 - plotly (interactive)
 
-Using functions in R [Daniel]
+#### Using functions in R [Daniel]
 
 - names vs ordered arguments
 - default arguments
@@ -151,22 +151,22 @@ Using functions in R [Daniel]
 
 ## Thursday:
 
-Intro to R packages [Mitch]
+#### Intro to R packages [Mitch]
 
 - finding, installing, versions
 - namespaces (conflicts mainly)
 - vigenttes, tutorials, help
 - cran vs non-cran (github, r-forge etc.)
 
-Getting help: stackoverflow, MWEs [Mitch]
+#### Getting help: stackoverflow, MWEs [Mitch]
 
-Reproducible workflows [Daniel]
+#### Reproducible workflows [Daniel]
 
 - Projects, end to end
 - Rmd: notebooks vs knitr reports
 - version control (overview)
 
-Continued learning: [Daniel + Mitch]
+#### Continued learning: [Daniel + Mitch]
 
 - style 
 	- paradigms
