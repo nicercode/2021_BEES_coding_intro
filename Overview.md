@@ -98,25 +98,43 @@ It uses elegant code with just the variable names rather than having to index va
 - loading and manipulating data [Daniel]
 	- readr
 	- dplyr
+	- tidyr
 	- filter & select
 	- piping
 	- group_by
 	- summarise
 	- ?broom
-	
+	- ?spread/gather
+
 - plotting with ggplot  [Mitch]
-   - data structure (data.frames or tibbles)
-   - basic plot setup (grammar)
-   - geom_point, geom_boxplot
-   - axis labelling, log transform axis
-   - facet grid/wrap (Data: CO2 data plant growth CO2)
+	- installing and loading the {ggplot2} package
+	- data structure (data.frames or tibbles)
+		- typically you want *long* data when ggplotting (tidyr::gather)
+	- using the *reveg.csv* data as an example:
+	    - basic plot setup:
+	    	- data & aes()
+	    	- geom's (boxplot, point, line etc.)
+	    - basic colour, shape and other groupings:
+	    	- group
+	    	- colour
+	    	- fill
+	    	- shape/linetype
+	    - axis and plot labelling
+	    - theme (pronto overall layout)
+	    - facet grid/wrap
+	- scaling aesthetics (continuous, discrete, manual etc...)
+	- direct plotting vs. assigning to object
 
 ## Wednesday:
 
 - plotting with ggplot [Mitch]
-  - geom_abline, geom_ribbon 
+  - geom_abline, geom_ribbon, geom_errorbar
   - geom_smooth (lm, loess, gam)
+  - more customised theme's
   - adding predicted data to ggplots
+  - grid.arrange()
+  - string inputs e.g. aes_string()
+  - opinion: incredibly powerful and efficient for visualising lots of information, BUT, really fine-scale aesthetics can be diminishing returns...
   - plotly (interactive)
 
 - using  functions in R [Daniel]
