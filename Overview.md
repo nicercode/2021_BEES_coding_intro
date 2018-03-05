@@ -78,7 +78,7 @@ Project organisation -- Keeping things undercontrol [Daniel]
 
 ## Tuesday:
 
-- intro to tidyverse [Daniel]
+Intro to tidyverse [Daniel]
 	- focus on data.frames (tibbles)
     - base vs tidyverse
     	- subsetting/indexing/logical operators
@@ -95,7 +95,7 @@ rename    – rename variables
 
 It uses elegant code with just the variable names rather than having to index variables by $. For example to create a log transformed variable in base R code, we would use:
 
-- loading and manipulating data [Daniel]
+Loading and manipulating data [Daniel]
 	- readr
 	- dplyr
 	- tidyr
@@ -106,7 +106,7 @@ It uses elegant code with just the variable names rather than having to index va
 	- ?broom
 	- ?spread/gather
 
-- plotting with ggplot  [Mitch]
+Plotting with ggplot  [Mitch]
 	- installing and loading the {ggplot2} package
 	- data structure (data.frames or tibbles)
 		- typically you want *long* data when ggplotting (tidyr::gather)
