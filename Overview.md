@@ -21,6 +21,10 @@ crash-course to R and Rstudio [Mitch]
 - workflow strategy --> run chunks, check (not line by line)
 - packages: base-R vs. contributed (more on Thursday)
 
+- **Things we skipped**:
+	- saving objects
+	- things to avoid (saving, attach/detach)
+
 Project organisation -- Keeping things undercontrol [Daniel]
 
 - Intro
@@ -91,7 +95,6 @@ rename    – rename variables
 
 It uses elegant code with just the variable names rather than having to index variables by $. For example to create a log transformed variable in base R code, we would use:
 
-
 - loading and manipulating data [Daniel]
 	- readr
 	- dplyr
@@ -100,6 +103,7 @@ It uses elegant code with just the variable names rather than having to index va
 	- group_by
 	- summarise
 	- ?broom
+	
 - plotting with ggplot  [Mitch]
    - data structure (data.frames or tibbles)
    - basic plot setup (grammar)
