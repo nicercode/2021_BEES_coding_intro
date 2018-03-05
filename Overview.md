@@ -79,10 +79,11 @@ Project organisation -- Keeping things undercontrol [Daniel]
 ## Tuesday:
 
 Intro to tidyverse [Daniel]
-	- focus on data.frames (tibbles)
-    - base vs tidyverse
-    	- subsetting/indexing/logical operators
-    - why tidyverse
+
+- focus on data.frames (tibbles)
+- base vs tidyverse
+	- subsetting/indexing/logical operators
+- why tidyverse
 
 The idea behind dplyr is that many of the common functions that you will need are descriptive verbs. The particularly useful ones that we will introduce you to today are:
 
@@ -96,72 +97,79 @@ rename    – rename variables
 It uses elegant code with just the variable names rather than having to index variables by $. For example to create a log transformed variable in base R code, we would use:
 
 Loading and manipulating data [Daniel]
-	- readr
-	- dplyr
-	- tidyr
-	- filter & select
-	- piping
-	- group_by
-	- summarise
-	- ?broom
-	- ?spread/gather
+
+- readr
+- dplyr
+- tidyr
+- filter & select
+- piping
+- group_by
+- summarise
+- ?broom
+- ?spread/gather
 
 Plotting with ggplot  [Mitch]
-	- installing and loading the {ggplot2} package
-	- data structure (data.frames or tibbles)
-		- typically you want *long* data when ggplotting (tidyr::gather)
-	- using the *reveg.csv* data as an example:
-	    - basic plot setup:
-	    	- data & aes()
-	    	- geom's (boxplot, point, line etc.)
-	    - basic colour, shape and other groupings:
-	    	- group
-	    	- colour
-	    	- fill
-	    	- shape/linetype
-	    - axis and plot labelling
-	    - theme (pronto overall layout)
-	    - facet grid/wrap
-	- scaling aesthetics (continuous, discrete, manual etc...)
-	- direct plotting vs. assigning to object
-	- ggsave()
+
+- installing and loading the {ggplot2} package
+- data structure (data.frames or tibbles)
+	- typically you want *long* data when ggplotting (tidyr::gather)
+- using the *reveg.csv* data as an example:
+    - basic plot setup:
+    	- data & aes()
+    	- geom's (boxplot, point, line etc.)
+    - basic colour, shape and other groupings:
+    	- group
+    	- colour
+    	- fill
+    	- shape/linetype
+    - axis and plot labelling
+    - theme (pronto overall layout)
+    - facet grid/wrap
+- scaling aesthetics (continuous, discrete, manual etc...)
+- direct plotting vs. assigning to object
+- ggsave()
 
 ## Wednesday:
 
-- plotting with ggplot [Mitch]
-  - geom_abline, geom_ribbon, geom_errorbar
-  - geom_smooth (lm, loess, gam)
-  - more customised themes
-  - adding predicted data to ggplots
-  - grid.arrange()
-  - string inputs e.g. aes_string()
-  - opinion: incredibly powerful and efficient for visualising lots of information, BUT, really fine-scale aesthetics can be diminishing returns...
-  - plotly (interactive)
+Plotting with ggplot [Mitch]
 
-- using  functions in R [Daniel]
-	- names vs ordered arguments
-	- default arguments
-	- ...
-	- ? writing functions programming principles: DRY	 [Daniel]
+- geom_abline, geom_ribbon, geom_errorbar
+- geom_smooth (lm, loess, gam)
+- more customised themes
+- adding predicted data to ggplots
+- grid.arrange()
+- string inputs e.g. aes_string()
+- opinion: incredibly powerful and efficient for visualising lots of information, BUT, really fine-scale aesthetics can be diminishing returns...
+- plotly (interactive)
+
+Using functions in R [Daniel]
+
+- names vs ordered arguments
+- default arguments
+- ...
+- ? writing functions programming principles: DRY	 [Daniel]
 
 ## Thursday:
 
-- intro to R packages [Mitch]
-	- finding, installing, versions
-	- namespaces (conflicts mainly)
-	- vigenttes, tutorials, help
-	- cran vs non-cran (github, r-forge etc.)
+Intro to R packages [Mitch]
 
-- getting help: stackoverflow, MWEs [Mitch]
+- finding, installing, versions
+- namespaces (conflicts mainly)
+- vigenttes, tutorials, help
+- cran vs non-cran (github, r-forge etc.)
 
-- reproducible workflows [Daniel]
-	- Projects, end to end
-	- Rmd: notebooks vs knitr reports
-	- version control (overview)
+Getting help: stackoverflow, MWEs [Mitch]
 
-- continued learning: [Daniel + Mitch]
-	- style 
-		- paradigms
-		- Rstudio
-		- ropensci / tidyverse
-	- programming: when, how
+Reproducible workflows [Daniel]
+
+- Projects, end to end
+- Rmd: notebooks vs knitr reports
+- version control (overview)
+
+Continued learning: [Daniel + Mitch]
+
+- style 
+	- paradigms
+	- Rstudio
+	- ropensci / tidyverse
+- programming: when, how
