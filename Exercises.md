@@ -39,9 +39,15 @@ Challenge - projects:
 
 ## Plotting with ggplot 
 
+Challenge - basic ggplot:
 
-## Plotting with ggplot 
-
+1. Load a new dataset
+2. Choose a plot type, and plot something
+3. Set a colour/fill/shape aesthetic
+4. Choose a theme
+5. Choose a facet if applicable, or scale one of your aesthetics
+6. Assign the plot to an object
+7. Save the plot as a couple different file formats
 
 ## Using and writing functions in R 
 

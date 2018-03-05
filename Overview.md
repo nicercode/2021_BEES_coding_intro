@@ -124,13 +124,14 @@ Plotting with ggplot  [Mitch]
 	    - facet grid/wrap
 	- scaling aesthetics (continuous, discrete, manual etc...)
 	- direct plotting vs. assigning to object
+	- ggsave()
 
 ## Wednesday:
 
 - plotting with ggplot [Mitch]
   - geom_abline, geom_ribbon, geom_errorbar
   - geom_smooth (lm, loess, gam)
-  - more customised theme's
+  - more customised themes
   - adding predicted data to ggplots
   - grid.arrange()
   - string inputs e.g. aes_string()
