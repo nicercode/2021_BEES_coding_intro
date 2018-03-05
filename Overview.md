@@ -80,24 +80,6 @@ Below is an overview of the content we intend to cover - most of it will be taug
 
 #### Intro to tidyverse [Daniel]
 
-- focus on data.frames (tibbles)
-- base vs tidyverse
-	- subsetting/indexing/logical operators
-- why tidyverse
-
-The idea behind dplyr is that many of the common functions that you will need are descriptive verbs. The particularly useful ones that we will introduce you to today are:
-
-mutate  – make new variables
-select  and  filter   – subset columns and rows 
-summarise  – summarise data
-group_by  – grouping data
-arrange  – order rows
-rename    – rename variables
-
-It uses elegant code with just the variable names rather than having to index variables by $. For example to create a log transformed variable in base R code, we would use:
-
-#### Loading and manipulating data [Daniel]
-
 - readr
 - dplyr
 - tidyr
@@ -107,6 +89,8 @@ It uses elegant code with just the variable names rather than having to index va
 - summarise
 - ?broom
 - ?spread/gather
+
+See [Tidyverse](https://github.com/nicercode/2018_BEES_regression/blob/master/Tidyverse.html)
 
 #### Plotting with ggplot  [Mitch]
 
