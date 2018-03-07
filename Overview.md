@@ -96,7 +96,7 @@ See slides how on the [Tidyverse](http://htmlpreview.github.io/?https://github.c
 References:
 
 - [Cheat sheets from Rstudio](https://www.rstudio.com/resources/cheatsheets/)
-- [Tidyverse refernce materials](http://tidyr.tidyverse.org/)
+- [Tidyverse reference materials](http://tidyr.tidyverse.org/)
 
 Talks:
 
@@ -111,6 +111,8 @@ Tutorials:
 - [Data Camp's Into to tidyverse](http://varianceexplained.org/r/intro-tidyverse/)
 - [Miles McBain's Into to tidyverse](https://github.com/MilesMcBain/tidycourse)
 
+
+## Wednesday:
 
 #### Plotting with ggplot  [Mitch]
 
@@ -132,48 +134,41 @@ Tutorials:
 - scaling aesthetics (continuous, discrete, manual etc...)
 - direct plotting vs. assigning to object
 - ggsave()
-
-## Wednesday:
-
-#### Plotting with ggplot [Mitch]
-
-- geom_abline, geom_ribbon, geom_errorbar
-- geom_smooth (lm, loess, gam)
 - more customised themes
-- adding predicted data to ggplots
-- grid.arrange()
-- string inputs e.g. aes_string()
 - opinion: incredibly powerful and efficient for visualising lots of information, BUT, really fine-scale aesthetics can be diminishing returns...
-- plotly (interactive)
+
+## Thursday:
 
 #### Using functions in R [Daniel]
 
 - names vs ordered arguments
 - default arguments
 - ...
-- ? writing functions programming principles: DRY	 [Daniel]
 
-## Thursday:
-
-#### Intro to R packages [Mitch]
+#### packages in R [Daniel]
 
 - finding, installing, versions
-- namespaces (conflicts mainly)
-- vigenttes, tutorials, help
 - cran vs non-cran (github, r-forge etc.)
+- namespaces (conflicts mainly)
 
-#### Getting help: stackoverflow, MWEs [Mitch]
+### ggplot extended 
 
-#### Reproducible workflows [Daniel]
+- adding predicted data to ggplots
+- geom_abline, geom_ribbon, geom_errorbar
+- geom_smooth (lm, loess, gam)
+- string inputs e.g. aes_string()
+- plotly (interactive)
 
-- Projects, end to end
-- Rmd: notebooks vs knitr reports
-- version control (overview)
 
-#### Continued learning: [Daniel + Mitch]
+#### Further topics (Show and tell)
 
-- style 
-	- paradigms
+- getting help: stackoverflow, MWEs [Mitch]
+- Reproducible workflows [Daniel]
+	- Projects, end to end
+	- Rmd: notebooks vs knitr reports
+	- version control (overview)
+- Style 
 	- Rstudio
-	- ropensci / tidyverse
-- programming: when, how
+- Continued learning: [Daniel + Mitch]
+	- at UNSW
+	- elsewhere
