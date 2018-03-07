@@ -87,8 +87,7 @@ Below is an overview of the content we intend to cover - most of it will be taug
 - piping
 - group_by
 - summarise
-- ?broom
-- ?spread/gather
+- spread/gather
 
 See slides how on the [Tidyverse](http://htmlpreview.github.io/?https://github.com/nicercode/2018_BEES_regression/blob/master/tidyverse.html)
 
@@ -141,15 +140,35 @@ Tutorials:
 
 #### Using functions in R [Daniel]
 
-- names vs ordered arguments
+```
+library(dplyr)
+x <- tibble(x1 = c(1:7, NA), x2 = c(4:1, 2:5))
+rowSums(x)
+```
+- function structure (rowSums)
+	- name
+	- body
+	- arguments
+- investigating structure of function f 
+	- `args(f)`
+	- `body(f)` or just `f`
+	- return value
+- ?help
+- named vs ordered arguments
 - default arguments
-- ...
+- ... 
+```
+mymean <- function(..., na.rm=TRUE) {
+  mean(..., na.rm=na.rm)
+}
+```
 
 #### packages in R [Daniel]
 
 - finding, installing, versions
-- cran vs non-cran (github, r-forge etc.)
-- namespaces (conflicts mainly)
+	- CRAN
+- non-cran (github, r-forge etc.)
+	- ways to install
 
 ### ggplot extended 
 
@@ -166,9 +185,9 @@ Tutorials:
 - Reproducible workflows [Daniel]
 	- Projects, end to end
 	- Rmd: notebooks vs knitr reports
-	- version control (overview)
 - Style 
-	- Rstudio
+	- white space, tabs, naming
+	- Rstudio indent  / reflow commands
 - Continued learning: [Daniel + Mitch]
 	- at UNSW
 	- elsewhere
