@@ -1,11 +1,11 @@
 ###########
 ## Session 3: Linear Regression
 ###########
-# library(car)
-rm(list = ls())
+
+library(tidyverse)
+
 ## Question 1a 
-rm(list = ls())
-datsmoke <- read.csv("data/smokePregnant.csv", header = T)
+datsmoke <- read_csv("data/smokePregnant.csv")
 
 ## Question 1b
 datsmoke2 <- data.frame(errors=c(datsmoke$Nicotine,datsmoke$Control), treatment=rep(c("Nicotine","Control"),each=nrow(datsmoke)))
@@ -41,9 +41,8 @@ plot(fit.smoke1)
 #catchment <- c(29,49,28,8,57,9,31,10,21,26,31,52,21,8,18,5,18,26,27,26)
 #quality <- c(61,85,46,53,55,71,59,41,82,56,39,89,32,43,29,55,81,82,82,85)
 #write.table(data.frame(catchment, quality), file = "waterQual.txt", row.names = F)
-#dat <- read.table(file = "waterQual.txt", header = T)
 
-datqual <- read.csv("data/waterQual.csv", header = T)
+datqual <- read_csv("data/waterQual.csv")
 head(datqual)
 
 

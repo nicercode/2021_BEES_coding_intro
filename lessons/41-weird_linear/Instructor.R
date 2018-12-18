@@ -2,38 +2,31 @@
 # ## Session 4: Weirder linear models
 # ###########
 
-
-#install.packages(c("dplyr", "reshape2"))
-library(reshape2)
-library(dplyr)
+library(tidyverse)
 
 # Import the bird data
-birds <- read.csv("data/birdCountYear.csv", head=TRUE)
-colnames(birds) <- c("site", "1992", "2002", "2012")
-birds <- melt(birds)
-colnames(birds)[2] <- 'year'
-birds$year <- birds$year %>% as.character 
-plot(y=log(birds$value+1), x=birds$year, col=birds$site, pch=20, cex=2)
+data_birds_raw <- read_csv("data/birdCountYear.csv")
+data_birds <- gather(data_birds_raw, key="year", value= "counts", `1992`, `2002`, `2012`)
+plot(y=log(data_birds$counts+1), x=data_birds$year, col=as.factor(data_birds$site), pch=20, cex=2)
 
-anova(lm(value~., data=birds))
+anova(lm(counts~., data=data_birds))
 
 
 
-habitat <- read.csv("data/HabitatConfig.csv", head=TRUE)
+data_habitat <- read_csv("data/HabitatConfig.csv")
 
-plot(y=habitat$Total, x=habitat$Wmass, log='xy', col=as.factor(habitat$Dist), xlab='wet mass (kg)', ylab='count per gram of seaweed', pch=20)
-legend(x="topright", legend=unique(habitat$Dist), col=1:3, bty='n', pch=20)
+plot(y=data_habitat$Total, x=data_habitat$Wmass, log='xy', col=as.factor(data_habitat$Dist), xlab='wet mass (kg)', ylab='count per gram of seaweed', pch=20)
+legend(x="topright", legend=unique(data_habitat$Dist), col=1:3, bty='n', pch=20)
 
-plot(y=habitat$Total, x=habitat$Wmass, log='xy', col=as.factor(habitat$Time), xlab='wet mass (kg)', ylab='count per gram of seaweed', pch=20)
-legend(x="topright", legend=unique(habitat$Time), col=1:2, bty='n', pch=20)
+plot(y=data_habitat$Total, x=data_habitat$Wmass, log='xy', col=as.factor(data_habitat$Time), xlab='wet mass (kg)', ylab='count per gram of seaweed', pch=20)
+legend(x="topright", legend=unique(data_habitat$Time), col=1:2, bty='n', pch=20)
 
 ###########################
 ## Question 1a
-rm(list = ls())
-dathabconf <- read.csv("data/HabitatConfig.csv", head=TRUE)
-dathabconf$Dist <- factor(dathabconf$Dist)
-dathabconf$Size <- factor(dathabconf$Size)
-dathabconf$Time <- factor(dathabconf$Time)
+data_habitat <- data_habitat %>%
+  mutate(Dist = as.factor(Dist),
+        Size = as.factor(Size),
+        Time = as.factor(Time))
 ## NO subsetting done here. Consequently, answers will be different to question 3 of session 2
 
 ## Question 1b-c
@@ -42,26 +35,26 @@ dathabconf$Time <- factor(dathabconf$Time)
 
 ## Question 1d
 par(mfrow = c(1,2))
-boxplot(dathabconf$Total)
-boxplot(log(dathabconf$Total))
+boxplot(data_habitat$Total)
+boxplot(log(data_habitat$Total))
 ## Encouraged to use a log transformation
 
-boxplot(Total~Dist*Time*Size,data=dathabconf,log="y",xlab="",ylab="Density [log scale]",las=2)
+boxplot(Total~Dist*Time*Size,data=data_habitat,log="y",xlab="",ylab="Density [log scale]",las=2)
 ## Hard to see what's going on!
 
 par(mfrow = c(2,1))
-boxplot(Total~Dist*Time,data=dathabconf,xlab="Time.Dist",ylab="Density [log scale]",log="y",las=2)
-boxplot(Total~Dist*Size,data=dathabconf,xlab="Time.Size",ylab="Density [log scale]",log="y",las=2)
+boxplot(Total~Dist*Time,data=data_habitat,xlab="Time.Dist",ylab="Density [log scale]",log="y",las=2)
+boxplot(Total~Dist*Size,data=data_habitat,xlab="Time.Size",ylab="Density [log scale]",log="y",las=2)
 
 ## Question 1e
-fit.habconf1 <- lm(Total~Dist, data=dathabconf) 
+fit.habconf1 <- lm(Total~Dist, data=data_habitat) 
 anova(fit.habconf1)
 
 par(mfrow = c(2,2)); 
 plot(fit.habconf1)
 ## Mean-variance trend (large variance at larger densities) so futher support for log transform
 
-fit.habconf1aov <- aov(log(Total)~Dist, data=dathabconf)
+fit.habconf1aov <- aov(log(Total)~Dist, data=data_habitat)
 summary(fit.habconf1aov)
 TukeyHSD(fit.habconf1aov)
 
@@ -70,23 +63,23 @@ plot(fit.habconf1aov)
 ## not perfect but a better
 
 ## Illstration of Factorial design and model selection in action! Fit a three-way ANOVA and do backward elimination
-fit.habconffull <- aov(log(Total)~Dist*Time*Size, data=dathabconf)
+fit.habconffull <- aov(log(Total)~Dist*Time*Size, data=data_habitat)
 summary(fit.habconffull)
 
-fit.habconf3 <- aov(log(Total)~(Dist + Time + Size)^2, data=dathabconf)
+fit.habconf3 <- aov(log(Total)~(Dist + Time + Size)^2, data=data_habitat)
 summary(fit.habconf3)
 
-fit.habconf4 <- aov(log(Total)~ Dist*Time + Dist*Size, data=dathabconf)
+fit.habconf4 <- aov(log(Total)~ Dist*Time + Dist*Size, data=data_habitat)
 summary(fit.habconf4)
 
-fit.habconf5 <- aov(log(Total)~ Dist*Time + Size, data=dathabconf)
+fit.habconf5 <- aov(log(Total)~ Dist*Time + Size, data=data_habitat)
 summary(fit.habconf5)
 
-fit.habconf6 <- aov(log(Total)~ Dist*Time, data=dathabconf)
+fit.habconf6 <- aov(log(Total)~ Dist*Time, data=data_habitat)
 summary(fit.habconf6)
 anova(fit.habconf6, fit.habconf5) ## Suggests size is probably droppable
 
-fit.habconffinal <- aov(log(Total)~ Dist*Time, data=dathabconf)
+fit.habconffinal <- aov(log(Total)~ Dist*Time, data=data_habitat)
 summary(fit.habconffinal)
 
 ## Question 1f
@@ -108,26 +101,26 @@ plot(tft,las=1)
 
 ## A more informative result can also be obtained via an interaction plot using on final model 
 par(mfrow = c(1,1));
-interaction.plot(dathabconf$Dist, dathabconf$Time, fit.habconffinal$fitted, xlab="Isolation of patch", ylab="Total density [log scale]", trace.label="Time (weeks)")
+interaction.plot(data_habitat$Dist, data_habitat$Time, fit.habconffinal$fitted, xlab="Isolation of patch", ylab="Total density [log scale]", trace.label="Time (weeks)")
 ## Similar shapes of the two lines suggests that interaction between Distance and Time is mild, which corresponds with the p-value in fit.habconffinal
 
 
 ## Question 1i - Wetmass is a "blocking factor" , so we put this covariate first after the "~"
-fit.wethabconf <- aov(log(Total)~Wmass*Dist,data=dathabconf)
+fit.wethabconf <- aov(log(Total)~Wmass*Dist,data=data_habitat)
 summary(fit.wethabconf)
 
-fit.wethabconf2 <- aov(log(Total)~Wmass + Dist,data=dathabconf)
+fit.wethabconf2 <- aov(log(Total)~Wmass + Dist,data=data_habitat)
 summary(fit.wethabconf2)
 ## Overall conclusion is not changed. That is, after accounting for wet mass, Distance is still significantly related to Density. Wet mass also an additive effect. This can also be seen below.
 
-plot(dathabconf$Total~dathabconf$Wmass, col=as.numeric(dathabconf$Dist), log="xy", xlab="Wet Mass [log scale]", ylab="Density (per gram) [log scale]")
-legend("topright", levels(dathabconf$Dist), col=1:3)
+plot(data_habitat$Total~data_habitat$Wmass, col=as.numeric(data_habitat$Dist), log="xy", xlab="Wet Mass [log scale]", ylab="Density (per gram) [log scale]")
+legend("topright", levels(data_habitat$Dist), col=1:3)
 
-fit.wethabconffinal <- aov(log(Total)~ Wmass + Dist*Time, data=dathabconf)
+fit.wethabconffinal <- aov(log(Total)~ Wmass + Dist*Time, data=data_habitat)
 summary(fit.wethabconffinal)
 
 ## Interaction is now significant at a 5% level, but conclusions are not changed dramatically
-interaction.plot(dathabconf$Dist, dathabconf$Time, fit.wethabconffinal$fitted, xlab="Isolation of patch (m)", ylab="Total density (per gram) [log scale]", trace.label="Time (weeks)")
+interaction.plot(data_habitat$Dist, data_habitat$Time, fit.wethabconffinal$fitted, xlab="Isolation of patch (m)", ylab="Total density (per gram) [log scale]", trace.label="Time (weeks)")
 
 tft=TukeyHSD(fit.wethabconffinal,which=c("Dist:Time"))
 par(mar = c(6,6,4,1))
@@ -137,8 +130,7 @@ plot(tft,las=1)
 
 
 # ## Question 2a
-##rm(list = ls())
-##datbird <- read.csv("data/birdCountYear.csv", header = T)
+##data_birds <- read_csv("data/birdCountYear.csv")
 
 # #dathost$Genus <- factor(dathost$Genus) 
 # 

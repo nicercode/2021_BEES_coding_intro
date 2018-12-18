@@ -2,38 +2,40 @@
 ## Session 2: Introductory Stats Revision
 ###########
 ## Question 1a 
-rm(list = ls())
-datsmoke <- read.csv("data/smokePregnant.csv", header = T)
+
+library(tidyverse)
+
+data_smoking <- read_csv("data/smokePregnant.csv")
 
 ## Question 1b-c
 ## Inference; hypothesis test of whether there is difference in number of errors between two groups
 ## Two variables; one categorical and one quantitative
 
 ## Question 1d
-boxplot(datsmoke, main = "Comparative boxplots of # of errors by treatment", ylab = "# of errors", xlab = "Treatment")
+boxplot(data_smoking, main = "Comparative boxplots of # of errors by treatment", ylab = "# of errors", xlab = "Treatment")
 
 ## Question 1e
 par(mfrow = c(1,2))
-qqnorm(datsmoke$Nicotine); qqline(datsmoke$Nicotine)
-qqnorm(datsmoke$Control); qqline(datsmoke$Control)
+qqnorm(data_smoking$Nicotine); qqline(data_smoking$Nicotine)
+qqnorm(data_smoking$Control); qqline(data_smoking$Control)
 ## Both are right skewed; boxplots in particular show this; give the transformations a go
 
-boxplot(log(datsmoke), main = "Comparative boxplots of # of errors by treatment", ylab = "# of errors", xlab = "Treatment")
+boxplot(log(data_smoking), main = "Comparative boxplots of # of errors by treatment", ylab = "# of errors", xlab = "Treatment")
 
 par(mfrow = c(1,2))
-qqnorm(log(datsmoke$Nicotine)); qqline(log(datsmoke$Nicotine))
-qqnorm(log(datsmoke$Control)); qqline(log(datsmoke$Control))
+qqnorm(log(data_smoking$Nicotine)); qqline(log(data_smoking$Nicotine))
+qqnorm(log(data_smoking$Control)); qqline(log(data_smoking$Control))
 ## Better
 
 ## Question 1f-g
 #t.test(dat$Nicotine,dat$Control, var.equal=T)
-t.test(log(datsmoke$Nicotine), log(datsmoke$Control), var.equal=T)
+t.test(log(data_smoking$Nicotine), log(data_smoking$Control), var.equal=T)
 
 ## Question 1h
 ## Observations are independent; random sample of GPs and and random allocation of treatments
 ## observations are normally distributed with same variance in both groups
-sd(log(datsmoke$Nicotine))
-sd(log(datsmoke$Control))
+sd(log(data_smoking$Nicotine))
+sd(log(data_smoking$Control))
 
 
 ## Question 2

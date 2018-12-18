@@ -3,10 +3,10 @@
 ###########
 ## Question 1a
 
-#install.packages("car")
 library(car)
+library(tidyverse)
 
-datheight <- read.csv("data/plantHeightSingleSpp.csv", header = T)
+data_height <- read_csv("data/plantHeightSingleSpp.csv")
 
 ## Question 1b-c
 ## Inference; testing whether latitude variation in plant height can be explained by rainfall
@@ -14,14 +14,14 @@ datheight <- read.csv("data/plantHeightSingleSpp.csv", header = T)
 ## More than two variables; all quantitative
 
 ## Question 1d-g
-plot(datheight$lat, datheight$height, ylab = "Height", xlab = "Latitude", main = "Scatterplot of plant height versus latitude")
+plot(data_height$lat, data_height$height, ylab = "Height", xlab = "Latitude", main = "Scatterplot of plant height versus latitude")
 
-fit.height1 <- lm(height ~ rain + lat, data=datheight) ## Notice how I enter rain first, as I wantr to account or control for rainfall.
+fit.height1 <- lm(height ~ rain + lat, data=data_height) ## Notice how I enter rain first, as I wantr to account or control for rainfall.
 summary(fit.height1)
 anova(fit.height1)
 
 vif(fit.height1) ## No values near 5-10 so no big concern
-cor(cbind(datheight$lat, datheight$rain))
+cor(cbind(data_height$lat, data_height$rain))
 
 ## Observations were independent conditional on x; random sampling of plants
 ## Residuals are normally distributed with same variance
@@ -30,11 +30,11 @@ cor(cbind(datheight$lat, datheight$rain))
 plot(fit.height1)
 ## Seems to be heteroscedascity and right skewed residuals. This is not surprising if you just consider a QQ plot of height
 par(mfrow =  c(1,2))
-qqnorm(datheight$height); qqline(datheight$height)
-qqnorm(log(datheight$height)); qqline(log(datheight$height))
+qqnorm(data_height$height); qqline(data_height$height)
+qqnorm(log(data_height$height)); qqline(log(data_height$height))
 ## Consider a log transformation of height. The transformation is inherently useful anyway as it removes the boundary at 0 (which many of the measurements are pushed up against if you look at the marginal plot)
 
-fit.height2 <- lm(log(height) ~ rain + lat, data = datheight)
+fit.height2 <- lm(log(height) ~ rain + lat, data = data_height)
 par(mfrow = c(2,2))
 plot(fit.height2)
 ## Things are much better now; multicollinearity will not have changed, so nothing to worry about here still 
@@ -55,8 +55,8 @@ anova(fit.height2)
 confint(fit.height2)
 
 ## Question 1j
-fit.clim1 <- lm(log(height) ~ rain + temp, data=datheight)
-fit.clim2  <- lm(log(height)~ rain + temp + lat, data=datheight)
+fit.clim1 <- lm(log(height) ~ rain + temp, data=data_height)
+fit.clim2  <- lm(log(height)~ rain + temp + lat, data=data_height)
 anova(fit.clim1, fit.clim2)
 
 summary(fit.clim2)
@@ -66,7 +66,7 @@ plot(fit.clim2)
 ## OK
 
 vif(fit.clim2) ## Worse but not ridiculously large; the damage is due to correlation between temp and lat, as one can see from the matrix of correlations
-cor(cbind(datheight$lat, datheight$rain, datheight$temp))
+cor(cbind(data_height$lat, data_height$rain, data_height$temp))
 
 par(mfrow = c(1,1))
 crPlots(fit.clim2, terms = ~lat, xlab="Latitude", ylab="Height|rain + temp",grid=F,smooth=F)
@@ -80,21 +80,19 @@ confint(fit.clim2)
 
 ## Question 2a-b
 rm(list = ls())
-dathabconf <- read.csv("data/HabitatConfig.csv", header = T)
-dathabconf <- subset(dathabconf, Size == "SMALL" & Time == 10)
-#dathabconf <- dathabconf[(dathabconf$Size == "SMALL" & dathabconf$Time == 10),]
-
-dathabconf$Dist = factor(dathabconf$Dist)
+data_habitat <- read_csv("data/HabitatConfig.csv") %>%
+	filter(Size == "SMALL" & Time == 10) %>% 
+	mutate(Dist = as.factor(Dist))
 
 ## Question 2c-d
 ## Inference; testing of whether density changes with distance of isolation
 ## Two variables; covariate is categorical and response is quantitative
 
 ## Question 2e
-plot(dathabconf$Total~dathabconf$Dist, xlab = "Distance", ylab = "Density", main = "Comparative boxplot of invertebrate density versus isolation distance")
+plot(data_habitat$Total~data_habitat$Dist, xlab = "Distance", ylab = "Density", main = "Comparative boxplot of invertebrate density versus isolation distance")
 
 ## Question 2f-h
-fit.habconf1 <- lm(Total~Dist, data=dathabconf)
+fit.habconf1 <- lm(Total~Dist, data=data_habitat)
 anova(fit.habconf1)
 
 ## Observations are independent conditional on x; random sampling of sites 
@@ -105,7 +103,7 @@ par(mfrow = c(2,2))
 plot(fit.habconf1)
 ## Clear mean-variance trend (large variance at larger densities), so it's transformation time. This is even clearer in the scale-location plot
 
-fit.habconf2 <- lm(log(Total)~Dist, data=dathabconf)
+fit.habconf2 <- lm(log(Total)~Dist, data=data_habitat)
 summary(fit.habconf2)
 anova(fit.habconf2)
 
