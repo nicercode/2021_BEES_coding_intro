@@ -15,7 +15,7 @@ Details for this session are as follows:
 	- Gordana Popovic (Stats Central)
 - **Demonstrators**:
 	- Dony Indiarto
-	- Sally ??
+	- Sally Crane 
 
 ## Aims & Content
 
