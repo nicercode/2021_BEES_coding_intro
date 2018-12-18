@@ -11,19 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Aims
 
-Project management
-
-- Projects: Organising and managing data 
-- Reproducible research with Rmarkdown
-
 Data manipulation & visualisation with the tidyverse
 
 - Data manipulation with the tidyverse 
 - Data visualisation with ggplot2
-
-## Project management
-
-- Data files
-- project structure
-- path names
 

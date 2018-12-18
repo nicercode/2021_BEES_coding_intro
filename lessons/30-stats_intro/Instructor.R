@@ -12,6 +12,8 @@ data_smoking <- read_csv("data/smokePregnant.csv")
 ## Two variables; one categorical and one quantitative
 
 ## Question 1d
+ggplot(data_smoking,)
+
 boxplot(data_smoking, main = "Comparative boxplots of # of errors by treatment", ylab = "# of errors", xlab = "Treatment")
 
 ## Question 1e
