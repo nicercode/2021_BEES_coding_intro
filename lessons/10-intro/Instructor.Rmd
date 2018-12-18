@@ -1,0 +1,98 @@
+---
+title: "Introduction to R"
+author: "Instructors: Daniel Falster & Will Cornwell"
+date: "17/12/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Aims
+
+Getting started with R
+
+- Introduction to Rstudio
+- Introduction to coding in R
+- Getting data in and out of R - R objects and classes
+- Packages
+
+## The Rstudio environment
+
+- code / scripts / Rmarkdown
+
+## Packages
+
+- installing
+- tidyverse
+
+## Loading data
+
+- file types
+- loading other file types
+  - include examples but not discuss much 
+  - excel, googlesheets, web csv
+- loading csv files
+  - base vs readr
+  - headers
+
+## Assigning
+
+- <- 
+- making variables
+- Rstudio environment panel
+- errors
+- -> (works more naturally)
+
+Exercise:
+
+- make new variables conating a character and numeric content 
+- load the XXX dataset and assign to variable name
+
+
+## Object types
+
+- data types
+  - character
+  - integer
+  - numeric
+  - boolean
+- variables
+- matrix
+- data frames 
+  - as_tibble / as_data_frame
+  - columns
+- lists
+  - non-table structures
+  - calling via names, numbers
+- functions
+
+## Explore data
+
+- vector
+  - numeric: mean, max, length
+  - character: unique
+    - avoid factors
+- dataframes
+  - exploring columns
+  - subsets
+
+## Exercises
+
+1. load data, 
+  - take column, first 5 values, take mean
+  - take all column x by value column y, first 5 values, take mean
+  - mutiply columns together
+  - multiply columns together then sum
+2. (for some data) Calculate sd and check against sd function
+
+## Optional extras
+
+- getting help
+  - google
+  - about functions
+- more on Rmd
+- generating data
+  - distributions
+

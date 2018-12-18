@@ -1,0 +1,94 @@
+---
+title: ""
+author: "Instructors: Daniel Falster & Will Cornwell"
+date: "17/12/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Brief recap yesterday
+
+- load data
+- dataframes (tibbles)
+
+# Data manipulation
+
+## Dplyr
+
+pipes
+
+- %>%
+- .
+
+**Exercises**: 
+
+1. Pipe with vector: x %>% mean(), x %>% is.na() %>% sum()
+
+filter 
+
+mutate
+
+
+group_by
+
+summarise
+
+**Exercises**: 
+
+1.
+
+joining
+
+- bind_cols
+- bind_rows
+- left_join
+
+**Exercises**: 
+
+1.
+
+# Data visualisation
+
+## Generate hypotheses
+
+- Using dataset from 1st half day, discuss in groups a plot you'd like to make
+- Report idea to group
+
+Sydney beaches data
+
+## ggplot philosophy
+
+- fonti intro talk (??)
+
+Extra 
+
+- ggplot vs base R
+- grammar of graphics
+- types of plots (inlc extra packages, ggbeeswarm)
+- themes
+- special axes (log)
+- facets
+- colours, symbols
+- ggsave
+- ?patchwork (load via source install)
+- stats: gmsmooth, lm
+
+
+## Exercises
+
+
+(revise) Challenge - basic ggplot:
+
+1. Load a new dataset
+2. Choose a plot type, and plot something
+3. Set a colour/fill/shape aesthetic
+4. Choose a theme
+5. Choose a facet if applicable, or scale one of your aesthetics
+6. Assign the plot to an object
+7. Save the plot as a couple different file formats
+
+
+

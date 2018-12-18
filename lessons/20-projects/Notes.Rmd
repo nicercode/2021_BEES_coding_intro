@@ -1,0 +1,30 @@
+---
+title: "Introduction to R"
+author: "Instructors: Daniel Falster & Will Cornwell"
+date: "17/12/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Aims
+
+Project management
+
+- Projects: Organising and managing data 
+- Reproducible research with Rmarkdown
+
+Data manipulation & visualisation with the tidyverse
+
+- Data manipulation with the tidyverse 
+- Data visualisation with ggplot
+
+## Project management
+
+
+- Data files
+- project structure
+- path names
+
