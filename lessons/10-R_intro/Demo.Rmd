@@ -18,7 +18,7 @@ We have extracted a dataset for Sydney city, stored in `data/sydneybeaches.csv`.
 
 <!-- 
 x <- read_csv( "EnterococciDataDownload-20181218-090215.csv") %>% 
-filter(x, Region ==  "Sydney City Ocean Beaches", !is.na(`Enterococci (cfu/100ml)`)) %>% write_csv("data/sydneybeaches.csv")
+filter(x, Region ==  "Sydney City Ocean Beaches", !is.na(Enterococci_cfu_per_100ml)) %>% write_csv("data/sydneybeaches.csv")
 -->
 
 Load data, extract year using the package lubridate
@@ -28,7 +28,7 @@ data <- read_csv("data/sydneybeaches.csv") %>%
   mutate(Date = Date %>% lubridate::dmy(),
          year = Date %>% lubridate::year()
          ) %>% 
-  filter(!is.na(`Enterococci (cfu/100ml)`)) 
+  filter(!is.na(Enterococci_cfu_per_100ml)) 
 ```
 
 
@@ -56,7 +56,7 @@ Plots using these package ggplot and ggbeeswarm:
 
 ```{r, warning=FALSE}
 data %>% 
-  ggplot(aes(y = `Enterococci (cfu/100ml)`, x = year, colour = log(`Enterococci (cfu/100ml)`))) +
+  ggplot(aes(y = Enterococci_cfu_per_100ml, x = year, colour = log(Enterococci_cfu_per_100ml))) +
     ggbeeswarm::geom_quasirandom() +
     scale_y_log10( name="Enterococci (cfu/100ml)") +
     theme(legend.position = "none")+ 
@@ -81,7 +81,7 @@ Check against rainfall on that day:
 
 ```{r}
 data_randwick %>% 
-  ggplot(aes( x = rain, y = `Enterococci (cfu/100ml)`, colour = log(`Enterococci (cfu/100ml)` ))) +
+  ggplot(aes( x = rain, y = Enterococci_cfu_per_100ml, colour = log(Enterococci_cfu_per_100ml ))) +
     geom_point() +
     scale_y_log10( name="Enterococci (cfu/100ml)") + 
     scale_x_log10( name="Rainfall (mm)") +
@@ -94,7 +94,7 @@ Split by beach and year:
 ```{r}
 data_randwick %>% 
   filter(Site %in% c( "Maroubra Beach", "Coogee Beach", "Malabar Beach")) %>% 
-  ggplot(aes( x = rain, y = `Enterococci (cfu/100ml)`, col = Site)) +
+  ggplot(aes( x = rain, y = Enterococci_cfu_per_100ml, col = Site)) +
     geom_point() +
     scale_y_log10( name="Enterococci (cfu/100ml)")+ 
     scale_x_log10( name="Rainfall (mm)") +
