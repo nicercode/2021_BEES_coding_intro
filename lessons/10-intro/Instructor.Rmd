@@ -15,19 +15,43 @@ Getting started with R
 
 - Introduction to Rstudio
 - Introduction to coding in R
-- Getting data in and out of R - R objects and classes
+- Getting data in and out of R 
+- R objects and classes
 - Packages
 
-## The Rstudio environment
+# Welcome (Dan)
+
+- housekeep, post its
+- warm up: 
+ - who has used R
+ - best & worst experience, worries, why here
+- overview
+
+# Intro demo (Dan)
+
+- brief intro Rstudio
+- demo  
+
+# Install R and Rstudio (Will)
+
+The Rstudio environment
 
 - code / scripts / Rmarkdown
 
-## Packages
+Packages
 
 - installing
 - tidyverse
 
-## Loading data
+# Download course materials and knit demo (Will)
+
+- fix issues
+  
+Morning tea
+
+
+
+# Loading data (Dan)
 
 - file types
 - loading other file types
@@ -37,7 +61,7 @@ Getting started with R
   - base vs readr
   - headers
 
-## Assigning
+# Assigning (Dan)
 
 - <- 
 - making variables
@@ -47,11 +71,11 @@ Getting started with R
 
 Exercise:
 
-- make new variables conating a character and numeric content 
+- make new variables containing a character and numeric content 
 - load the XXX dataset and assign to variable name
 
 
-## Object types
+# Object types (Will)
 
 - data types
   - character
@@ -68,7 +92,10 @@ Exercise:
   - calling via names, numbers
 - functions
 
-## Explore data
+# Functions (Dan)
+
+
+# Explore data
 
 - vector
   - numeric: mean, max, length
@@ -78,16 +105,16 @@ Exercise:
   - exploring columns
   - subsets
 
-## Exercises
+# Exercises
 
 1. load data, 
   - take column, first 5 values, take mean
   - take all column x by value column y, first 5 values, take mean
-  - mutiply columns together
+  - multiply columns together
   - multiply columns together then sum
 2. (for some data) Calculate sd and check against sd function
 
-## Optional extras
+# Optional extras
 
 - getting help
   - google

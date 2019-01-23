@@ -10,10 +10,9 @@ library(tidyverse)
 library(scales)
 library(ggbeeswarm)
 library(lubridate)
-library(leaflet)
 ```
 
-Data from OEH Beach water quality data, available [here](https://www.environment.nsw.gov.au/topics/water/beaches/beach-water-quality-data). Data for all of NSW can be downloaded at [the download tab](https://www.environment.nsw.gov.au/beachapp/report_enterococci.aspx). 
+Data from OEH Beach water quality data, available [here](https://www.environment.nsw.gov.au/topics/water/beaches/beach-water-quality-data). Data for all of NSW can be downloaded at [the download tab](https://www.environment.nsw.gov.au/beachapp/report_enterococci.aspx). Thanks for Jenny Richmond from [RLadies Sydney](https://rladiessydney.org/) for introducing this great resource (see Jenny's write-up [here](https://rladiessydney.org/post/2018/11/05/basicbasics-3/))
 
 We have extracted a dataset for Sydney city, stored in `data/sydneybeaches.csv`.
 
@@ -37,6 +36,10 @@ data <- read_csv("data/sydneybeaches.csv") %>%
 sites <- data %>% 
   select(Region, Site, Latitude, Longitude) %>% 
   distinct()
+```
+
+```{r}
+library(leaflet)
 
 leaflet() %>%
   addTiles() %>%

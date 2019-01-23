@@ -2,7 +2,8 @@
 
 Gear to bring:
 
-
+- cheatsheets
+- stickynotes
 
 Room setup:
 

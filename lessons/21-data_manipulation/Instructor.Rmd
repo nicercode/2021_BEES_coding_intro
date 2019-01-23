@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - load data
 - dataframes (tibbles)
 
-# Data manipulation
+# Data manipulation (Will)
 
 ## Dplyr
 
