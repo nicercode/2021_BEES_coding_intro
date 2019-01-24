@@ -1,121 +1,184 @@
 ---
-title: "exercise_stats_intro"
+title: "Intro to stats - Exercises"
 author: "Gordana Popovic"
 date: "23 January 2019"
 output: html_document
 ---
-### Main things to remember
-* When thinking about how to analyse data, think: (1) what is the research question? (2) what are the main properties of the data?
+
+```{r setup, echo=FALSE}
+show_solutions=TRUE
+```
+
+# Lecture revision
+
+## Main points to remember from the lecture
+
+* When thinking about how to analyse data, think: 
+	1. what is the research question? 
+	2. what are the main properties of the data?
 *  When doing inferential statistics e.g., hypothesis tests, confidence intervals, there are assumptions: what are they? Are they reasonable for my study?
 *  Be careful using and interpreting hypothesis tests and P-values
 *  Do you know how to do a two-sample t-test on R, and interpret the output?
 
-
+## Code we learned
 
 First read in some necessary libraries
-```{r message=FALSE, warning=FALSE, paged.print=TRUE}
-library(dplyr)
-library(ggplot2)
-library(reshape2)
-rm(list = ls())
+
+```{r}
+library(tidyverse)
 ```
 
+Read in data
 
-###Question 1
+```{r}
+data_smoke <- read_csv("data/smokePregnant.csv")
+```
+
+Hypothesis testing: two sample t-test
+
+```{r}
+t.test(data_smoke$Nicotine, data_smoke$Control, var.equal=TRUE)
+```
+
+Check assumptions
+
+Normal quantile plot
+
+```{r}
+ggplot(data_smoke, aes(sample = Nicotine)) + stat_qq() + stat_qq_line()
+
+ggplot(data_smoke, aes(sample = Control)) + stat_qq() + stat_qq_line()
+```
+
+Calculate standard errors
+
+```{r}
+sd(data_smoke$Nicotine)
+sd(data_smoke$Control)
+```
+
+# Questions
+
+## Question 1 (lecture revision)
+
 Consider the guinea pigs (smoking) example: Is there an association between the number of errors and treatment group (Control and Nicotine)?
 
-a) Load the `smokePregnant.csv`.
-```{r}
-datsmoke <- read.csv("data/smokePregnant.csv")
+### a) Load the data `smokePregnant.csv`
+
+```{r, eval=show_solutions}
+data_smoke <- read_csv("data/smokePregnant.csv")
 ```
 
-b) What is the research question? Descriptive statistics or inference? Do we have a specific hypothesis to test or are we just estimating some parameter?
+### b) What is the research question? Descriptive statistics or inference? Do we have a specific hypothesis to test or are we just estimating some parameter?
 
-Inference; hypothesis test of whether there is difference in number of errors between two groups
+```{r, eval=show_solutions}
+"Inference; hypothesis test of whether there is difference in number of errors between two groups"
+```
 
-c) What are the main properties of the data? One variable or two? Categorical or quantitative?
+### c) What are the main properties of the data? One variable or two? Categorical or quantitative?
 
-Two variables; one categorical and one quantitative
+```{r, results="hide", eval=show_solutions}
+"Two variables; one categorical and one quantitative"
+```
 
-d) Produce a graph relevant to the original research question.
+### d) Produce a graph relevant to the original research question.
+
 ```{r}
-datsmoke2 = melt(datsmoke, variable.name="treatment", value.name="errors")
+data_smoke2 <- gather(data_smoke, key = "treatment", value = "errors")
 
-boxplots_smoke2 = ggplot(datsmoke2, aes(treatment,errors)) + 
-  geom_boxplot() + 
-  ggtitle("Comparative boxplots of # of errors by treatment")
+boxplots_smoke2 <- 
+	ggplot(data_smoke2, aes(treatment,errors)) + 
+	geom_boxplot() + 
+	ggtitle("Comparative boxplots of # of errors by treatment")
+
 boxplots_smoke2
 ```
 
-e) Left-skewed, right-skewed, symmetric?
+### e) Left-skewed, right-skewed, symmetric? Need transformation?
 
-Both are right skewed. Try transformation.
-
-```{r}
+```{r, eval=show_solutions}
+# Log transforming looks Better
 boxplots_smoke2 +  scale_y_continuous(trans="log")
 ```
 
-Log transforming looks Better
+### f) Use a two-sample $t$-test to see if there is evidence the # of errors (transformed if required) is associated with treatment group.
 
-f) Use a two-sample $t$-test to see if there is evidence the # of errors (transformed if required) is associated with treatment group.
-```{r}
-t.test(log(datsmoke$Nicotine), log(datsmoke$Control), var.equal=T)
+```{r, eval=show_solutions}
+t.test(log(data_smoke$Nicotine), log(data_smoke$Control), var.equal=TRUE)
 ```
 
-g) What is a plausible range of values for the mean difference  between treatments?
+### g) What is a plausible range of values for the mean difference  between treatments?
 
-(0.2106 1.1224)
+```{r, eval=show_solutions}
+c(0.2106, 1.1224)
+```
 
-h) What did you assume in the above?  Check any assumptions you can, and comment on anything that could have been done in the study design to ensure assumptions were reasonable.
+### h) What did you assume in the above?  Check any assumptions you can, and comment on anything that could have been done in the study design to ensure assumptions were reasonable.
 
-We assume
+Verbal answer:
+
+```{r, eval=show_solutions}
+
+"We assume
 
 * Observations are independent
 * random sample of GPs and and random allocation of treatments
 * observations are normally distributed with same variance in both groups
+"
+```
 
-```{r}
-datsmoke2 %>% 
+Plot:
+
+```{r, eval=show_solutions}
+data_smoke2 %>% 
   group_by(treatment) %>%
   summarise(sd_of_log = sd(log(errors)))
 ```
 
+## Question 2 (something new -- bats)
 
-###Question 2
-\item Consider the bats example: 
+Consider the bats example: 
 
 *Kerry goes bat counting. She finds 65 female bats and 44 male bats in a colony. She would like to know if there is evidence of gender bias.*
 
-a) Create a dataset from this information.
+### a) Create a dataset from this information.
+
 ```{r}
-batsex = data.frame(Sex = c("Male","Female"), count = c(44,65))
+data_batsex <- data_frame(Sex = c("Male","Female"), count = c(44,65))
 ```
 
-b) What is the research question? Descriptive statistics or inference? Do we have a specific hypothesis to test or are we just estimating some parameter?
+### b) What is the research question? Descriptive statistics or inference? Do we have a specific hypothesis to test or are we just estimating some parameter?
 
-Inference, with a specifc hypothesis to test (evidence of gender bias)
-
-c) What are the main properties of the data? One variable or two? Categorical or quantitative?
-
-One variable with two categories
-
-d) Produce a graph relevant to the original research question.
-```{r}
-ggplot(batsex, aes(Sex,count)) + 
-  geom_bar(stat = "identity") + 
-  ylab("Frequency in Colony") + 
-  ggtitle("Barplot of Bats in Colony by Sex")
+```{r, eval=show_solutions}
+"Inference, with a specific hypothesis to test (evidence of gender bias)"
 ```
 
-e) Test if there is evidence of gender bias in the colony (consider `prop.test`)
-```{r}
-prop.test( t(batsex$count), correct = F)
+### c) What are the main properties of the data? One variable or two? Categorical or quantitative?
+
+```{r, eval=show_solutions}
+"One variable with two categories"
 ```
 
-f) What is a plausible range of values for the sex ratio in this colony?
+### d) Produce a graph relevant to the original research question.
 
-(0.3163,0.4975)
+```{r, eval=show_solutions}
+ggplot(data_batsex, aes(Sex,count)) +   geom_bar(stat = "identity") +   ylab("Frequency in Colony") +   ggtitle("Barplot of Bats in Colony by Sex")
+```
 
-g) What did you assume in the above?  What could have been done to ensure assumptions were reasonable?
+### e) Test if there is evidence of gender bias in the colony (consider `?prop.test`)
 
-Each bat has the same probability of being selected (independence); guaranteed by random sampling of bats
+```{r, eval=show_solutions}
+prop.test( t(data_batsex$count), correct = FALSE)
+```
+
+### f) What is a plausible range of values for the sex ratio in this colony?
+
+```{r, eval=show_solutions}
+c(0.3163, 0.4975)
+```
+
+### g) What did you assume in the above?  What could have been done to ensure assumptions were reasonable?
+
+```{r, eval=show_solutions}
+"Each bat has the same probability of being selected (independence); guaranteed by random sampling of bats"
+```
