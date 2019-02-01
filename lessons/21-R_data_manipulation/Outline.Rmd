@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "Data Manipulation and Visualization"
 author: "Instructors: Daniel Falster & Will Cornwell"
 date: "17/12/2018"
 output: html_document
@@ -9,42 +9,79 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Brief recap yesterday
+# Brief recap 
 
 - load data
 - dataframes (tibbles)
 
-# Data manipulation (Will)
+## Load individually or all together
 
-## Dplyr
+```{r, eval = FALSE}
+library(dplyr)
+library(readr)
+library(tidyr)
+# ...
+```
+or
+```{r, results='hide',message=FALSE}
+library(tidyverse)
+```
+
+#Dplyr intro (Will 11:15 - 12:15)
+
+- Data is never organized in the way you want it 
+
+- High % of project is data wrangling
+
+- Many many many modern jobs are data wrangling
+
+# data is a noun
+
+# actions on data are verbs  
+
+# learn a few key verbs and what they do
+
+read_csv
+filter
+select
+mutate
+arrange
+
+group_by
+summarise
+count 
+n
+
+rename
+
+join family
 
 pipes
 
-- %>%
-- .
-
-**Exercises**: 
-
-1. Pipe with vector: x %>% mean(), x %>% is.na() %>% sum()
-
-filter 
-
-mutate
+Exercise
 
 
-group_by
+Lunch 1230-1330
 
-summarise
+Dpylr excersise 1330-1400
 
-**Exercises**: 
+## ggplot philosophy (1400-1500)
 
-1.
+- fonti intro talk 
 
-joining
+Extra 
 
-- bind_cols
-- bind_rows
-- left_join
+- ggplot vs base R
+- grammar of graphics
+- types of plots (inlc extra packages, ggbeeswarm)
+- themes
+- special axes (log)
+- facets
+- colours, symbols
+- ggsave
+- ?patchwork (load via source install)
+- stats: gmsmooth, lm
+
 
 **Exercises**: 
 
@@ -59,22 +96,6 @@ joining
 
 Sydney beaches data
 
-## ggplot philosophy
-
-- fonti intro talk (??)
-
-Extra 
-
-- ggplot vs base R
-- grammar of graphics
-- types of plots (inlc extra packages, ggbeeswarm)
-- themes
-- special axes (log)
-- facets
-- colours, symbols
-- ggsave
-- ?patchwork (load via source install)
-- stats: gmsmooth, lm
 
 
 ## Exercises

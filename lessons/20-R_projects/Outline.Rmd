@@ -1,5 +1,5 @@
 ---
-title: "Introduction to R"
+title: "Managing projects with R"
 author: "Instructors: Daniel Falster & Will Cornwell"
 date: "17/12/2018"
 output: html_document
@@ -12,12 +12,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Brief recap yesterday
 
 - packages
-- Rmd files
 - load data
-- dataframes (tibbles)
+- data_frames 
+- Rmd files
 
+## Project management (Dan, 9:30-11)
 
-## Project management (Dan)
+Live is complicated, and I used to be in pain, but now I live a blissfull peaceful happy existence with no worries aside from feeding unicorns.
 
 ### Exercises
 
@@ -36,3 +37,9 @@ Challenge - projects:
 6. When you finish put the green post-it on your laptop screen
 7. Put up your green sticky when you're done
   - don't forget to use your directories (/data, /R, /output)
+  
+Optional:
+
+Organize one of your own projects
+  
+# Reproducible research with Rmarkdown
