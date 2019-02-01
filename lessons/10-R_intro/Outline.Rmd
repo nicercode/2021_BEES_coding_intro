@@ -19,22 +19,22 @@ Getting started with R
 - R objects and classes
 - Packages
 
-# Welcome (Dan)
+# Welcome (Dan, 30 min)
 
-- housekeep, post its
+- housekeep, post its, nametags
 - warm up: 
  - who has used R
  - best & worst experience, worries, why here
 - overview
 
-# Intro demo (Dan)
+# Intro demo (Dan, 30 min)
 
 - brief intro Rstudio
 - demo  
 
-# Install R and Rstudio (Will)
+#  The Rstudio environment  (Will, 30 min)
 
-The Rstudio environment
+
 
 - code / scripts / Rmarkdown
 
@@ -42,16 +42,33 @@ Packages
 
 - installing
 - tidyverse
+- loading
 
-# Download course materials and knit demo (Will)
+- Exercise: Install R (>3.5), Rstudio (1.1.463), and tidyverse
+
+# Doing a full analysis yourself (Will, 30 min)
+
+- Exercise: Download course materials and knit demo 
 
 - fix issues
   
-Morning tea
+# Morning tea 11 AM
 
+# Assigning 11 - 1130 (Dan)
 
+- <- 
+- making variables
+- Rstudio environment panel
+- errors
+- -> (works more naturally)
+- = 
 
-# Loading data (Dan)
+Exercise:
+
+- make new variables containing a character and numeric content 
+- load the XXX dataset and assign to variable name
+
+# Loading data 11:30 - 12 (Dan)
 
 - file types
 - loading other file types
@@ -61,51 +78,40 @@ Morning tea
   - base vs readr
   - headers
 
-# Assigning (Dan)
-
-- <- 
-- making variables
-- Rstudio environment panel
-- errors
-- -> (works more naturally)
-
 Exercise:
 
-- make new variables containing a character and numeric content 
-- load the XXX dataset and assign to variable name
+# Object types I (Will 12-12:30)
 
+- data frame
+   - columns
+   - $
+- vector
+   - []
+   - :
 
-# Object types (Will)
+exercise:
+
+# Lunch 12:30 - 13:30
+
+# Object types II (Will 13:30-14:00)
 
 - data types
   - character
   - integer
   - numeric
   - boolean
+  - dates
 - variables
 - matrix
-- data frames 
-  - as_tibble / as_data_frame
-  - columns
 - lists
   - non-table structures
   - calling via names, numbers
-- functions
 
-# Functions (Dan)
-
-
-# Explore data
+# Useful Vocabulary for exploring data (Dan, 14-15)
 
 - vector
   - numeric: mean, max, length
   - character: unique
-    - avoid factors
-- dataframes
-  - exploring columns
-  - subsets
-
-# Exercises
 
 1. load data, 
   - take column, first 5 values, take mean
@@ -113,6 +119,25 @@ Exercise:
   - multiply columns together
   - multiply columns together then sum
 2. (for some data) Calculate sd and check against sd function
+
+# AFTERNOON TEA (15 - 1530)
+
+# More complicated functions and how to use them(Dan 1530-1600)
+
+- arguments for functions
+- default values
+- = 
+- outputs of functions
+- lm
+- formula
+
+
+
+Exercises
+
+
+
+
 
 # Optional extras
 
