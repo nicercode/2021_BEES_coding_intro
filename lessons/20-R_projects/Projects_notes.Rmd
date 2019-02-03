@@ -25,19 +25,23 @@ Aims of this course:
 
 - Introduction to R & Rstudio
 - Getting data in and out of R 
-- R objects and classes
+- R objects and data types
 - Packages
+- Functions
+- Organising your materials in Projects
 - Data manipulation
 - Data visualisation
 
 Brief recap from yesterday
 
 - R & Rstudio
+- Rmd files
 - packages
 - loading data
 - assigning variables
 - object types 
-- Rmd files
+- exploring data
+- functions
 
 What is the tidyverse
 
@@ -65,39 +69,130 @@ library(tidyverse)
 
 (Dan, 9:30-10:30)
 
-## Motivation
+Motivation
 
-Live is complicated, and I used to be in pain, but now I live a blissful peaceful happy existence with no worries aside from feeding unicorns.
+- Life is complicated, and I used to be in pain, but now I live a blissful peaceful happy existence with no worries aside from feeding unicorns.
+- Top tip for happy coding
+	- structure for organising yourself
+	- not only way you can do it, but unless have other good ideas, consider adopting it
+- Most people tend to organize their projects like this:
+
+![](http://swcarpentry.github.io/r-novice-gapminder/fig/bad_layout.png)
+
+<blockquote class="twitter-tweet"><p>Managing your projects in a reproducible fashion doesn't just make your science reproducible, it makes your life easier.</p>— Vince Buffalo (@vsbuffalo) <a href="https://twitter.com/vsbuffalo/status/323638476153167872">April 15, 2013</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+A good project layout will ultimately make your life easier:
+
+* It will help ensure the integrity of your data;
+* It makes it simpler to share your code with someone else
+(a lab-mate, collaborator, or supervisor);
+* It allows you to easily upload your code with your manuscript submission;
+* It makes it easier to pick the project back up after a break.
+
+
+Path names
+
+- You have to know where things are
+- Where on your computer: `getwd()`
+- What's in the folder: `dir()` 
+- Absolute versus relative paths
+	- Person 1: Describe how to get to level 5 of this building
+	- Person 2: Describe how to get to level 5 of this building, from the entrance to the uni on Anzac parade
 
 **Exercises:**
 
-Challenge - path names:
+1. Use the `getwd` to find the absolute path of the `folder`
 
-1. Use the `dir` function to list contents of a folder
+2. Use the `dir` function to list contents of the folder you are in
+	- change one of the default arguments to return the full path name of the files
 
-Challenge - projects:
+3. Read in a `csv` file using both absolute and relative paths
 
-1. Create an organized project directory for this stats course
-2. Include an RStudio Project in the folder
-3. Download the course data (from Moodle or github)
-4. Create a file something like 'R_day1.R' 
-5. Write one line of code to make a variable, and then save the object as a .rds file
-6. When you finish put the green post-it on your laptop screen
-7. Put up your green sticky when you're done
-  - don't forget to use your directories (/data, /R, /output)
-  
-Optional:
+4. Use `write_csv` to save the same data as a new file where you want to, using absolute and relative paths 
 
-Organize one of your own projects
-  
+
+How do we organise materials?
+
+- What is a meaningful unit for project? (A chapter or analysis)
+	- **Happy coder rule**: Projects are distinct & self contained
+	- start with a folder for project
+
+- Key parts: What sort of files do we have to deal with?
+	- README.md -- orients
+	- data/
+	- analysis.Rmd
+	- R/
+	- output/
+
+-	Path names:
+	- **Happy coder rule**: use relative paths
+		1. can move projects around and still use it
+		2. collaboration
+
+- Rstudio project files
+	- opening projects
+	- **Happy coder rule**: use Rstduio's project files
+	- **Rule: never use setwd**
+	- [Hadley Wickham on opening Rstudio projects](https://youtu.be/boKFxBniUH0) 
+
+- More guidelines:
+	- use a consistent project structure
+	- everything in `data` should be read-only (and precious)
+	- everything in the folder `R` is a code for a function
+	- everything in `output` is disposable
+	- main R or Rmd script is simple and readable
+	- all Rmd files written to run from the top directory
+	- Use a file `readme.md` to give brief introduction
+		- might add another in the directory `data`
+
+**Exercises:**
+
+1. Create a new project layout for one of your projects:
+
+- Start in a new folder (In Rstudio go to `File` -> `New Project`, then choose `New directory`)
+- Add an Rmd file like `Analysis.Rmd`
+- Create a folder called `data` and add a csv file to the folder 
+- Try closing and reopening Rstudio, switching between different projects. Use `getwd()` to see what folder you're in and `ls()` to see what's in memory 
+
+2. Restructure the project in the folder `messy_project` to make it more usable
+
+**Resources:**
+
+- [Basic project management on environmentalcomputing](http://environmentalcomputing.net/basic-project-management/)
+- [Software Carpentry's Project Management With RStudio](http://swcarpentry.github.io/r-novice-gapminder/02-project-intro/index.html)
+- [Nicercode's guide to projects](http://nicercode.github.io/blog/2013-04-05-projects/)
+- [Nicercode's organising my project](http://nicercode.github.io/blog/2013-05-17-organising-my-project/)
+
+
 # Reproducible research with Rmarkdown
 
 (Dan, 10:30-11:00)
 
+**Exercises:**
 
-Links: 
+Discuss with your partner 
 
-- blogdown: 
+- what is meant by Reproducible research?
+- does coding help? 
+- What can you do do make your research reproducible?
+- who benefits from reproducible research?
+
+## Keys to reproducible research
+
+
+
+## The wonders of Rmarkdown
+
+You can use Rmd files to create all sorts of stuff:
+
+- html files
+- word documonets
+- pdf (maybe)
+- blogs 
+	- see package blogdown
+- websites
 - Pimp my Rmd: https://holtzy.github.io/Pimp-my-rmd/
 
 # Morning tea

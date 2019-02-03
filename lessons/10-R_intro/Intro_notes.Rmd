@@ -32,10 +32,10 @@ Aims of this course:
 
 - Introduction to R & Rstudio
 - Getting data in and out of R 
-- R objects and classes
+- R objects and data types
 - Packages
 - Functions
-- Organising your materials
+- Organising your materials in Projects
 - Data manipulation
 - Data visualisation
 
@@ -51,18 +51,11 @@ Expectations
   - it's a diverse crowd, everyone has complimentary skills and experiences
   - there is no dumb question
   - anti-social behaviour not welcome
-
-Learning to code and need inspiration ?
-
-- [Anyone can code](https://www.youtube.com/watch?v=qYZF6oIZtfc&list=PLzdnOPI1iJNe1WmdkMG-Ca8cLQpdEAL7Q)
-- [Coding is the new literacy](https://www.youtube.com/watch?v=MwLXrN0Yguk&list=PLzdnOPI1iJNe1WmdkMG-Ca8cLQpdEAL7Q)
-- [What most schools don't teach](https://www.youtube.com/watch?v=nKIu9yen5nc&feature=c4-overview-vl&list=PLzdnOPI1iJNe1WmdkMG-Ca8cLQpdEAL7Q)
-- when coding saves you time, [from XKCD](http://xkcd.com/1205/)
-
-Why good code matters
-
-- [Why I want to write nice R code](http://nicercode.github.io/blog/2013-04-05-why-nice-code/)
-- [Science has a credibility problem](http://www.economist.com/news/leaders/21588069-scientific-research-has-changed-world-now-it-needs-change-itself-how-science-goes-wrong)
+- Live coding
+  - We're going to do a lot of live coding -> why?
+  - Materials will be circulated, but we don't have fully worked files for you. There are lots of these already available (see Resources sections), including our own website: [Environmental Computing](http://environmentalcomputing.net/) 
+  - Use the circulated files to take notes as you follow along
+  - We'll circulate our files after 
 
 # A quick demo of some things you can do
 
@@ -95,9 +88,13 @@ Writing code
 
 Packages
 
-- installing
-- tidyverse
-- loading
+
+- Install package by using `install.packages("package-name")`
+- Update packages by using `update.packages("package-name")`
+- Load packages by using `library("package-name")`
+- tidyverse is a useful collection of packages
+- Possible to install packages from places other than cran (e.g. github, r-forge, local computer)
+  - ways to install
 
 **Exercises:** Install R (>3.5), Rstudio (1.1.463), and the `tidyverse` packages
 
@@ -119,10 +116,13 @@ Good instructions [here if needed](https://datacarpentry.org/R-ecology-lesson/#s
 
 Code vs console vs Rmd
 
+Use `<-` to assign something as an object in memory
+
+- use `ls()` to see what's available in your environment 
+- Rstudio environment panel
+- Take errors seriously 
+
 Running code vs assigning object
-Use <- to assign an object
-Rstudio environment panel
-errors
 
 ```{r}
 12    # doesn't print anything
@@ -134,6 +134,14 @@ snakes          # and so does typing the name of the object
 <- vs = (outside vs inside function calls)
 -> vs <- (-> works more naturally)
 
+use `rm()` to delete objects
+
+Style
+
+- the [tidyverse style guide](https://style.tidyverse.org/)
+  - likes `_` between names
+  - variable and function names should use only lowercase letters, numbers, and `_`. Use underscores (`_`) (so called snake case) to separate words within a name, e.g. `day_one`
+
 **Exercises:**
 
 1. Make a new variable containing the number 13
@@ -144,12 +152,11 @@ snakes          # and so does typing the name of the object
 
 - ["Making new variables" on environmentalcomputing](http://environmentalcomputing.net/making-new-variables/)
 - ["Creating R objects" on DataCarpentry](https://datacarpentry.org/R-ecology-lesson/01-intro-to-r.html)
+- ["Software carpentry"'s intor to RStudio'](http://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro/index.html)
 
 # Loading data
 
 (Dan, 12:00-12:30)
-
-Loaded data as objects
 
 Where might you need to load data from (consider both sources and file types)? (Discuss with partner)
 
@@ -166,22 +173,24 @@ Use `read_csv` to load csv file
 - intro to a function
 - key arguments
 - options for parsing 
+- Loaded data need to be assigned as objects
+- `read_csv` (in the tidyverse) is generally better than `read.csv`
 
 **Exercises:**
 
-1. Load the file `10-R_intro/data/temperature.csv` into R and save as a variable
+1. Load the file `10-R_intro/data/sydneybeaches.csv` into R and save as a variable called `data_beaches`
 2. Create a csv file from either Excel or Google Sheets
 3. Open your csv file in the Rstudio editor (or another text editor)
 
-
 **Resources:**
 
-Resources for loading other file types
+You can likely load most data types into R
+
+A few resources for loading other file types
 
 - [readxl](https://readxl.tidyverse.org/reference/read_excel.html): Reading data direct from Excel
 - [datapasta](https://cran.r-project.org/web/packages/datapasta/): when copying and pasting data from the web
 - [googlesheets4](https://googlesheets4.tidyverse.org/): for reading data from google sheets
-
 
 # Lunch 
 
@@ -197,9 +206,6 @@ Resources for loading other file types
 - vector
    - []
    - :
-
-**Exercises:**
-
 - data types
   - character
   - integer
@@ -212,42 +218,72 @@ Resources for loading other file types
   - non-table structures
   - calling via names, numbers
 
+**Exercises:**
+
+
 # Exploring data: useful vocabulary
 
 (Dan, 14:30-15:00)
 
+We're now going to check out a bunch of really useful R functions and see how they work, to explore some data in the "Sydney Beaches" data set. 
 
-- vector
-  - numeric: mean, max, length
-  - character: unique
+First load the data from `data/sydneybeaches.csv` and save as `data_beaches`
+
+
+To look at columns of numeric data, these functions can be helpful:
+
+- min, max, range, sum, length, mean, sd
+
+To look at columns of categorical data, these functions can be helpful:
+
+- unique, sort, length
+
+These functions can be used on whole dataframes
+
+- nrow
+- dim
+- colSum, rowSum
 
 **Exercises:**
 
-1. load data, 
-  - take column, first 5 values, take mean
-  - take all column x by value column y, first 5 values, take mean
-  - multiply columns together
-  - multiply columns together then sum
-2. (for some data) Calculate sd and check against sd function
+1. Load the beaches data, then 
+  - extract the column `Enterococci_cfu_per_100ml` and save as a new variable
+  - find the min and max count
+  - find the mean
+  - find the mean of the first 100 records
+2. Using the same data, extract the column `Site` and save as a new variable
+  - find all unique values
+  - find all unique values and sort them
+3. using the whole dataframe
+  - How many rows and columns does it have
+  - Make a new dataset using only the first 10 rows
+  - Make a new dataset using only the first 3 columns
 
 # Afternoon tea
 
 (15:00 - 15:30)
 
-# Exploring data
-
-**Exercises:**
-
 # More complicated functions and how to use them 
 
-(Dan. 16:00-16:30)
+(Dan. 15:30-16:00)
 
-- arguments for functions
-- default values
-- = 
-- outputs of functions
-- lm
-- formula
+Investigate function structure, using the function `lm` as an example
+
+- function structure
+  - name
+  - body
+  - arguments
+- investigating structure of function f 
+  - `args(f)`
+  - `body(f)` or just `f`
+  - return value
+- ?help
+- named vs ordered arguments
+- default arguments
+
+# Q & A 
+
+(16:00 - 16:30)
 
 **Exercises:**
 
@@ -264,8 +300,24 @@ Where to get help
 
 # Resources
 
+Online courses:
+
 - [Environmental Computing](http://environmentalcomputing.net/) 
+- [Software carpentry's R novice lesson](http://swcarpentry.github.io/r-novice-gapminder/)
 - [Datacarpentry's lesson on R for ecology](https://datacarpentry.org/R-ecology-lesson/)
 - [A paper looking at how much R is used in Ecology](https://esajournals.onlinelibrary.wiley.com/doi/full/10.1002/ecs2.2567)
 - [The tidyverse web page](https://www.tidyverse.org/)
 - [Hadley Wickham's book R for data Science](https://r4ds.had.co.nz/)
+
+
+Learning to code and need inspiration ?
+
+- [Anyone can code](https://www.youtube.com/watch?v=qYZF6oIZtfc&list=PLzdnOPI1iJNe1WmdkMG-Ca8cLQpdEAL7Q)
+- [Coding is the new literacy](https://www.youtube.com/watch?v=MwLXrN0Yguk&list=PLzdnOPI1iJNe1WmdkMG-Ca8cLQpdEAL7Q)
+- [What most schools don't teach](https://www.youtube.com/watch?v=nKIu9yen5nc&feature=c4-overview-vl&list=PLzdnOPI1iJNe1WmdkMG-Ca8cLQpdEAL7Q)
+- when coding saves you time, [from XKCD](http://xkcd.com/1205/)
+
+Why good code matters
+
+- [Why I want to write nice R code](http://nicercode.github.io/blog/2013-04-05-why-nice-code/)
+- [Science has a credibility problem](http://www.economist.com/news/leaders/21588069-scientific-research-has-changed-world-now-it-needs-change-itself-how-science-goes-wrong)
