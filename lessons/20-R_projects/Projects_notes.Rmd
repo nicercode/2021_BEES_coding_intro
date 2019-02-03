@@ -18,6 +18,7 @@ Logistics
 
 Getting to know you:
 
+- who is new from yesterday
 - who has used R
 - best & worst experience, worries, why here
 
@@ -188,7 +189,7 @@ Discuss with your partner
 You can use Rmd files to create all sorts of stuff:
 
 - html files
-- word documonets
+- word documents
 - pdf (maybe)
 - blogs 
 	- see package blogdown

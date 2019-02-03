@@ -30,14 +30,24 @@ Actions on data are verbs
 Learn a few key verbs and what they do
 
 read_csv
+
 filter
+
 select
+
 mutate
+
 arrange
 
+distinct
+
+
 group_by
+
 summarise
+
 count 
+
 n
 
 rename
@@ -46,7 +56,7 @@ the `join` family
 
 Pipes
 
- - use the operator `%>%` 
+- use the operator `%>%` 
 - If you use RStudio, you can type the pipe with Ctrl + Shift + M if you have a PC or Cmd + Shift + M if you have a Mac.
 
 **Exercises:**
@@ -57,8 +67,6 @@ Pipes
 - [Datacarpentry's lesson on data manipulation](https://datacarpentry.org/R-ecology-lesson/03-dplyr.html)
 - [The `tidylog` package](https://github.com/elbersb/tidylog) is cool for understanding what happens with dplyr operations
 
-
-
 # Lunch
 
 (12:30-13:30)
@@ -68,67 +76,62 @@ Pipes
 
 (13:30-14:00)
 
-**Exercises:** Use the `dplyr` package to ....
+**Exercises:** Apply the `dplyr` package and your new data wrangling skills to the sydney beaches dataset to 
+
+1. Create a subset of the dataset consisting of only records taken since 2016
+2. As above and only variables `Site`, `Latitude`, and `Longitude`
+3. As above but with only one record per Site
+3. As above but with data sorted by `Latitude`
+4. For each Site, calculate the number of records, the min, mean, median and max value of `Enterococci_cfu_per_100ml` 
+5. For each record, create a new variable giving the year the record was collected (hint: the package lubridate could be helpful, see the cheatsheet) 
 
 # Data Visualisation
 
 (14:00-15:00)
 
+## ggplot philosophy and intro
+
 Fonti Kar is coming to give  a session on ggplot philosophy 
 
-**Exercises:**
+**Exercises:** In pairs, discuss a hypothesis you can address using the Sydney Beaches dataset and the plot you would like to make to demonstrate this. Try to make the plot using ggplot. In making your plot consider
 
-Extra 
+- what goes on the x & y axes?
+- is it one panel or many panels?
+- what type of plot would be best?
+- what aesthetics are you going to use: i.e. symbols, colours, etc?
+- should axes be log scaled?
+- is there anything else about the plot style you would change if you could?
+- try saving the plot as a png and pdf using the function `ggsave`
 
--
-- ggplot vs base R
-- grammar of graphics
-- types of plots (incl extra packages, ggbeeswarm)
+
+## Extra things to consider / discuss
+
+- ggplot vs base R graphics: 
 - themes
 - special axes (log)
 - facets
 - colours, symbols
+- types of plots (incl extra packages, ggbeeswarm)
 - ggsave
 - ?patchwork (load via source install)
 - stats: gmsmooth, lm
+- plotly
 
 **Resources:**
 
+Some resources for using ggplot:
 
-Fundamentals of Data Visualization by Claus O. Wilke: https://serialmentor.com/dataviz/index.html
+* [ggplot homepage](https://ggplot2.tidyverse.org)
+* [Plotting with ggplot on environmentalcomputing.net](http://environmentalcomputing.net/plotting-with-ggplot/)
+* [Visualising data with ggplot from Data Carpentry](https://datacarpentry.org/R-ecology-lesson/04-visualization-ggplot2.html)
+* [Recommended ggplot extensions](http://www.ggplot2-exts.org/gallery/)
+* The [data visualisation](http://r4ds.had.co.nz/data-visualisation.html) and [graphics for communication](http://r4ds.had.co.nz/graphics-for-communication.html) chapters of Hadley Wickham;s R for data science.
 
+Some general resources on data visualisation:
 
-**Exercises**: 
-
-1.
-
-# Data visualisation
-
-## Generate hypotheses
-
-- Using dataset from 1st half day, discuss in groups a plot you'd like to make
-- Report idea to group
-
-Sydney beaches data
-
-
-**Exercises:**
-
-(revise) Challenge - basic ggplot:
-
-1. Load a new dataset
-2. Choose a plot type, and plot something
-3. Set a colour/fill/shape aesthetic
-4. Choose a theme
-5. Choose a facet if applicable, or scale one of your aesthetics
-6. Assign the plot to an object
-7. Save the plot as a couple different file formats
-
-
-**Resources:**
-
-
-Tidy log: https://github.com/elbersb/tidylog
+* [Claus O. Wilke's book Fundamentals of Data Visualization](https://serialmentor.com/dataviz/index.html)
+* [From Data to viz](https://www.data-to-viz.com/), a great website over-viewing different kinds of graphic
+* [R Graphics Cookbook  by Winston Chang](https://www.amazon.com/dp/1449316956/ref=as_li_ss_tl?&linkId=4daa45d4fbd0a187163a6ff9d56d986e)
 
 
 
