@@ -9,23 +9,64 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Brief recap yesterday
+# Welcome
 
+Logistics
+
+- nametags: sticker and desk
+- post it  notes, 
+
+Getting to know you:
+
+- who has used R
+- best & worst experience, worries, why here
+
+Aims of this course:
+
+- Introduction to R & Rstudio
+- Getting data in and out of R 
+- R objects and classes
+- Packages
+- Data manipulation
+- Data visualisation
+
+Brief recap from yesterday
+
+- R & Rstudio
 - packages
-- load data
-- data_frames 
+- loading data
+- assigning variables
+- object types 
 - Rmd files
 
-## Project management (Dan, 9:30-11)
+The tidyverse 
 
-Live is complicated, and I used to be in pain, but now I live a blissfull peaceful happy existence with no worries aside from feeding unicorns.
+Can load individually or all together
 
-### Exercises
+```{r, eval = FALSE}
+library(dplyr)
+library(readr)
+library(tidyr)
+# ...
+```
+or
+```{r, results='hide',message=FALSE}
+library(tidyverse)
+```
+
+# Project management
+
+(Dan, 9:30-10:30)
+
+## Motivation
+
+Live is complicated, and I used to be in pain, but now I live a blissful peaceful happy existence with no worries aside from feeding unicorns.
+
+**Exercise:**
 
 Challenge - path names:
 
-1. Download the course data (from Moodle or github)
-2. Use the `dir` function to list contents of the folder
+1. Use the `dir` function to list contents of a folder
 
 Challenge - projects:
 
@@ -43,3 +84,16 @@ Optional:
 Organize one of your own projects
   
 # Reproducible research with Rmarkdown
+
+(Dan, 10:30-11:00)
+
+
+Links: 
+
+- blogdown: 
+- Pimp my Rmd: https://holtzy.github.io/Pimp-my-rmd/
+
+# Morning tea
+
+(11:00-11:15)
+

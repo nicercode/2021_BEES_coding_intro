@@ -9,37 +9,25 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Brief recap 
+# Introduction to data manipulation with `dplyr` intro
 
-- load data
-- dataframes (tibbles)
+(Will, 11:15 - 12:15)
 
-## Load individually or all together
+## Motivation
 
-```{r, eval = FALSE}
-library(dplyr)
-library(readr)
-library(tidyr)
-# ...
-```
-or
-```{r, results='hide',message=FALSE}
-library(tidyverse)
-```
+Data is never organized in the way you want it 
 
-#Dplyr intro (Will 11:15 - 12:15)
+High % of project is data wrangling
 
-- Data is never organized in the way you want it 
+Many many many modern jobs are data wrangling
 
-- High % of project is data wrangling
+## Key ideas
 
-- Many many many modern jobs are data wrangling
+Data is a noun
 
-# data is a noun
+Actions on data are verbs  
 
-# actions on data are verbs  
-
-# learn a few key verbs and what they do
+Learn a few key verbs and what they do
 
 read_csv
 filter
@@ -54,26 +42,44 @@ n
 
 rename
 
-join family
+the `join` family
 
-pipes
-
-Exercise
+pipes  `%>%` 
 
 
-Lunch 1230-1330
+**Exercise:**
 
-Dpylr excersise 1330-1400
 
-## ggplot philosophy (1400-1500)
+## Other cool resources
 
-- fonti intro talk 
+Tidy log: https://github.com/elbersb/tidylog
+
+
+# Lunch
+
+(12:30-13:30)
+
+
+# Data Wrangling
+
+(13:30-14:00)
+
+**Exercise:** Use the `dplyr` package to ....
+
+# Data Visualisation
+
+(14:00-15:00)
+
+Fonti Kar is coming to give  a session on ggplot philosophy 
+
+**Exercise:**
 
 Extra 
 
+-
 - ggplot vs base R
 - grammar of graphics
-- types of plots (inlc extra packages, ggbeeswarm)
+- types of plots (incl extra packages, ggbeeswarm)
 - themes
 - special axes (log)
 - facets
@@ -81,6 +87,11 @@ Extra
 - ggsave
 - ?patchwork (load via source install)
 - stats: gmsmooth, lm
+
+## Resources
+
+
+Fundamentals of Data Visualization by Claus O. Wilke: https://serialmentor.com/dataviz/index.html
 
 
 **Exercises**: 
@@ -97,9 +108,7 @@ Extra
 Sydney beaches data
 
 
-
-## Exercises
-
+**Exercise:**
 
 (revise) Challenge - basic ggplot:
 
@@ -110,6 +119,12 @@ Sydney beaches data
 5. Choose a facet if applicable, or scale one of your aesthetics
 6. Assign the plot to an object
 7. Save the plot as a couple different file formats
+
+
+## Extra resources
+
+
+Tidy log: https://github.com/elbersb/tidylog
 
 
 

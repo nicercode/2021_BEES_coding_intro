@@ -11,36 +11,58 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Aims
+# Welcome
 
-Getting started with R
+(Dan, 9:00-9:30)
 
-- Introduction to Rstudio
-- Introduction to coding in R
+Logistics
+
+- nametags: sticker and desk
+- post it  notes, 
+
+Getting to know you:
+
+- who has used R
+- best & worst experience, worries, why here
+
+Aims of this course:
+
+- Introduction to R & Rstudio
 - Getting data in and out of R 
 - R objects and classes
 - Packages
-```{r}
-sb<-read_csv("data/sydneybeaches.csv")
-```
+- Data manipulation
+- Data visualisation
 
-# Welcome (Dan, 30 min)
+# A quick demo of some things you can do
 
-- housekeep, post its, nametags
-- warm up: 
- - who has used R
- - best & worst experience, worries, why here
-- overview
+(Dan, 9:30-10:00)
 
-# Intro demo (Dan, 30 min)
+What is R
 
-- brief intro Rstudio
-- demo  
+- Code vs console vs Rmd
+- differnt clients
 
-#  The Rstudio environment  (Will, 30 min)
+Demonstration of data analysis -- using the Sydney Beaches dataset
 
-- code / scripts / 
+Interesting links:
 
+- How much R is used in Ecology: https://esajournals.onlinelibrary.wiley.com/doi/full/10.1002/ecs2.2567
+- https://www.tidyverse.org/
+- R4DS: https://r4ds.had.co.nz/
+
+
+#  The Rstudio environment 
+
+(Will, 10:00-10:30)
+
+Rstudio 
+
+- into to panels panels
+
+Writing code
+
+- Code vs console vs Rmd
 - Rmarkdown (code chunks, markdown)
 
 Packages
@@ -49,18 +71,24 @@ Packages
 - tidyverse
 - loading
 
-- Exercise: Install R (>3.5), Rstudio (1.1.463), and tidyverse
 
-# Doing a full analysis yourself (Will, 30 min)
+**Exercise:** Install R (>3.5), Rstudio (1.1.463), and the `tidyverse` packages
 
-- Exercise: Download course materials and knit demo 
+# Doing a full analysis yourself
 
-- fix issues
+(Will, 10:30-11:00)
+
+**Exercise:** Download course materials and knit demo. Make sure they can knit the demo. Take time to fix any issues that arise.
   
-# Morning tea 11 AM
+# Morning tea
 
-# Assigning 11 - 1130 (Dan)
+(11:00-11:30)
 
+# Assigning objects
+
+(Dan, 11:30-12:00)
+
+- Code vs console vs Rmd
 - <- 
 - making variables
 - Rstudio environment panel
@@ -68,12 +96,14 @@ Packages
 - -> (works more naturally)
 - = 
 
-Exercise:
+**Exercise:**
 
 - make new variables containing a character and numeric content 
 - load the XXX dataset and assign to variable name
 
-# Loading data 11:30 - 12 (Dan)
+# Loading data
+
+(Dan, 12:00-12:30)
 
 - file types
 - loading other file types
@@ -83,9 +113,20 @@ Exercise:
   - base vs readr
   - headers
 
-Exercise:
+**Exercise:**
 
-# Object types I (Will 12-12:30)
+- readxl: https://readxl.tidyverse.org/reference/read_excel.html
+- datapasta: https://cran.r-project.org/web/packages/datapasta/
+- googlesheets4: https://googlesheets4.tidyverse.org/
+
+
+# Lunch 
+
+(12:30 - 13:30)
+
+# Object types I
+
+(Will, 13:30-14:30)
 
 - data frame
    - columns
@@ -94,11 +135,7 @@ Exercise:
    - []
    - :
 
-exercise:
-
-# Lunch 12:30 - 13:30
-
-# Object types II (Will 13:30-14:00)
+**Exercise:**
 
 - data types
   - character
@@ -112,7 +149,9 @@ exercise:
   - non-table structures
   - calling via names, numbers
 
-# Useful Vocabulary for exploring data (Dan, 14-15)
+# Useful Vocabulary for exploring data
+
+(Dan, 14:30-15:00)
 
 - vector
   - numeric: mean, max, length
@@ -125,9 +164,17 @@ exercise:
   - multiply columns together then sum
 2. (for some data) Calculate sd and check against sd function
 
-# AFTERNOON TEA (15 - 1530)
+# Afternoon tea
 
-# More complicated functions and how to use them(Dan 1530-1600)
+(15:00 - 15:30)
+
+# Exploring data
+
+**Exercise:**
+
+# More complicated functions and how to use them 
+
+(Dan. 16:00-16:30)
 
 - arguments for functions
 - default values
@@ -136,7 +183,7 @@ exercise:
 - lm
 - formula
 
-Exercises
+**Exercise:**
 
 # Optional extras
 
