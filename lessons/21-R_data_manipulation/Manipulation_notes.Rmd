@@ -44,15 +44,19 @@ rename
 
 the `join` family
 
-pipes  `%>%` 
+Pipes
 
+ - use the operator `%>%` 
+- If you use RStudio, you can type the pipe with Ctrl + Shift + M if you have a PC or Cmd + Shift + M if you have a Mac.
 
-**Exercise:**
+**Exercises:**
 
+**Resources:**
 
-## Other cool resources
+- [Data manipulation on environmentalcomputing.net](http://environmentalcomputing.net/data-manipulation/) 
+- [Datacarpentry's lesson on data manipulation](https://datacarpentry.org/R-ecology-lesson/03-dplyr.html)
+- [The `tidylog` package](https://github.com/elbersb/tidylog) is cool for understanding what happens with dplyr operations
 
-Tidy log: https://github.com/elbersb/tidylog
 
 
 # Lunch
@@ -64,7 +68,7 @@ Tidy log: https://github.com/elbersb/tidylog
 
 (13:30-14:00)
 
-**Exercise:** Use the `dplyr` package to ....
+**Exercises:** Use the `dplyr` package to ....
 
 # Data Visualisation
 
@@ -72,7 +76,7 @@ Tidy log: https://github.com/elbersb/tidylog
 
 Fonti Kar is coming to give  a session on ggplot philosophy 
 
-**Exercise:**
+**Exercises:**
 
 Extra 
 
@@ -88,7 +92,7 @@ Extra
 - ?patchwork (load via source install)
 - stats: gmsmooth, lm
 
-## Resources
+**Resources:**
 
 
 Fundamentals of Data Visualization by Claus O. Wilke: https://serialmentor.com/dataviz/index.html
@@ -108,7 +112,7 @@ Fundamentals of Data Visualization by Claus O. Wilke: https://serialmentor.com/d
 Sydney beaches data
 
 
-**Exercise:**
+**Exercises:**
 
 (revise) Challenge - basic ggplot:
 
@@ -121,7 +125,7 @@ Sydney beaches data
 7. Save the plot as a couple different file formats
 
 
-## Extra resources
+**Resources:**
 
 
 Tidy log: https://github.com/elbersb/tidylog

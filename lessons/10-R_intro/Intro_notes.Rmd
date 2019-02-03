@@ -18,12 +18,15 @@ knitr::opts_chunk$set(echo = TRUE)
 Logistics
 
 - nametags: sticker and desk
-- post it  notes, 
+- Sticky notes for help
+- Work in pairs
+  - help each other: Peer to peer is most efficient way of learning
 
 Getting to know you:
 
-- who has used R
-- best & worst experience, worries, why here
+- Whose used R before: <6 months, up to 2 years, more than 2 years
+- Who has used a different language (e.g. Python)
+- Discuss with partner: best & worst experience, goals, worries
 
 Aims of this course:
 
@@ -31,8 +34,35 @@ Aims of this course:
 - Getting data in and out of R 
 - R objects and classes
 - Packages
+- Functions
+- Organising your materials
 - Data manipulation
 - Data visualisation
+
+Expectations
+
+- We are practising scientists, also trained as instructors for software and data carpentry
+  - here to guide your learning
+  - it's *one* way to do it, not the only way
+- We will show you the key ingredients for data analysis
+  - we can't turn you into crack analysts in 2 days
+  - start of a journey. Hopefully a fun one!
+- We aim for boot camp to be inclusive
+  - it's a diverse crowd, everyone has complimentary skills and experiences
+  - there is no dumb question
+  - anti-social behaviour not welcome
+
+Learning to code and need inspiration ?
+
+- [Anyone can code](https://www.youtube.com/watch?v=qYZF6oIZtfc&list=PLzdnOPI1iJNe1WmdkMG-Ca8cLQpdEAL7Q)
+- [Coding is the new literacy](https://www.youtube.com/watch?v=MwLXrN0Yguk&list=PLzdnOPI1iJNe1WmdkMG-Ca8cLQpdEAL7Q)
+- [What most schools don't teach](https://www.youtube.com/watch?v=nKIu9yen5nc&feature=c4-overview-vl&list=PLzdnOPI1iJNe1WmdkMG-Ca8cLQpdEAL7Q)
+- when coding saves you time, [from XKCD](http://xkcd.com/1205/)
+
+Why good code matters
+
+- [Why I want to write nice R code](http://nicercode.github.io/blog/2013-04-05-why-nice-code/)
+- [Science has a credibility problem](http://www.economist.com/news/leaders/21588069-scientific-research-has-changed-world-now-it-needs-change-itself-how-science-goes-wrong)
 
 # A quick demo of some things you can do
 
@@ -40,17 +70,15 @@ Aims of this course:
 
 What is R
 
-- Code vs console vs Rmd
-- differnt clients
+- R consists of writing code
+- Why write code?
+  - reproducible - love not to your future self
+- Code vs console
+- Different clients -- Rstudio
 
 Demonstration of data analysis -- using the Sydney Beaches dataset
 
-Interesting links:
-
-- How much R is used in Ecology: https://esajournals.onlinelibrary.wiley.com/doi/full/10.1002/ecs2.2567
-- https://www.tidyverse.org/
-- R4DS: https://r4ds.had.co.nz/
-
+- see the file Intro_demo.Rmd
 
 #  The Rstudio environment 
 
@@ -71,14 +99,15 @@ Packages
 - tidyverse
 - loading
 
+**Exercises:** Install R (>3.5), Rstudio (1.1.463), and the `tidyverse` packages
 
-**Exercise:** Install R (>3.5), Rstudio (1.1.463), and the `tidyverse` packages
+Good instructions [here if needed](https://datacarpentry.org/R-ecology-lesson/#setup_instructions)
 
 # Doing a full analysis yourself
 
 (Will, 10:30-11:00)
 
-**Exercise:** Download course materials and knit demo. Make sure they can knit the demo. Take time to fix any issues that arise.
+**Exercises:** Download course materials and knit demo. Go to the folder `lessons/10-R_intro/` and open the file `Intro_demo.Rmd` Make sure everyone can knit the demo. Take time to fix any issues that arise.
   
 # Morning tea
 
@@ -88,36 +117,70 @@ Packages
 
 (Dan, 11:30-12:00)
 
-- Code vs console vs Rmd
-- <- 
-- making variables
-- Rstudio environment panel
-- errors
-- -> (works more naturally)
-- = 
+Code vs console vs Rmd
 
-**Exercise:**
+Running code vs assigning object
+Use <- to assign an object
+Rstudio environment panel
+errors
 
-- make new variables containing a character and numeric content 
-- load the XXX dataset and assign to variable name
+```{r}
+12    # doesn't print anything
+snakes <- 12
+(snakes <- 12)  # but putting parenthesis around the call prints the value of `weight_kg`
+snakes          # and so does typing the name of the object
+```
+
+<- vs = (outside vs inside function calls)
+-> vs <- (-> works more naturally)
+
+**Exercises:**
+
+1. Make a new variable containing the number 13
+2. Make a new variable 1345 times the variable above (doing the calculation in code)
+3. Make new variables containing the name of you and your partner 
+
+**Resources:**
+
+- ["Making new variables" on environmentalcomputing](http://environmentalcomputing.net/making-new-variables/)
+- ["Creating R objects" on DataCarpentry](https://datacarpentry.org/R-ecology-lesson/01-intro-to-r.html)
 
 # Loading data
 
 (Dan, 12:00-12:30)
 
-- file types
-- loading other file types
-  - include examples but not discuss much 
-  - excel, googlesheets, web csv
-- loading csv files
-  - base vs readr
-  - headers
+Loaded data as objects
 
-**Exercise:**
+Where might you need to load data from (consider both sources and file types)? (Discuss with partner)
 
-- readxl: https://readxl.tidyverse.org/reference/read_excel.html
-- datapasta: https://cran.r-project.org/web/packages/datapasta/
-- googlesheets4: https://googlesheets4.tidyverse.org/
+Tables are a special type
+
+- tidy data: 1 observation per row, 1 variable per column
+
+Comma Separated Files (csv) files are a common and desirable format. Why?
+
+How do they work?
+
+Use `read_csv` to load csv file
+
+- intro to a function
+- key arguments
+- options for parsing 
+
+**Exercises:**
+
+1. Load the file `10-R_intro/data/temperature.csv` into R and save as a variable
+2. Create a csv file from either Excel or Google Sheets
+3. Open your csv file in the Rstudio editor (or another text editor)
+
+
+**Resources:**
+
+Resources for loading other file types
+
+- [readxl](https://readxl.tidyverse.org/reference/read_excel.html): Reading data direct from Excel
+- [datapasta](https://cran.r-project.org/web/packages/datapasta/): when copying and pasting data from the web
+- [googlesheets4](https://googlesheets4.tidyverse.org/): for reading data from google sheets
 
 
 # Lunch 
@@ -135,7 +198,7 @@ Packages
    - []
    - :
 
-**Exercise:**
+**Exercises:**
 
 - data types
   - character
@@ -149,13 +212,16 @@ Packages
   - non-table structures
   - calling via names, numbers
 
-# Useful Vocabulary for exploring data
+# Exploring data: useful vocabulary
 
 (Dan, 14:30-15:00)
+
 
 - vector
   - numeric: mean, max, length
   - character: unique
+
+**Exercises:**
 
 1. load data, 
   - take column, first 5 values, take mean
@@ -170,7 +236,7 @@ Packages
 
 # Exploring data
 
-**Exercise:**
+**Exercises:**
 
 # More complicated functions and how to use them 
 
@@ -183,14 +249,23 @@ Packages
 - lm
 - formula
 
-**Exercise:**
+**Exercises:**
 
 # Optional extras
 
-- getting help
-  - google
-  - about functions
-- more on Rmd
-- generating data
-  - distributions
+(if time permits)
 
+Where to get help
+
+- google
+- stack overflow
+- reproducible examples
+
+
+# Resources
+
+- [Environmental Computing](http://environmentalcomputing.net/) 
+- [Datacarpentry's lesson on R for ecology](https://datacarpentry.org/R-ecology-lesson/)
+- [A paper looking at how much R is used in Ecology](https://esajournals.onlinelibrary.wiley.com/doi/full/10.1002/ecs2.2567)
+- [The tidyverse web page](https://www.tidyverse.org/)
+- [Hadley Wickham's book R for data Science](https://r4ds.had.co.nz/)

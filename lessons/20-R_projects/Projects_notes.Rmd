@@ -39,7 +39,14 @@ Brief recap from yesterday
 - object types 
 - Rmd files
 
-The tidyverse 
+What is the tidyverse
+
+* The [Tidyverse](http://tidyverse.org) is the name given to suite of R packages designed for seamless data analysis
+* Designed to help you fall into a **"Pit of Success"**
+* Tools designed for: 1) Turning data into tidy data, and 2) Plotting & analysing Tidy Data
+* Dataframes (tibbles) are the universal "tidy" input and output
+* A tidy dataframe has: 1 observation per row, 1 variable per column
+* Not one but a collection packages
 
 Can load individually or all together
 
@@ -62,7 +69,7 @@ library(tidyverse)
 
 Live is complicated, and I used to be in pain, but now I live a blissful peaceful happy existence with no worries aside from feeding unicorns.
 
-**Exercise:**
+**Exercises:**
 
 Challenge - path names:
 
