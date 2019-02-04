@@ -5,8 +5,9 @@ date: "17/12/2018"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+library(tidyverse)
+data_beaches<-read_csv("data/sydneybeaches.csv")
 ```
 
 # Introduction to data manipulation with `dplyr` intro
@@ -29,37 +30,43 @@ Actions on data are verbs
 
 Learn a few key verbs and what they do
 
-read_csv
+- filter
 
-filter
+- select
 
-select
+- mutate
 
-mutate
+- arrange
 
-arrange
+- distinct
 
-distinct
+- group_by
 
+- summarise
 
-group_by
+- n
 
-summarise
+- rename
 
-count 
+- recode
 
-n
-
-rename
-
-the `join` family
+- count
 
 Pipes
+
 
 - use the operator `%>%` 
 - If you use RStudio, you can type the pipe with Ctrl + Shift + M if you have a PC or Cmd + Shift + M if you have a Mac.
 
-**Exercises:**
+the `join` family
+
+**Exercises:** Apply the `dplyr` package and your new data wrangling skills to the sydney beaches dataset to 
+
+1. Filter the Beach dataset to only Latitudes that are north of -33.94
+2. Mutate a row to be in usable dates using lubridate::dmy()
+3. select only Region, Site, Latitude, and Longitude columns and then use distinct to get a date frame of only locations
+4. recode the Council column values to not include the word "Council" (it's redundant)
+5. Count the number of records by Council; count the number of records by Site AND Council
 
 **Resources:**
 
@@ -76,7 +83,7 @@ Pipes
 
 (13:30-14:00)
 
-**Exercises:** Apply the `dplyr` package and your new data wrangling skills to the sydney beaches dataset to 
+**Exercises:** Apply the `dplyr` package and your new data wrangling skills to the Sydney beaches dataset to 
 
 1. Create a subset of the dataset consisting of only records taken since 2016
 2. As above and only variables `Site`, `Latitude`, and `Longitude`
@@ -84,3 +91,7 @@ Pipes
 3. As above but with data sorted by `Latitude`
 4. For each Site, calculate the number of records, the min, mean, median and max value of `Enterococci_cfu_per_100ml` 
 5. For each record, create a new variable giving the year the record was collected (hint: the package lubridate could be helpful, see the cheatsheet) 
+
+**Extra Exercises** 
+
+1. Join the Sydney beaches data to the rain data in "data/randwickrain.csv" by date using left_join, inner_join, full_join and right_join.  Try to understand what each of those does.  

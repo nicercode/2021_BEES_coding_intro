@@ -102,6 +102,10 @@ Good instructions [here if needed](https://datacarpentry.org/R-ecology-lesson/#s
 
 # Doing a full analysis yourself
 
+```{r}
+?read_csv
+
+```
 (Will, 10:30-11:00)
 
 **Exercises:** Download course materials and knit demo. Go to the folder `lessons/10-R_intro/` and open the file `Intro_demo.Rmd` Make sure everyone can knit the demo. Take time to fix any issues that arise.
@@ -182,6 +186,13 @@ Use `read_csv` to load csv file
 2. Create a csv file from either Excel or Google Sheets
 3. Open your csv file in the Rstudio editor (or another text editor)
 
+```{r}
+x <- TRUE
+class(x)
+```
+
+
+
 **Resources:**
 
 You can likely load most data types into R
@@ -218,9 +229,22 @@ A few resources for loading other file types
   - non-table structures
   - calling via names, numbers
 
+
+
+
 **Exercises:**
 
+create a new column in the data_beaches data frame and change the units of Enterococci from cfu_per100ml to Enterococci_cfu_per_10ml
 
+the Enterococci_cfu_per_100ml variable to Enterococci_cfu_per_10ml
+
+```{r}
+data_beaches <- read_csv("data/sydneybeaches.csv")
+dim(data_beaches)
+
+data_beaches[,1:3]
+sort(unique(data_beaches$Site),decreasing = TRUE)
+```
 # Exploring data: useful vocabulary
 
 (Dan, 14:30-15:00)
@@ -280,6 +304,12 @@ Investigate function structure, using the function `lm` as an example
 - ?help
 - named vs ordered arguments
 - default arguments
+
+```{r}
+model_fit<-lm(iris$Sepal.Length~iris$Petal.Length)
+```
+
+
 
 # Q & A 
 
