@@ -35,7 +35,7 @@ library(tidyverse)
 * Can control how columns are parsed
 
 ```{r}
-data <- read_csv("data/plantHeight5Spp.csv")  
+data <- read_csv("data/plant_height/plantHeight5Spp.csv")  
 ```
 
 ## [`tibble`](tibble.tidyverse.org) - A better data frame 

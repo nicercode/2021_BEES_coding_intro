@@ -7,7 +7,7 @@ output: html_document
 
 ```{r}
 library(tidyverse)
-data_beaches<-read_csv("data/sydneybeaches.csv")
+data_beaches<-read_csv("data/sydney_beaches/sydneybeaches.csv")
 ```
 
 # Introduction to data manipulation with `dplyr` intro
@@ -94,4 +94,4 @@ the `join` family
 
 **Extra Exercises** 
 
-1. Join the Sydney beaches data to the rain data in "data/randwickrain.csv" by date using left_join, inner_join, full_join and right_join.  Try to understand what each of those does.  
+1. Join the Sydney beaches data to the rain data in "data/sydney_beaches/randwickrain.csv" by date using left_join, inner_join, full_join and right_join.  Try to understand what each of those does.  

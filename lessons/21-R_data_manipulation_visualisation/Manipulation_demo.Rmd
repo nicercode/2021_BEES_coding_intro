@@ -14,17 +14,17 @@ library(lubridate)
 
 Data from OEH Beach water quality data, available [here](https://www.environment.nsw.gov.au/topics/water/beaches/beach-water-quality-data). Data for all of NSW can be downloaded at [the download tab](https://www.environment.nsw.gov.au/beachapp/report_enterococci.aspx). Thanks for Jenny Richmond from [RLadies Sydney](https://rladiessydney.org/) for introducing this great resource (see Jenny's write-up [here](https://rladiessydney.org/post/2018/11/05/basicbasics-3/))
 
-We have extracted a dataset for Sydney city, stored in `data/sydneybeaches.csv`.
+We have extracted a dataset for Sydney city, stored in `data/sydney_beaches/sydneybeaches.csv`.
 
 <!-- 
 x <- read_csv( "EnterococciDataDownload-20181218-090215.csv") %>% 
-filter(x, Region ==  "Sydney City Ocean Beaches", !is.na(Enterococci_cfu_per_100ml)) %>% write_csv("data/sydneybeaches.csv")
+filter(x, Region ==  "Sydney City Ocean Beaches", !is.na(Enterococci_cfu_per_100ml)) %>% write_csv("data/sydney_beaches/sydneybeaches.csv")
 -->
 
 Load data, extract year using the package lubridate
 
 ```{r,warning=FALSE, results='hide', message=FALSE}
-data <- read_csv("data/sydneybeaches.csv") %>% 
+data <- read_csv("data/sydney_beaches/sydneybeaches.csv") %>% 
   mutate(Date = Date %>% lubridate::dmy(),
          year = Date %>% lubridate::year()
          ) %>% 
@@ -66,7 +66,7 @@ data %>%
 Check link to rainfall (in Randwick where we have data):
 
 ```{r}
-rain <- read_csv("data/randwickrain.csv") %>% 
+rain <- read_csv("data/sydney_beaches/randwickrain.csv") %>% 
   mutate(
     Date = date %>% lubridate::ymd(),
     rain = 0.01 + rain_mm
