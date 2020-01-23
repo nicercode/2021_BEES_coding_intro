@@ -22,16 +22,16 @@ We have organised different lessons into their own folder including
 
 The hope is that this structure will
 
-* Reduce time and brain energy lost on navigating file structures
-* Make projects and lessons portable, by removing any use of `setwd`
-* Improve engagement with a particular lesson, by reducing clutter
-* Help build good habits
+- Reduce time and brain energy lost on navigating file structures
+- Make projects and lessons portable, by removing any use of `setwd`
+- Improve engagement with a particular lesson, by reducing clutter
+- Help build good habits
+
 
 ## Style
 
-
 * Use tidyverse tools for reading in data, e.g. `read_csv` rather than `read.csv`
-* Use tidyverse tools for creating dataframes, ege. `data_frame` rather than `data.frame`
+* Use tidyverse tools for creating dataframes, eg. `tibble` rather than `data.frame`
 * Use tools from `dplyr` and `tidyr` for data manipulation
 * Use pipes to create clean workflows
 * Use tidyverse style for naming variables, eg. `data_smoking` 

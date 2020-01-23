@@ -28,13 +28,61 @@ Getting started with R
 
 ### Days 2-3 Project management, data manipulation & data visualisation [ Daniel Falster, Will Cornwell, Dony Indiatro ]
 
-Project management
+Topics
 
 - Projects: Organising and managing data - Reproducible research with Rmarkdown
 Data manipulation & visualisation with the tidyverse
 - Data manipulation with the tidyverse 
 - Data visualisation with ggplot
 
+Lesson plan (Day 1)
+
+- 9:30 Intro (Dan)
+- 9:45 Getting organised: Projects, path names, folders (Dan)
+- 10:30 Rmd files (Dan)
+
+- 11:00 MORNING TEA
+
+- 11:15 Reading data with `readr` (Dan)
+
+- 11:45 Data manipulation with `dplyr` (Dan)
+	- filter, select, mutate, rename, arrange, summarise, 
+	- pipes 
+
+- 12:30 LUNCH
+
+- 13:30 Imagine your plot (Will)
+- 14:30 Intro to data visualisation with ggplot (Dony)
+
+- 15:15 AFTERNOON TEA
+
+- 15:30 Exercises
+
+Lesson plan (Day 2)
+
+- 9:30 Tidy Data concept (Dony)
+	- pivots
+
+- 10:00 Advanced data manipulation with `dplyr`  (Dan)
+	- group_by (summarise, mutate), 
+	- join
+
+- 11:00 MORNING TEA
+
+- 11:15 Advanced data visualisation with ggplot (Will)
+	- (extend plots from Day 1 in various ways)
+	- facets
+	- styles: themes, scales, labels, palettes  
+	- multiple plot layouts with patchwork
+	
+- 12:30 LUNCH
+
+- 13:30 Data wrangling & visualisation challenge (Dan)
+- 15:15 AFTERNOON TEA
+- 15:30 Extensions
+	- ggplot in talks (Rose O'Dea)
+	- ggplot extensions (Will)
+	- Reproducible research (Dan)
 
 ### Day 3-4 Introduction to design and analysis and  linear modelling [ Eve Slavich and Gordana Popovic]
 

@@ -1,7 +1,7 @@
 ---
 title: "Data Manipulation and Visualization"
-author: "Instructors: Daniel Falster & Will Cornwell"
-date: "17/12/2018"
+author: "Instructors: Daniel Falster, Will Cornwell, Dony Indiarto"
+date: "Feb 2020"
 output: html_document
 ---
 
