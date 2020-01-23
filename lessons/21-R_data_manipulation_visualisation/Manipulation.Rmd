@@ -7,7 +7,7 @@ output: html_document
 
 ```{r}
 library(tidyverse)
-data_beaches<-read_csv("data/sydney_beaches/sydneybeaches.csv")
+data_beaches <- read_csv("data/sydney_beaches/sydneybeaches.csv")
 ```
 
 # Introduction to data manipulation with `dplyr` intro

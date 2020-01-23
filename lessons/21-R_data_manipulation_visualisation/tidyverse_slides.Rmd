@@ -35,7 +35,7 @@ library(tidyverse)
 * Can control how columns are parsed
 
 ```{r}
-data <- read_csv("data/plant_height/plantHeight5Spp.csv")  
+data <- read_csv("data/plant_height/plantHeight5Spp.csv")
 ```
 
 ## [`tibble`](tibble.tidyverse.org) - A better data frame 
@@ -71,7 +71,7 @@ select(data, site, Country, Family, Genus_species, height)
 
 ```{r}
 filter(data, Country == "Australia")
-filter(data, Country == "Australia", Family == "Myrtaceae", height <3)
+filter(data, Country == "Australia", Family == "Myrtaceae", height < 3)
 ```
 
 ## Use [arrange](http://dplyr.tidyverse.org/reference/arrange.html) to sort by values in a column
@@ -84,19 +84,19 @@ arrange(data, Country, Family, Genus_species)
 ## Use [rename](http://dplyr.tidyverse.org/reference/select.html) to rename a variable
 
 ```{r}
-rename(data,  species = Genus_species)
+rename(data, species = Genus_species)
 ```
 
 ## Use [mutate](http://dplyr.tidyverse.org/reference/mutate.html) creates new variables
 
 ```{r}
-mutate(data,  log_ht = log(height))
+mutate(data, log_ht = log(height))
 ```
 
 ## Use [summarise](http://dplyr.tidyverse.org/reference/summarise.html) for summary statistics
 
 ```{r}
-summarise(data,  ht_mn = mean(height), ht_sd = sd(height), n = n())
+summarise(data, ht_mn = mean(height), ht_sd = sd(height), n = n())
 ```
 
 ## Use "the pipe" [%>%](http://magrittr.tidyverse.org/reference/pipe.html) to connect expressions
@@ -111,14 +111,14 @@ data$height %>% mean()
 
 You can control the input position of the next function with `.`:
 ```{r}
-20 %>% seq(1,4, length.out = .)
+20 %>% seq(1, 4, length.out = .)
 ```
 
 ## Use pipes to join data verbs to make a data sentence
 
 ```{r, eval = FALSE}
-data %>% 
-  filter(Country == "Australia") %>% 
+data %>%
+  filter(Country == "Australia") %>%
   select(Family, Genus_species, height) %>%
   mutate(log_height = log(height))
 ```
@@ -139,7 +139,7 @@ data %>%
 Split by country
 ```{r}
 data %>%
-  group_by(Country) %>% 
+  group_by(Country) %>%
   summarise(ht_mn = mean(height), ht_sd = sd(height), n = n())
 ```
 
@@ -155,7 +155,7 @@ data %>%
 
 ```{r}
 data %>%
-  group_by(Country) %>% 
+  group_by(Country) %>%
   summarise_at(vars(height, NPP), funs(mean, sd, length))
 ```
 
@@ -177,7 +177,7 @@ band_members %>% left_join(band_instruments)
 
 ```{r}
 stocks <- tibble(
-  time = as.Date('2009-01-01') + 0:9,
+  time = as.Date("2009-01-01") + 0:9,
   X = rnorm(10, 0, 1),
   Y = rnorm(10, 0, 2),
   Z = rnorm(10, 0, 4)

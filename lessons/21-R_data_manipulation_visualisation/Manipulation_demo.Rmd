@@ -24,17 +24,18 @@ filter(x, Region ==  "Sydney City Ocean Beaches", !is.na(Enterococci_cfu_per_100
 Load data, extract year using the package lubridate
 
 ```{r,warning=FALSE, results='hide', message=FALSE}
-data <- read_csv("data/sydney_beaches/sydneybeaches.csv") %>% 
-  mutate(Date = Date %>% lubridate::dmy(),
-         year = Date %>% lubridate::year()
-         ) %>% 
-  filter(!is.na(Enterococci_cfu_per_100ml)) 
+data <- read_csv("data/sydney_beaches/sydneybeaches.csv") %>%
+  mutate(
+    Date = Date %>% lubridate::dmy(),
+    year = Date %>% lubridate::year()
+  ) %>%
+  filter(!is.na(Enterococci_cfu_per_100ml))
 ```
 
 
 ```{r}
-sites <- data %>% 
-  select(Region, Site, Latitude, Longitude) %>% 
+sites <- data %>%
+  select(Region, Site, Latitude, Longitude) %>%
   distinct()
 ```
 
@@ -43,11 +44,12 @@ library(leaflet)
 
 leaflet() %>%
   addTiles() %>%
-  addMarkers(lng = sites$Longitude, lat = sites$Latitude,
-             label = paste(sites$Site, "(", sites$Region, ")"))	%>%
+  addMarkers(
+    lng = sites$Longitude, lat = sites$Latitude,
+    label = paste(sites$Site, "(", sites$Region, ")")
+  ) %>%
   addScaleBar() %>%
-  addMiniMap(zoomLevelFixed=2)
-
+  addMiniMap(zoomLevelFixed = 2)
 ```
 
 Question: How does the distribution of values change across years and beaches?
@@ -55,51 +57,50 @@ Question: How does the distribution of values change across years and beaches?
 Plots using these package ggplot and ggbeeswarm:
 
 ```{r, warning=FALSE}
-data %>% 
+data %>%
   ggplot(aes(y = Enterococci_cfu_per_100ml, x = year, colour = log(Enterococci_cfu_per_100ml))) +
-    ggbeeswarm::geom_quasirandom() +
-    scale_y_log10( name="Enterococci (cfu/100ml)") +
-    theme(legend.position = "none")+ 
-    facet_wrap(vars(Site)) 
+  ggbeeswarm::geom_quasirandom() +
+  scale_y_log10(name = "Enterococci (cfu/100ml)") +
+  theme(legend.position = "none") +
+  facet_wrap(vars(Site))
 ```
 
 Check link to rainfall (in Randwick where we have data):
 
 ```{r}
-rain <- read_csv("data/sydney_beaches/randwickrain.csv") %>% 
+rain <- read_csv("data/sydney_beaches/randwickrain.csv") %>%
   mutate(
     Date = date %>% lubridate::ymd(),
     rain = 0.01 + rain_mm
-    )
+  )
 
-data_randwick <- data %>% 
-  filter(year > 2012, Council == "Randwick Council") %>% 
-  left_join(rain, by="Date")
+data_randwick <- data %>%
+  filter(year > 2012, Council == "Randwick Council") %>%
+  left_join(rain, by = "Date")
 ```
 
 Check against rainfall on that day:
 
 ```{r}
-data_randwick %>% 
-  ggplot(aes( x = rain, y = Enterococci_cfu_per_100ml, colour = log(Enterococci_cfu_per_100ml ))) +
-    geom_point() +
-    scale_y_log10( name="Enterococci (cfu/100ml)") + 
-    scale_x_log10( name="Rainfall (mm)") +
-    theme(legend.position = "none") + 
-    facet_wrap(vars(Site)) 
+data_randwick %>%
+  ggplot(aes(x = rain, y = Enterococci_cfu_per_100ml, colour = log(Enterococci_cfu_per_100ml))) +
+  geom_point() +
+  scale_y_log10(name = "Enterococci (cfu/100ml)") +
+  scale_x_log10(name = "Rainfall (mm)") +
+  theme(legend.position = "none") +
+  facet_wrap(vars(Site))
 ```
 
 Split by beach and year:
 
 ```{r}
-data_randwick %>% 
-  filter(Site %in% c( "Maroubra Beach", "Coogee Beach", "Malabar Beach")) %>% 
-  ggplot(aes( x = rain, y = Enterococci_cfu_per_100ml, col = Site)) +
-    geom_point() +
-    scale_y_log10( name="Enterococci (cfu/100ml)")+ 
-    scale_x_log10( name="Rainfall (mm)") +
-    facet_wrap(vars(year)) 
-
+data_randwick %>%
+  filter(Site %in% c("Maroubra Beach", "Coogee Beach", "Malabar Beach")) %>%
+  ggplot(aes(x = rain, y = Enterococci_cfu_per_100ml, col = Site)) +
+  geom_point() +
+  scale_y_log10(name = "Enterococci (cfu/100ml)") +
+  scale_x_log10(name = "Rainfall (mm)") +
+  facet_wrap(vars(year))
 ```
 
 
