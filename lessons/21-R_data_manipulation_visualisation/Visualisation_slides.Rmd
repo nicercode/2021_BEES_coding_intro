@@ -22,18 +22,15 @@ class: center, middle
 ---
 
 # Why ggplot2 is worth the effort?
---
-  -  Tidy and intuitive coding
---
 
-  -  Streamlined with the `tidy` data exploration/analysis framework<sup>1</sup>
+
+  -  `tidy` data exploration/analysis framework<sup>1</sup>
 .center[![](https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png)]
 --
 
+  -  Intuitive coding
   - 'Publication ready' look
---
-  - Offers greater flexibility and customisation.
-
+  - Flexibileity and customisation
 
 .footnote[
 [1] [Grolemund & Wickham, R for Data Science, 2017](https://r4ds.had.co.nz/explore-intro.html)
@@ -78,14 +75,24 @@ class: inverse, center, middle
 
 # Installation  
 
-Install the **ggplot2** package from [CRAN](https://cran.r-project.org/web/packages/ggplot2/index.html):
+Load `tidyverse`
+
+```{r eval=FALSE, tidy=FALSE}
+library(tidyverse)
+```
+
+(or installand load the **ggplot2** package from [CRAN](https://cran.r-project.org/web/packages/ggplot2/index.html))
 
 ```{r eval=FALSE, tidy=FALSE}
 install.packages("ggplot2")
+library(ggplot2)
 ```
+
+
+---
+# What questions can we ask with the data?
 --
-# What question can we ask from the data?
---
+
 ```{r eval=TRUE, message=FALSE, warning=FALSE, tidy=FALSE}
 library(tidyverse)
 movies <- read_csv("data/movie_profit/movie_profit.csv")
@@ -97,7 +104,7 @@ glimpse(movies) # see every column in the data frame
 --
 ![](https://ourcodingclub.github.io/img/DL_datavis1_which_plot.png)
 ---
-# Q1 What is the most popular genre? 
+# Q1 What is the most common genre? 
 --
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg'}
 ggplot(movies, aes(x= genre))+
@@ -109,12 +116,12 @@ ggplot(movies, aes(x= genre))+
 And put some color on...
 
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg'}
-ggplot(movies, aes(x= genre, fill=genre))+ #the device containing your data
-  geom_bar() #geom and aesthetics
+ggplot(movies, aes(x= genre, fill=genre))+
+  geom_bar()
 
 ```
 ---
-# Q2 What genre is expensive to produce?
+# Q2 What genre is more expensive to produce?
 --
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(2)}
 ggplot(movies, aes(x=genre, y=production_budget))+
@@ -153,6 +160,7 @@ ggplot(movies, aes(x = production_budget)) +
   scale_x_log10()
 ```
 ---
+
 
 # Q4 Does expensive production budget make more profit?
 --
