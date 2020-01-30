@@ -269,7 +269,7 @@ See slides in "slides/XXXX"
 
 **Exercise**:
 
-Now using join and pipes, we can built a big table of data
+Now using join and pipes, we can built a big table of data containing all variables
 
 ```{r}
 
@@ -297,20 +297,26 @@ data <-
   ) %>% 
   # reorganise data
   select(continent, country, year, everything()) %>% 
-  arrange(continent, country, year)
+  arrange(continent, country, year) %>% 
+  mutate(year = as.integer(year))
 ```
 
+What about Na's?
+
 ```{r}
- 
+filter(data, is.na(continent))
+filter(data, is.na(continent)) %>% pull(country) %>% unique()
+
 ```
+
+
+What to do when your big pipe thingo doesn't work?
 
 
 # Advanced data visualisation with `ggplot2` (Will)
 
-This session will show you some more advanaced plotting techniques, building on the basic plots from Day 1
+This session will show you some more advanaced plotting techniques, building on the basic plots from Day 1 and using the gapminder data
 
-
-## Facets
 
 ## Adjusting labels, sclaes, paletters
 
@@ -321,12 +327,31 @@ library(scales)
 ```
 
 
-## Adding fitted lines
+```{r}
+data %>% 
+  filter(year==1900) %>%
+  ggplot(aes(gdp_per_capita, life_expectancy, colour = continent, size=sqrt(population))) + 
+  geom_point() + 
+  scale_x_log10() + scale_y_log10() +
+  labs(x = "GDP per capita ($)", y = "life expectancy (yr)") + 
+  theme_classic()
+```
 
-Can use lines `geom_smooth` to fit lines
+## Facets
 
 
-## Multiple plot layouts with `patchwork`
+```{r}
+data %>% 
+  filter(year %in% seq(1800, 2020, by =20)) %>%
+  ggplot(aes(gdp_per_capita, life_expectancy, colour = continent, size=population)) + 
+  theme_classic()
+  geom_point(alpha = 0.7, show.legend = FALSE) +
+  scale_x_log10() + scale_y_log10() +
+  scale_size(range = c(2, 12)) +
+  labs(x = "GDP per capita ($)", y = "life expectancy (yr)") + 
+  theme_classic() +
+  facet_wrap(~year)
+```
 
 ## Themes
 
@@ -344,6 +369,15 @@ Can also set default theme
 theme_set()
 ```
 
+
+## Adding fitted lines
+
+Can use lines `geom_smooth` to fit lines
+
+
+## Multiple plot layouts with `patchwork`
+
+
 # Data wrangling & visualisation challenge (Dan)
 
 
@@ -358,7 +392,30 @@ Other packages that build on ggplot
 - hexbinplot
 - ggbeeswarm
 - plotly
+- gganimate
 
+
+### Animations with gganimate
+
+```{r}
+library(gganimate)
+
+country_colors <- readRDS("data/gapminder/country_colours.rds")
+
+data %>% 
+  filter(!is.na(continent)) %>% 
+  ggplot(aes(gdp_per_capita, life_expectancy, size = population, colour = country)) +
+  theme_classic()
+  geom_point(alpha = 0.7, show.legend = FALSE) +
+  scale_colour_manual(values = country_colors) +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  facet_wrap(~continent) +
+  # Here comes the gganimate specific bits
+  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') +
+  transition_time(year) +
+  ease_aes('linear')
+```
 
 
 # Reproducible research (Dan)
