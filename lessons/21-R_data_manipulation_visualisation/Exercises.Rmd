@@ -5,93 +5,292 @@ date: "Feb 2020"
 output: html_document
 ---
 
+# Introduction to using Rmarkdown (Rmd)
+
+
+- File extension `*.Rmd`
+- Can be notebook or markdown
+- Includes text and code -> good for note taking 
+
+Code chunks:
+
+- typical R code
+- are embedded in wrapper
+
 ```{r}
-library(tidyverse)
-data_beaches <- read_csv("data/sydney_beaches/sydneybeaches.csv")
+
 ```
 
-# Introduction to data manipulation with `dplyr` intro
+Text written in makrdown
 
-(Will, 11:15 - 12:15)
+- Headers: `#`
+- Bold: `**bold**`
+- links: `[text](link)`
 
-## Motivation
+Hotcake shortcuts:
 
-Data is never organized in the way you want it 
+- in the top right of code
 
-High % of project is data wrangling
+# Introduction to Movies data (Dan
 
-Many many many modern jobs are data wrangling
+```{r}
+data <- read_csv("data/movie_profit/movie_profit.csv")
+```
 
-## Key ideas
+What variables?
+```{r}
+names(data)
+```
 
-Data is a noun
+An overview of the data
 
-Actions on data are verbs  
+```{r}
+View(data)
+```
 
-Learn a few key verbs and what they do
+or summarise using the `skimr` package:
 
-- filter
-
-- select
-
-- mutate
-
-- arrange
-
-- distinct
-
-- group_by
-
-- summarise
-
-- n
-
-- rename
-
-- recode
-
-- count
-
-Pipes
+```{r}
+skimr::skim(data)
+```
 
 
-- use the operator `%>%` 
-- If you use RStudio, you can type the pipe with Ctrl + Shift + M if you have a PC or Cmd + Shift + M if you have a Mac.
+# What is the tidyverse? (Dan)
 
-the `join` family
+* The [Tidyverse](http://tidyverse.org) is the name given to suite of R packages designed for seamless data analysis
+* Designed to help you fall into a **"Pit of Success"**
+* Tools designed for: 1) Turning data into tidy data, and 2) Plotting & analysing Tidy Data
+* Dataframes (tibbles) are the universal "tidy" input and output
+* A tidy dataframe has: 1 observation per row, 1 variable per column
+* Not one but a collection packages
 
-**Exercises:** Apply the `dplyr` package and your new data wrangling skills to the sydney beaches dataset to 
+Load individually or all together
 
-1. Filter the Beach dataset to only Latitudes that are north of -33.94
-2. Mutate a row to be in usable dates using lubridate::dmy()
-3. select only Region, Site, Latitude, and Longitude columns and then use distinct to get a date frame of only locations
-4. recode the Council column values to not include the word "Council" (it's redundant)
-5. Count the number of records by Council; count the number of records by Site AND Council
+```{r, eval = FALSE}
+library(dplyr)
+library(readr)
+library(tidyr)
+library(ggplot2)
+```
+or
+```{r, , eval = FALSE}}
+library(tidyverse)
+```
 
-**Resources:**
-
-- [Data manipulation on environmentalcomputing.net](http://environmentalcomputing.net/data-manipulation/) 
-- [Datacarpentry's lesson on data manipulation](https://datacarpentry.org/R-ecology-lesson/03-dplyr.html)
-- [The `tidylog` package](https://github.com/elbersb/tidylog) is cool for understanding what happens with dplyr operations
-
-# Lunch
-
-(12:30-13:30)
+## `tibble` - A better data frame 
 
 
-# Data Wrangling
+* Prints a short summary at console
+* Generates suitable warnings 
+* Won't convert strings to factors
+* No partial column-name matching
+* Behaves consistently with `[` and `[[`
+* [tibble.tidyverse.org](tibble.tidyverse.org)
 
-(13:30-14:00)
+```{r}
+data
+```
 
-**Exercises:** Apply the `dplyr` package and your new data wrangling skills to the Sydney beaches dataset to 
+# Reading data with `readr` (Dan)
 
-1. Create a subset of the dataset consisting of only records taken since 2016
-2. As above and only variables `Site`, `Latitude`, and `Longitude`
-3. As above but with only one record per Site
-3. As above but with data sorted by `Latitude`
-4. For each Site, calculate the number of records, the min, mean, median and max value of `Enterococci_cfu_per_100ml` 
-5. For each record, create a new variable giving the year the record was collected (hint: the package lubridate could be helpful, see the cheatsheet) 
+Where possible, we recomened using 
 
-**Extra Exercises** 
+- `csv` files (common separated files) to store data
+- the `readr` package to laod data
 
-1. Join the Sydney beaches data to the rain data in "data/sydney_beaches/randwickrain.csv" by date using left_join, inner_join, full_join and right_join.  Try to understand what each of those does.  
+Why `readr`?
+
+* Fast
+* Won't convert strings to factors
+* Can control how columns are parsed
+
+```{r}
+data <- read_csv("data/movie_profit/movie_profit.csv")
+```
+
+Has a bunch of extra arguments:
+
+- guess_max
+- trim_ws
+- skip
+- na
+
+Tries to guess column types. Can overirds this by specifying excatly:
+
+
+All characters
+```{r}
+
+read_csv("data/movie_profit/movie_profit.csv", 
+         col_types = cols(.default = col_character())
+)
+```
+
+Specify by variable:
+
+```{r}
+read_csv("data/movie_profit/movie_profit.csv", 
+         col_types = cols(
+           X1 = col_integer(),
+           release_date = col_character(),
+           movie = col_character(),
+           production_budget = col_double(),
+           domestic_gross = col_double(),
+           worldwide_gross = col_double(),
+           distributor = col_character(),
+           mpaa_rating = col_character(),
+           genre = col_character()
+         )
+)
+```
+
+Also other variants
+
+- `read_tsv`: load tab-seperated data
+- `read_delim`: laod file by specifiying the deliminiter
+
+```{r}
+read_delim("data/movie_profit/movie_profit.csv", ",")
+```
+
+To laod data from excel spreadhseets, try the `readxl` package.
+
+## Exercises
+
+1. Use `read_csv` to load data file `data/plant_height/plantHeightSingleSpp.csv`
+
+2. Use `read_csv` to load data file `data/sydney_beaches/temperature.csv`
+
+
+# Data manipulation with `dplyr` (Dan)
+
+Motivation:
+
+- Data is never organized in the way you want it 
+- High % of project is data wrangling
+- Many many many modern jobs are data wrangling
+
+Key ideas:
+
+- Data is a noun
+- Actions on data are verbs  
+
+Main actions are verbs describing effect on data
+
+- `select` -> subset columns 
+- `filter` -> subset rows 
+- `arrange`  –> order rows
+- `rename`    –> rename variables
+- `mutate`  –> make new variables
+- `summarise`  –> summarise data
+- `distinct` -> filter to each unique row
+
+
+**Exercises:**
+
+## Pipes
+
+
+## Use "the pipe" [%>%](http://magrittr.tidyverse.org/reference/pipe.html) to connect expressions
+
+* `%>%` "pipes" the **output** of the last expression as the **first input** of the next expression
+* If you use RStudio, you can type the pipe with Ctrl + Shift + M if you have a PC or Cmd + Shift + M if you have a Mac.
+* `%>%` is an **infix operator** -> expects commands on left & right
+* Comes from the [magrittr](http://magrittr.tidyverse.org/reference/pipe.html) package
+
+
+```{r}
+data$distributor %>% unique()
+```
+
+```{r}
+data$distributor %>% unique() %>% length()
+data$distributor %>% n_distinct()
+```
+
+But you can control the input position of the next function with `.`:
+```{r}
+20 %>% seq(1, 4, length.out = .)
+```
+
+## Use pipes to join data verbs to make a data sentence
+
+Tidyverse functions are written to work with pipes, i.e. most take the data as the first argument.
+
+```{r}
+data %>% filter(distributor == "Universal")
+```
+is the same as
+
+```{r}
+filter(data, distributor == "Universal")
+```
+
+
+
+```{r}
+data %>%
+  filter(distributor == "Universal") %>%
+  select(movie, mpaa_rating)
+```
+
+
+**Exercises:** Apply the `dplyr` package and your new data wrangling skills to the movies dataset to 
+
+
+1. Create a subset of the dataset consisting of only movies with budget < XXX
+2. As above and only variables `XXX`, `XXX`, and `Longitude`
+3. As above but with only one record per XXXX
+3. As above but with data sorted by `XXXX`
+4. Mutate a column to caluclate XXX
+
+# Imagine your plot (Will)
+
+# Intro to data visualisation with `ggplot2` (Dony)
+
+See slides in "slides/XXXX"
+
+## Exercises
+
+# Introduction to gapminder data (Dan)
+
+# Tidy Data concept (Dony)
+
+- What is tidy data?
+- Converting from long to wide data
+- see slides in XXXX
+
+# Advanced data manipulation with `dplyr` (Dan)
+	
+- group_by (summarise, mutate), 
+- join
+
+# Advanced data visualisation with `ggplot2` (Will)
+
+- (extend plots from Day 1 in various ways)
+- facets
+- styles: themes, set_theme
+- scales package: scales, labels, palettes
+- lines: geom_smooth
+- patchwork: multiple plot layouts
+
+# Data wrangling & visualisation challenge (Dan)
+
+
+# ggplot in talks (Dan)
+	
+# ggplot extensions (Will)
+	
+Base R vs ggplot
+
+Other packages that build on ggplot
+
+- hexbinplot
+- ggbeeswarm
+- plotly
+
+
+
+# Reproducible research (Dan)
+
+
