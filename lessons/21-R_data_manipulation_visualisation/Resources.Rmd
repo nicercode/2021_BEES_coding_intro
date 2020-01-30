@@ -1,6 +1,6 @@
 
 
-## Data manaipulation
+## Data manipulation
 
 
 **Resources:**

@@ -21,13 +21,13 @@ Code chunks:
 
 ```
 
-Text written in makrdown
+Text written in markdown
 
 - Headers: `#`
 - Bold: `**bold**`
 - links: `[text](link)`
 
-Hotcake shortcuts:
+Hotcake short-cuts:
 
 - in the top right of code
 
@@ -61,7 +61,6 @@ skimr::skim(data)
 * Designed to help you fall into a **"Pit of Success"**
 * Tools designed for: 1) Turning data into tidy data, and 2) Plotting & analysing Tidy Data
 * Dataframes (tibbles) are the universal "tidy" input and output
-* A tidy dataframe has: 1 observation per row, 1 variable per column
 * Not one but a collection packages
 
 Load individually or all together
@@ -93,10 +92,10 @@ data
 
 # Reading data with `readr` (Dan)
 
-Where possible, we recomened using 
+Where possible, we recommend using 
 
 - `csv` files (common separated files) to store data
-- the `readr` package to laod data
+- the `readr` package to load data
 
 Why `readr`?
 
@@ -115,7 +114,7 @@ Has a bunch of extra arguments:
 - skip
 - na
 
-Tries to guess column types. Can overirds this by specifying excatly:
+Tries to guess column types. Can overirde this by specifying exactly:
 
 
 All characters
@@ -146,14 +145,14 @@ read_csv("data/movie_profit/movie_profit.csv",
 
 Also other variants
 
-- `read_tsv`: load tab-seperated data
-- `read_delim`: laod file by specifiying the deliminiter
+- `read_tsv`: load tab-separated data
+- `read_delim`: load file by specifying the delimiter
 
 ```{r}
 read_delim("data/movie_profit/movie_profit.csv", ",")
 ```
 
-To laod data from excel spreadhseets, try the `readxl` package.
+To load data from excel spreadsheets, try the `readxl` package.
 
 ## Exercises
 
@@ -242,7 +241,7 @@ data %>%
 2. As above and only variables `XXX`, `XXX`, and `Longitude`
 3. As above but with only one record per XXXX
 3. As above but with data sorted by `XXXX`
-4. Mutate a column to caluclate XXX
+4. Mutate a column to calculate XXX
 
 # Imagine your plot (Will)
 
