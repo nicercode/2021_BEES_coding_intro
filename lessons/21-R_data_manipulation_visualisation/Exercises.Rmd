@@ -254,6 +254,7 @@ See slides in "slides/XXXX"
 # Introduction to gapminder data (Dan)
 
 
+https://github.com/jennybc/gapminder
 
 # Tidy Data concept (Dony)
 
@@ -396,6 +397,8 @@ Other packages that build on ggplot
 
 
 ### Animations with gganimate
+
+https://github.com/thomasp85/gganimate
 
 ```{r}
 library(gganimate)
