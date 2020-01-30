@@ -293,3 +293,15 @@ Other packages that build on ggplot
 # Reproducible research (Dan)
 
 
+# Reproducible research with Rmarkdown
+
+**Exercises:**
+
+Discuss with your partner 
+
+- what is meant by Reproducible research?
+- what can you do do make your research reproducible?
+- who benefits from reproducible research?
+
+## Keys to reproducible research
+

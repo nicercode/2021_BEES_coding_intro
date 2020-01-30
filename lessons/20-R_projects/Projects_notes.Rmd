@@ -44,28 +44,6 @@ Brief recap from yesterday
 - exploring data
 - functions
 
-What is the tidyverse
-
-* The [Tidyverse](http://tidyverse.org) is the name given to suite of R packages designed for seamless data analysis
-* Designed to help you fall into a **"Pit of Success"**
-* Tools designed for: 1) Turning data into tidy data, and 2) Plotting & analysing Tidy Data
-* Dataframes (tibbles) are the universal "tidy" input and output
-* A tidy dataframe has: 1 observation per row, 1 variable per column
-* Not one but a collection packages
-
-Can load individually or all together
-
-```{r, eval = FALSE}
-library(dplyr)
-library(readr)
-library(tidyr)
-# ...
-```
-or
-```{r, results='hide',message=FALSE}
-library(tidyverse)
-```
-
 # Project management
 
 (Dan, 9:30-10:30)
@@ -109,9 +87,7 @@ Path names
 2. Use the `dir` function to list contents of the folder you are in
 	- change one of the default arguments to return the full path name of the files
 
-3. Read in a `csv` file using both absolute and relative paths
-
-4. Use `write_csv` to save the same data as a new file where you want to, using absolute and relative paths 
+3. Check a file exists using both absolute and relative paths, using the `file.exists` function
 
 
 How do we organise materials?
@@ -157,46 +133,5 @@ How do we organise materials?
 - Create a folder called `data` and add a csv file to the folder 
 - Try closing and reopening Rstudio, switching between different projects. Use `getwd()` to see what folder you're in and `ls()` to see what's in memory 
 
-2. Restructure the project in the folder `messy_project` to make it more usable
 
-**Resources:**
-
-- [Basic project management on environmentalcomputing](http://environmentalcomputing.net/basic-project-management/)
-- [Software Carpentry's Project Management With RStudio](http://swcarpentry.github.io/r-novice-gapminder/02-project-intro/index.html)
-- [Nicercode's guide to projects](http://nicercode.github.io/blog/2013-04-05-projects/)
-- [Nicercode's organising my project](http://nicercode.github.io/blog/2013-05-17-organising-my-project/)
-
-
-# Reproducible research with Rmarkdown
-
-(Dan, 10:30-11:00)
-
-**Exercises:**
-
-Discuss with your partner 
-
-- what is meant by Reproducible research?
-- does coding help? 
-- What can you do do make your research reproducible?
-- who benefits from reproducible research?
-
-## Keys to reproducible research
-
-
-
-## The wonders of Rmarkdown
-
-You can use Rmd files to create all sorts of stuff:
-
-- html files
-- word documents
-- pdf (maybe)
-- blogs 
-	- see package blogdown
-- websites
-- Pimp my Rmd: https://holtzy.github.io/Pimp-my-rmd/
-
-# Morning tea
-
-(11:00-11:15)
 

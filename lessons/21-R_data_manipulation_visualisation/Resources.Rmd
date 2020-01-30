@@ -28,6 +28,24 @@ Some general resources on data visualisation:
 * [From Data to viz](https://www.data-to-viz.com/), a great website over-viewing different kinds of graphic
 * [R Graphics Cookbook  by Winston Chang](https://www.amazon.com/dp/1449316956/ref=as_li_ss_tl?&linkId=4daa45d4fbd0a187163a6ff9d56d986e)
 
+
+
+## The wonders of Rmarkdown
+
+You can use Rmd files to create all sorts of stuff:
+
+- html files
+- word documents
+- pdf (maybe)
+- blogs 
+	- see package blogdown
+- websites
+- Pimp my Rmd: https://holtzy.github.io/Pimp-my-rmd/
+
+
+
 ## Reproducible research
+
+
 
 
