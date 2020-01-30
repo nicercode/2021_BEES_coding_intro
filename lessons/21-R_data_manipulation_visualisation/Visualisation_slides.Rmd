@@ -17,7 +17,7 @@ class: center, middle
 
 # What is ggplot2?
 
-### A graphing library for the statistical languange programming R.
+### A graphing library for the statistical language programming R.
 
 ---
 
@@ -30,7 +30,7 @@ class: center, middle
 
   -  Intuitive coding
   - 'Publication ready' look
-  - Flexibileity and customisation
+  - Flexibility and customisation
 
 .footnote[
 [1] [Grolemund & Wickham, R for Data Science, 2017](https://r4ds.had.co.nz/explore-intro.html)
@@ -117,7 +117,7 @@ ggplot(movies,         # the data
 ```
 ---
 # Q1 What are the most common genres? 
-And put some color on...
+And put some colour on...
 --
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg'}
 ggplot(movies,                        # the data
@@ -153,10 +153,10 @@ ggplot(movies,aes(x = genre, y = worldwide_gross))+
 ---
 class: inverse, middle, center
 
-#Excercise
+# Exercise
 ---
 class: inverse
-# Excercise Q1
+# Exercise Q1
 
 ## Are there more cheap films ?
 .pull-left[
@@ -169,7 +169,7 @@ class: inverse
  ]
 ---
 class: inverse
-# Excercise Q2
+# Exercise Q2
 
 ## What genres make the highest return on investment?
 .pull-left[
@@ -185,7 +185,7 @@ class: inverse
 ---
 
 class: inverse
-# Excercise Q3
+# Exercise Q3
 ## What genres make the highest return on investment?
 .pull-left[
 .left[![](https://media1.giphy.com/media/2mXJvHKUYL9n2/giphy.gif?cid=790b7611a5e51916870da7d33f79fbbc4845283557728094&rid=giphy.gif)]
@@ -204,7 +204,7 @@ class: inverse
 ---
 class:  middle, center
 
-#Solution
+# Solution
 ---
 # Q1 Are there more cheap films ?
 --
