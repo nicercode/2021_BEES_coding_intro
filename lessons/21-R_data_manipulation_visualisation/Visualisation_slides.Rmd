@@ -57,7 +57,7 @@ class: center, middle
 ```{r eval=FALSE, tidy=FALSE, size='\\large'}
 ggplot(movies,         # the data
        aes(x= genre))+ # what to plot
-       geom_bar()+      # type of plot
+       geom_bar()+     # type of plot
        theme()         # customisation
 ```
 ]
@@ -65,7 +65,7 @@ ggplot(movies,         # the data
 
 --
 ```{r echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", tidy=FALSE}
-knitr::include_graphics("https://tenor.com/view/mind-blown-gif-4952382.gif")
+knitr::include_graphics("https://media1.giphy.com/media/12uXi1GXBibALC/giphy.gif?cid=790b7611b18e6742d84000cc3f90537deb5f1e324e8dc52b&rid=giphy.gif")
 ```
 ---
 class: inverse, center, middle
@@ -81,7 +81,7 @@ Load `tidyverse`
 library(tidyverse)
 ```
 
-(or installand load the **ggplot2** package from [CRAN](https://cran.r-project.org/web/packages/ggplot2/index.html))
+(or install and load the **ggplot2** package from [CRAN](https://cran.r-project.org/web/packages/ggplot2/index.html))
 
 ```{r eval=FALSE, tidy=FALSE}
 install.packages("ggplot2")
@@ -103,56 +103,117 @@ glimpse(movies) # see every column in the data frame
 # What is the best plot type for accurately representing the question and the data?
 --
 ![](https://ourcodingclub.github.io/img/DL_datavis1_which_plot.png)
+.footnote[
+[ourcodingclub.github.io](https://ourcodingclub.github.io)
+]
 ---
-# Q1 What is the most common genre? 
+# Q1 What are the most common genres? 
 --
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg'}
-ggplot(movies, aes(x= genre))+
-  geom_bar()
+ggplot(movies,         # the data
+       aes(x= genre))+ # what to plot
+  geom_bar()           # type of plot
 
 ```
 ---
-# What is the most popular genre? 
+# Q1 What are the most common genres? 
 And put some color on...
-
+--
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg'}
-ggplot(movies, aes(x= genre, fill=genre))+
-  geom_bar()
+ggplot(movies,                        # the data
+       aes(x = genre, fill = genre))+ # what to plot
+  geom_bar()                          # type of plot
 
 ```
 ---
-# Q2 What genre is more expensive to produce?
+# Q2 What genres are more expensive to produce?
 --
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(2)}
-ggplot(movies, aes(x=genre, y=production_budget))+
+ggplot(movies, aes(x = genre, y = production_budget))+
   geom_boxplot()
 ```
 
 ---
-# Q2 What genre makes the highest profit?
+# Q3 What genres make the highest profit?
 --
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(1)}
-ggplot(movies, aes(x=genre, y=worldwide_gross))+
+ggplot(movies, aes(x = genre, y = worldwide_gross))+
   geom_boxplot()
 ```
 ---
-# Q2 What genre makes the highest profit?
+# Q3 What genres make the highest profit?
 re-scale so we can see more variation...
+--
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(3)}
-ggplot(movies,aes(x=genre, y=worldwide_gross))+
+ggplot(movies,aes(x = genre, y = worldwide_gross))+
   geom_boxplot() +
   scale_y_log10()
 ```
 
 ---
-# Q3 Are there more cheap films ?
+class: inverse, middle, center
+
+#Excercise
+---
+class: inverse
+# Excercise Q1
+
+## Are there more cheap films ?
+.pull-left[
+.left[![](https://media0.giphy.com/media/l3V0d8epBIU4kT2Ja/giphy.gif?cid=790b761119e1a23cef859e29bc4c031e76f65751699c18e3&rid=giphy.gif)]
+]
+--
+.pull-right[
+## Hint
+ - create a histogram-plot with production_budget at the x-axis
+ ]
+---
+class: inverse
+# Excercise Q2
+
+## What genres make the highest return on investment?
+.pull-left[
+.left[![](https://tenor.com/view/money-sponge-bob-mr-crabs-money-shower-bling-gif-4787874.gif)]
+]
+--
+.pull-right[
+## Hint
+ - calculate the ratio of worldwide gross profit and production budget
+ - create a box-plot with x-axis representing the genre and y-axis representing the ratio
+ - Rescale y-axis to log scale
+ ]
+---
+
+class: inverse
+# Excercise Q3
+## What genres make the highest return on investment?
+.pull-left[
+.left[![](https://media1.giphy.com/media/2mXJvHKUYL9n2/giphy.gif?cid=790b7611a5e51916870da7d33f79fbbc4845283557728094&rid=giphy.gif)]
+]
+--
+.pull-right[
+## Hint
+ - create a scatter plot with with the x-axis representing the production_budget and the y-axis representing the worldwide_gross profit
+ - Rescale the x- and y-axis to log scale
+ - add regression line with `stat_smooth()`
+ ]
+---
+
+
+
+---
+class:  middle, center
+
+#Solution
+---
+# Q1 Are there more cheap films ?
 --
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(2)}
 ggplot(movies, aes(x = production_budget)) +
   geom_histogram()
 ```
 ---
-# Q3 Are there more cheap films ?
+# Q1 Are there more cheap films ?
 re-scale so we can see more variation...
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(3)}
 ggplot(movies, aes(x = production_budget)) +
@@ -160,9 +221,26 @@ ggplot(movies, aes(x = production_budget)) +
   scale_x_log10()
 ```
 ---
+# Q2 What genres make the highest return on investment?
+--
+```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(2)}
+# calculate the ratio of worldwide gross profit and production budget
+movies_ratio <- movies %>% mutate(ratio=worldwide_gross/production_budget)
 
+ggplot(movies_ratio,aes(x = genre, y = ratio))+
+  geom_boxplot()
+```
+---
+# Q2 What genres make the highest return on investment?
+re-scale so we can see more variation...
+```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(3)}
+ggplot(movies_ratio,aes(x = genre, y = ratio))+
+  geom_boxplot()+
+  scale_y_log10()
+```
+---
 
-# Q4 Does expensive production budget make more profit?
+# Q3 Does expensive production budget make more profit?
 --
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg'}
 ggplot(movies, aes(x= production_budget,y= worldwide_gross))+  
@@ -170,7 +248,7 @@ ggplot(movies, aes(x= production_budget,y= worldwide_gross))+
 ```
 ---
 
-# Q4 Does expensive production budget make more profit?
+# Q3 Does expensive production budget make more profit?
 re-scale so we can see more variation...
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg'}
 ggplot(movies, aes(x = production_budget, y = worldwide_gross)) +
@@ -179,7 +257,7 @@ ggplot(movies, aes(x = production_budget, y = worldwide_gross)) +
 ```
 ---
 
-# Q4 Do expensive movies make more (gross) profit?
+# Q3 Do expensive movies make more (gross) profit?
 Remove records with no worldwide gross data
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg'}
 movies_clean <- movies %>% filter(worldwide_gross!=0)
@@ -189,7 +267,7 @@ ggplot(movies_clean, aes(x = production_budget, y = worldwide_gross)) +
   scale_x_log10() + scale_y_log10()
 ```
 ---
-# Q4 Do expensive movies make more (gross) profit?
+# Q3 Do expensive movies make more (gross) profit?
 add a regression line
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg'}
 ggplot(movies_clean, aes(x = production_budget, y = worldwide_gross)) +
@@ -197,20 +275,5 @@ ggplot(movies_clean, aes(x = production_budget, y = worldwide_gross)) +
   stat_smooth(method = "lm", col = "red", se = FALSE)+
   scale_x_log10() + scale_y_log10()
 ```
----
-class: inverse
-# Excercise
-
-## What genre makes the highest return of investment?
-.pull-left[
-.left[![](https://tenor.com/view/money-sponge-bob-mr-crabs-money-shower-bling-gif-4787874.gif)]
-]
---
-.pull-right[
-## Hint
- - calculate the ratio of worldwide gross profit and production budget
- - create a box-plot with genre as the category (x-axis) and the profit/budget
- ]
----
 
 
