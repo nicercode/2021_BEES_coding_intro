@@ -114,7 +114,7 @@ Has a bunch of extra arguments:
 - skip
 - na
 
-Tries to guess column types. Can overirde this by specifying exactly:
+Tries to guess column types. Can override this by specifying exactly:
 
 
 All characters
@@ -253,6 +253,8 @@ See slides in "slides/XXXX"
 
 # Introduction to gapminder data (Dan)
 
+
+
 # Tidy Data concept (Dony)
 
 - What is tidy data?
@@ -260,18 +262,87 @@ See slides in "slides/XXXX"
 - see slides in XXXX
 
 # Advanced data manipulation with `dplyr` (Dan)
-	
-- group_by (summarise, mutate), 
+
 - join
+- group_by (summarise, mutate), 
+
+
+**Exercise**:
+
+Now using join and pipes, we can built a big table of data
+
+```{r}
+
+data <- 
+  read_csv("data/gapminder/children_per_woman_total_fertility.csv") %>%   
+  pivot_longer(-country, names_to = "year", values_to = "fertility") %>%
+  # Add in population
+  left_join(by=c("country", "year"),
+            read_csv("data/gapminder/population_total.csv") %>%
+              pivot_longer(-country, names_to = "year", values_to = "population")
+  ) %>%
+  # Add in gdp per capita
+  left_join(by=c("country", "year"),
+            read_csv("data/gapminder/income_per_person_gdppercapita_ppp_inflation_adjusted.csv") %>%   
+              pivot_longer(-country, names_to = "year", values_to = "gdp_per_capita")
+  ) %>%
+  # Add in life expectancy
+  left_join(by=c("country", "year"),
+            read_csv("data/gapminder/life_expectancy_years.csv") %>%
+              pivot_longer(-country, names_to = "year", values_to = "life_expectancy")
+  ) %>%
+  # Add in life continent
+  left_join(by="country",
+    read_csv("data/gapminder/continents.csv")
+  ) %>% 
+  # reorganise data
+  select(continent, country, year, everything()) %>% 
+  arrange(continent, country, year)
+```
+
+```{r}
+ 
+```
+
 
 # Advanced data visualisation with `ggplot2` (Will)
 
-- (extend plots from Day 1 in various ways)
-- facets
-- styles: themes, set_theme
-- scales package: scales, labels, palettes
-- lines: geom_smooth
-- patchwork: multiple plot layouts
+This session will show you some more advanaced plotting techniques, building on the basic plots from Day 1
+
+
+## Facets
+
+## Adjusting labels, sclaes, paletters
+
+Is now achieved via the `scales` packages
+
+```{r}
+library(scales)
+```
+
+
+## Adding fitted lines
+
+Can use lines `geom_smooth` to fit lines
+
+
+## Multiple plot layouts with `patchwork`
+
+## Themes
+
+
+Can add a theme onto plot
+
+```{r}
+
++ theme_classic()
+```
+
+Can also set default theme
+
+```{r}
+theme_set()
+```
 
 # Data wrangling & visualisation challenge (Dan)
 
