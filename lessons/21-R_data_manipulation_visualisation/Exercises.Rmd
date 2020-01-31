@@ -31,9 +31,10 @@ Hotcake short-cuts:
 
 - in the top right of code
 
-# Introduction to Movies data (Dan
+# Introduction to Movies data (Dan)
 
 ```{r}
+library(tidyverse)
 data <- read_csv("data/movie_profit/movie_profit.csv")
 ```
 
@@ -72,7 +73,7 @@ library(tidyr)
 library(ggplot2)
 ```
 or
-```{r, , eval = FALSE}}
+```{r, eval = FALSE}
 library(tidyverse)
 ```
 
@@ -247,9 +248,79 @@ data %>%
 
 # Intro to data visualisation with `ggplot2` (Dony)
 
-See slides in "slides/XXXX"
+See slides in "slides/Visualisation_slides.Rmd"
 
-## Exercises
+**Examples from the slides**
+
+Read and inspect the data
+```{r}
+library(tidyverse)
+movies <- read_csv("../data/movie_profit/movie_profit.csv")
+glimpse(movies) # see every column in the data frame
+```
+
+Q1 What are the most common genres? 
+
+```{r}
+ggplot(movies,         # the data
+       aes(x= genre))+ # what to plot
+  geom_bar()           # type of plot
+
+```
+
+
+Q1 And put some colour on...
+```{r }
+ggplot(movies,                        # the data
+       aes(x = genre, fill = genre))+ # what to plot
+  geom_bar()                          # type of plot
+
+```
+
+Q2 What genres are more expensive to produce?
+```{r}
+ggplot(movies, aes(x = genre, y = production_budget))+
+  geom_boxplot()
+```
+
+
+Q3 What genres make the highest profit?
+
+```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(1)}
+ggplot(movies, aes(x = genre, y = worldwide_gross))+
+  geom_boxplot()
+```
+
+Q3 re-scale so we can see more variation...
+
+```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(3)}
+ggplot(movies,aes(x = genre, y = worldwide_gross))+
+  geom_boxplot() +
+  scale_y_log10()
+```
+
+
+**Exercise**:
+Try to answer these questions below by making some relevant figures
+
+**Q1 Are there more cheap films?**
+
+ - Hint: create a histogram-plot with production_budget at the x-axis
+   
+**Q2 What genres make the highest return on investment?**
+
+ - Hints
+   - calculate the ratio of worldwide gross profit and production budget
+   - create a box-plot with x-axis representing the genre and y-axis representing the ratio
+   - Rescale y-axis to log scale
+   
+**Q3 What genres make the highest return on investment?**
+
+ - Hints
+   - create a scatter plot with with the x-axis representing the production_budget and the y-axis representing the worldwide_gross profit
+   - Rescale the x- and y-axis to log scale
+   - add regression line with `stat_smooth()`
+
 
 # Introduction to gapminder data (Dan)
 
@@ -257,10 +328,64 @@ See slides in "slides/XXXX"
 https://github.com/jennybc/gapminder
 
 # Tidy Data concept (Dony)
-
 - What is tidy data?
 - Converting from long to wide data
-- see slides in XXXX
+- see slides in slides/tidy_data_pivot_tables.pdf
+
+Read and inspect the structure of life_expectancy_years.csv
+```{r}
+library(tidyverse)
+le <- read_csv("data/gapminder/life_expectancy_years.csv") # read the worldwide life expectancy data
+
+skimr::skim(le) #summarise using the `skimr
+
+View(le) #An overview of the data
+```
+
+
+Make the 'life expectancy' data tidy with `dplyr::pivot_longer( )`
+```{r}
+le_long<- 
+  pivot_longer(data = le, # the data
+               
+                      # pivot all column into longer format except 'country'
+                      cols=-country, 
+               
+                      #the name of the column made from the data stored in the col.names
+                      names_to="year", 
+                  
+                      #the name of the column made from the data stored in the cells
+                      values_to = "life_exp") 
+
+View(le_long)
+```
+
+Make a figure of life expectancy trend over time
+```{r}
+ ggplot(le_long,                                   #data
+ aes(x = year, y = life_exp, group = country)) +   #aesthetics
+ geom_line() +	                                   #type of plot
+ theme(legend.position ="none")                    #remove legend
+
+```
+
+Make the long 'life expectancy' data back to its original form with `dplyr::pivot_wider( )`
+
+```{r}
+le_wide <- pivot_wider(data = le_long,           #the data
+                        names_from = "year",     #column to get the column names from
+                        values_from = "life_exp")#column to get the values from
+
+View(le_wide) 
+```
+
+**Exercise**:
+
+Make these data tidy:
+ - data\gapminder\children_per_woman_total_fertility.csv
+ - data\gapminder\income_per_person_gdppercapita_ppp_inflation_adjusted.csv
+
+
 
 # Advanced data manipulation with `dplyr` (Dan)
 
