@@ -95,7 +95,7 @@ library(ggplot2)
 
 ```{r eval=TRUE, message=FALSE, warning=FALSE, tidy=FALSE}
 library(tidyverse)
-movies <- read_csv("data/movie_profit/movie_profit.csv")
+movies <- read_csv("../data/movie_profit/movie_profit.csv")
 glimpse(movies) # see every column in the data frame
 ```
 
