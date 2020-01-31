@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data visualisation with ggplot2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dony Indiarto" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Data visualisation with ggplot2
+### Dony Indiarto
+### School of Biological, Earth and Environmental Sciences (BEES), UNSW
+
+---
+
+
+class: center, middle
+
+# What is ggplot2?
+
+### A graphing library for the statistical languange programming R.
+
+---
+
+# Why ggplot2 is worth the effort?
+
+
+  -  `tidy` data exploration/analysis framework&lt;sup&gt;1&lt;/sup&gt;
+  
+.center[![](https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png)]
+--
+
+  -  Intuitive coding
+  
+  - 'Publication ready' look
+  
+  - Flexibility and customisation
+
+
+ .footnote[
+[1] [Grolemund &amp; Wickham, R for Data Science, 2017](https://r4ds.had.co.nz/explore-intro.html)
+]
+---
+# The Recipe
+
+
+.center[![](https://i.ibb.co/WcsmbZ6/think-in-layers-1.png)]
+
+---
+# The Recipe
+
+
+.center[![](https://i.ibb.co/jvqVjnP/think-in-layers-2.png)]
+
+---
+# The Recipe
+
+.left-column[
+![](https://i.ibb.co/84KQ6nb/think-in-layers-3.png)
+]
+.right-column[
+
+```r
+ggplot(movies,         # the data
+       aes(x= genre))+ # what to plot
+       geom_bar()+     # type of plot
+       theme()         # customisation
+```
+]
+
+
+--
+&lt;img src="https://media1.giphy.com/media/12uXi1GXBibALC/giphy.gif?cid=790b7611b18e6742d84000cc3f90537deb5f1e324e8dc52b&amp;rid=giphy.gif" width="50%" /&gt;
+---
+class: inverse, center, middle
+
+# Get Started
+---
+
+# Installation  
+
+Load `tidyverse`
+
+
+```r
+library(tidyverse)
+```
+
+(or install and load the **ggplot2** package from [CRAN](https://cran.r-project.org/web/packages/ggplot2/index.html))
+
+
+```r
+install.packages("ggplot2")
+library(ggplot2)
+```
+
+
+---
+# What questions can we ask with the data?
+--
+
+
+```r
+library(tidyverse)
+movies &lt;- read_csv("../data/movie_profit/movie_profit.csv")
+glimpse(movies) # see every column in the data frame
+```
+
+```
+## Observations: 3,401
+## Variables: 9
+## $ X1                &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15...
+## $ release_date      &lt;chr&gt; "6/22/2007", "7/28/1995", "5/12/2017", "12/25/201...
+## $ movie             &lt;chr&gt; "Evan Almighty", "Waterworld", "King Arthur: Lege...
+## $ production_budget &lt;dbl&gt; 1.75e+08, 1.75e+08, 1.75e+08, 1.75e+08, 1.70e+08,...
+## $ domestic_gross    &lt;dbl&gt; 100289690, 88246220, 39175066, 38362475, 41676934...
+## $ worldwide_gross   &lt;dbl&gt; 174131329, 264246220, 139950708, 151716815, 13048...
+## $ distributor       &lt;chr&gt; "Universal", "Universal", "Warner Bros.", "Univer...
+## $ mpaa_rating       &lt;chr&gt; "PG", "PG-13", "PG-13", "PG-13", "PG-13", "PG-13"...
+## $ genre             &lt;chr&gt; "Comedy", "Action", "Adventure", "Action", "Actio...
+```
+
+---
+# What is the best plot type for accurately representing the question and the data?
+--
+![](https://ourcodingclub.github.io/img/DL_datavis1_which_plot.png)
+.footnote[
+[ourcodingclub.github.io](https://ourcodingclub.github.io)
+]
+---
+# Q1 What are the most common genres? 
+--
+
+```r
+ggplot(movies,         # the data
+       aes(x= genre))+ # what to plot
+  geom_bar()           # type of plot
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-6-1.svg)&lt;!-- --&gt;
+---
+# Q1 What are the most common genres? 
+And put some color on...
+--
+
+```r
+ggplot(movies,                        # the data
+       aes(x = genre, fill = genre))+ # what to plot
+  geom_bar()                          # type of plot
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-7-1.svg)&lt;!-- --&gt;
+---
+# Q2 What genres are more expensive to produce?
+--
+
+```r
+ggplot(movies, aes(x = genre, y = production_budget))+
+  geom_boxplot()
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-8-1.svg)&lt;!-- --&gt;
+
+---
+# Q3 What genres make the highest profit?
+--
+
+```r
+ggplot(movies, aes(x = genre, y = worldwide_gross))+
+  geom_boxplot()
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-9-1.svg)&lt;!-- --&gt;
+---
+# Q3 What genres make the highest profit?
+re-scale so we can see more variation...
+--
+
+```r
+ggplot(movies,aes(x = genre, y = worldwide_gross))+
+  geom_boxplot() +
+  scale_y_log10()
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-10-1.svg)&lt;!-- --&gt;
+
+---
+class: inverse, middle, center
+
+#Excercise
+---
+class: inverse
+# Excercise Q1
+
+## Are there more cheap films ?
+.pull-left[
+.left[![](https://media0.giphy.com/media/l3V0d8epBIU4kT2Ja/giphy.gif?cid=790b761119e1a23cef859e29bc4c031e76f65751699c18e3&amp;rid=giphy.gif)]
+]
+--
+.pull-right[
+## Hint
+ - create a histogram-plot with production_budget at the x-axis
+ ]
+---
+class: inverse
+# Excercise Q2
+
+## What genres make the highest return on investment?
+.pull-left[
+.left[![](https://tenor.com/view/money-sponge-bob-mr-crabs-money-shower-bling-gif-4787874.gif)]
+]
+--
+.pull-right[
+## Hint
+ - calculate the ratio of worldwide gross profit and production budget
+ - create a box-plot with x-axis representing the genre and y-axis representing the ratio
+ - Rescale y-axis to log scale
+ ]
+---
+
+class: inverse
+# Excercise Q3
+## What genres make the highest return on investment?
+.pull-left[
+.left[![](https://media1.giphy.com/media/2mXJvHKUYL9n2/giphy.gif?cid=790b7611a5e51916870da7d33f79fbbc4845283557728094&amp;rid=giphy.gif)]
+]
+--
+.pull-right[
+## Hint
+ - create a scatter plot with with the x-axis representing the production_budget and the y-axis representing the worldwide_gross profit
+ - Rescale the x- and y-axis to log scale
+ - add regression line with `stat_smooth()`
+ ]
+---
+
+
+
+---
+class:  middle, center
+
+# Solution
+---
+# Q1 Are there more cheap films ?
+--
+
+```r
+ggplot(movies, aes(x = production_budget)) +
+  geom_histogram()
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-11-1.svg)&lt;!-- --&gt;
+---
+# Q1 Are there more cheap films ?
+re-scale so we can see more variation...
+
+```r
+ggplot(movies, aes(x = production_budget)) +
+  geom_histogram()+
+  scale_x_log10()
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-12-1.svg)&lt;!-- --&gt;
+---
+# Q2 What genres make the highest return on investment?
+--
+
+```r
+# calculate the ratio of worldwide gross profit and production budget
+movies_ratio &lt;- movies %&gt;% mutate(ratio=worldwide_gross/production_budget)
+
+ggplot(movies_ratio,aes(x = genre, y = ratio))+
+  geom_boxplot()
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-13-1.svg)&lt;!-- --&gt;
+---
+# Q2 What genres make the highest return on investment?
+re-scale so we can see more variation...
+
+```r
+ggplot(movies_ratio,aes(x = genre, y = ratio))+
+  geom_boxplot()+
+  scale_y_log10()
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-14-1.svg)&lt;!-- --&gt;
+---
+
+# Q3 Does expensive production budget make more profit?
+--
+
+```r
+ggplot(movies, aes(x= production_budget,y= worldwide_gross))+  
+       geom_point()
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-15-1.svg)&lt;!-- --&gt;
+---
+
+# Q3 Does expensive production budget make more profit?
+re-scale so we can see more variation...
+
+```r
+ggplot(movies, aes(x = production_budget, y = worldwide_gross)) +
+  geom_point() +
+  scale_x_log10() + scale_y_log10()
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-16-1.svg)&lt;!-- --&gt;
+---
+
+# Q3 Do expensive movies make more (gross) profit?
+Remove records with no worldwide gross data
+
+```r
+movies_clean &lt;- movies %&gt;% filter(worldwide_gross!=0)
+
+ggplot(movies_clean, aes(x = production_budget, y = worldwide_gross)) +
+  geom_point() +
+  scale_x_log10() + scale_y_log10()
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-17-1.svg)&lt;!-- --&gt;
+---
+# Q3 Do expensive movies make more (gross) profit?
+add a regression line
+
+```r
+ggplot(movies_clean, aes(x = production_budget, y = worldwide_gross)) +
+  geom_point(alpha=0.5) +
+  stat_smooth(method = "lm", col = "red", se = FALSE)+
+  scale_x_log10() + scale_y_log10()
+```
+
+![](datavis_with_ggplot2_files/figure-html/unnamed-chunk-18-1.svg)&lt;!-- --&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
