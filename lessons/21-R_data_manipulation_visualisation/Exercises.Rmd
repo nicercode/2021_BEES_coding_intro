@@ -120,7 +120,6 @@ Tries to guess column types. Can override this by specifying exactly:
 
 All characters
 ```{r}
-
 read_csv("data/movie_profit/movie_profit.csv", 
          col_types = cols(.default = col_character())
 )
@@ -255,7 +254,7 @@ See slides in "slides/datavis_with_ggplot2.Rmd"
 Read and inspect the data
 ```{r}
 library(tidyverse)
-movies <- read_csv("../data/movie_profit/movie_profit.csv")
+movies <- read_csv("data/movie_profit/movie_profit.csv")
 glimpse(movies) # see every column in the data frame
 ```
 
@@ -470,7 +469,7 @@ data %>%
 data %>% 
   filter(year %in% seq(1800, 2020, by =20)) %>%
   ggplot(aes(gdp_per_capita, life_expectancy, colour = continent, size=population)) + 
-  theme_classic()
+  theme_classic()+
   geom_point(alpha = 0.7, show.legend = FALSE) +
   scale_x_log10() + scale_y_log10() +
   scale_size(range = c(2, 12)) +
@@ -533,7 +532,7 @@ country_colors <- readRDS("data/gapminder/country_colours.rds")
 data %>% 
   filter(!is.na(continent)) %>% 
   ggplot(aes(gdp_per_capita, life_expectancy, size = population, colour = country)) +
-  theme_classic()
+  theme_classic() +
   geom_point(alpha = 0.7, show.legend = FALSE) +
   scale_colour_manual(values = country_colors) +
   scale_size(range = c(2, 12)) +
