@@ -1,9 +1,8 @@
 ---
-title: "Cool figures with ggplot2"
+title: "Data visualisation with ggplot2"
 
 author: "Dony Indiarto"
 institute: "School of Biological, Earth and Environmental Sciences (BEES), UNSW"
-date: "(updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -17,7 +16,7 @@ class: center, middle
 
 # What is ggplot2?
 
-### A graphing library for the statistical language programming R.
+### A graphing library for the statistical languange programming R.
 
 ---
 
@@ -25,14 +24,18 @@ class: center, middle
 
 
   -  `tidy` data exploration/analysis framework<sup>1</sup>
+  
 .center[![](https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png)]
 --
 
   -  Intuitive coding
+  
   - 'Publication ready' look
+  
   - Flexibility and customisation
 
-.footnote[
+
+ .footnote[
 [1] [Grolemund & Wickham, R for Data Science, 2017](https://r4ds.had.co.nz/explore-intro.html)
 ]
 ---
@@ -95,7 +98,7 @@ library(ggplot2)
 
 ```{r eval=TRUE, message=FALSE, warning=FALSE, tidy=FALSE}
 library(tidyverse)
-movies <- read_csv("data/movie_profit/movie_profit.csv")
+movies <- read_csv("../data/movie_profit/movie_profit.csv")
 glimpse(movies) # see every column in the data frame
 ```
 
@@ -117,7 +120,7 @@ ggplot(movies,         # the data
 ```
 ---
 # Q1 What are the most common genres? 
-And put some colour on...
+And put some color on...
 --
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg'}
 ggplot(movies,                        # the data
@@ -153,10 +156,10 @@ ggplot(movies,aes(x = genre, y = worldwide_gross))+
 ---
 class: inverse, middle, center
 
-# Exercise
+#Excercise
 ---
 class: inverse
-# Exercise Q1
+# Excercise Q1
 
 ## Are there more cheap films ?
 .pull-left[
@@ -169,7 +172,7 @@ class: inverse
  ]
 ---
 class: inverse
-# Exercise Q2
+# Excercise Q2
 
 ## What genres make the highest return on investment?
 .pull-left[
@@ -185,7 +188,7 @@ class: inverse
 ---
 
 class: inverse
-# Exercise Q3
+# Excercise Q3
 ## What genres make the highest return on investment?
 .pull-left[
 .left[![](https://media1.giphy.com/media/2mXJvHKUYL9n2/giphy.gif?cid=790b7611a5e51916870da7d33f79fbbc4845283557728094&rid=giphy.gif)]
