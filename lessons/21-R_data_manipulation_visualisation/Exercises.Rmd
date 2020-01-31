@@ -248,7 +248,7 @@ data %>%
 
 # Intro to data visualisation with `ggplot2` (Dony)
 
-See slides in "slides/Visualisation_slides.Rmd"
+See slides in "slides/datavis_with_ggplot2.Rmd"
 
 **Examples from the slides**
 
@@ -330,7 +330,7 @@ https://github.com/jennybc/gapminder
 # Tidy Data concept (Dony)
 - What is tidy data?
 - Converting from long to wide data
-- see slides in slides/tidy_data_pivot_tables.pdf
+- see slides in slides/tidy_data_and_pivot_tables.pdf
 
 Read and inspect the structure of life_expectancy_years.csv
 ```{r}
