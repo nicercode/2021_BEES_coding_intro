@@ -7,64 +7,72 @@ output: html_document
 
 # Introduction to using Rmarkdown (Rmd)
 
-
 - File extension `*.Rmd`
 - Can be notebook or markdown
-- Includes text and code -> good for note taking 
+- Includes text and code -> make it good for note taking and reports 
 
 Code chunks:
 
-- typical R code
-- are embedded in wrapper
+- run standard R code
+- are embedded in a wrapper like this
 
 ```{r}
 
 ```
 
-Text written in markdown
+Text is written in [markdown](https://en.wikipedia.org/wiki/Markdown) --  a lightweight markup language with plain-text-formatting syntax.
 
 - Headers: `#`
 - Bold: `**bold**`
 - links: `[text](link)`
 
-Hotcake short-cuts:
+The Rstudio interface makes it easy to work with both Rmarkdown (`*.Rmd`) and markdown files (`*.md`):
 
-- in the top right of code
+- easily run code chunks
+- easily navigate
+- use the document outline in the top corner to jump between headers
 
-# Introduction to Movies data (Dan)
+**Exercise**:  Create a new R markdown document (File -> New -> R Markdown, choose HTML). Add some text, then some code. Run the code chunks. Compile into an html file.   
+
+# Introduction to movies dataset (Dan)
+
+For today's exercises we're using a data on movie production, from the ["Tidy Tuesday" collection](https://github.com/rfordatascience/tidytuesday). 
 
 ```{r}
 library(tidyverse)
-data <- read_csv("data/movie_profit/movie_profit.csv")
+movies <- read_csv("data/movie_profit/movie_profit.csv")
 ```
 
 What variables?
 ```{r}
-names(data)
+names(movies)
 ```
 
 An overview of the data
 
 ```{r}
-View(data)
+View(movies)
 ```
 
 or summarise using the `skimr` package:
 
 ```{r}
-skimr::skim(data)
+skimr::skim(movies)
 ```
+
+**Exercise**: With your partner, review the `README` for the data at `data/movie_profit/readme.md` to see the variables included. 
 
 
 # What is the tidyverse? (Dan)
 
 * The [Tidyverse](http://tidyverse.org) is the name given to suite of R packages designed for seamless data analysis
 * Designed to help you fall into a **"Pit of Success"**
-* Tools designed for: 1) Turning data into tidy data, and 2) Plotting & analysing Tidy Data
-* Dataframes (tibbles) are the universal "tidy" input and output
+* Tools are designed to work seamlessly together, for: 1) Turning data into tidy data, and 2) Plotting & analysing Tidy Data
 * Not one but a collection packages
+* Dataframes (tibbles) are the universal "tidy" input and output
 
-Load individually or all together
+
+Load (and install) individually or all together
 
 ```{r, eval = FALSE}
 library(dplyr)
@@ -77,18 +85,29 @@ or
 library(tidyverse)
 ```
 
-## `tibble` - A better data frame 
+**Exercise**: Make sure you can load the `tidyverse`.
 
+
+## What is a `tibble`? 
+
+Basically, it's a better data frame.
+
+Key features of a dataframe:
+
+- table of data
+- each column may have a different data type: character, double, integer, bool, string.
+
+Tibbles have extra functionality:
 
 * Prints a short summary at console
 * Generates suitable warnings 
 * Won't convert strings to factors
 * No partial column-name matching
 * Behaves consistently with `[` and `[[`
-* [tibble.tidyverse.org](tibble.tidyverse.org)
+* For more, see [tibble.tidyverse.org](tibble.tidyverse.org)
 
 ```{r}
-data
+movies
 ```
 
 # Reading data with `readr` (Dan)
@@ -96,7 +115,7 @@ data
 Where possible, we recommend using 
 
 - `csv` files (common separated files) to store data
-- the `readr` package to load data
+- the `readr` package to read and write data
 
 Why `readr`?
 
@@ -105,27 +124,28 @@ Why `readr`?
 * Can control how columns are parsed
 
 ```{r}
-data <- read_csv("data/movie_profit/movie_profit.csv")
+movies <- read_csv("data/movie_profit/movie_profit.csv")
 ```
 
-Has a bunch of extra arguments:
+Has a bunch of extra arguments: guess_max, trim_ws, skip, na
 
-- guess_max
-- trim_ws
-- skip
-- na
+**Exercises**: 
 
-Tries to guess column types. Can override this by specifying exactly:
+1. Review the help for `read_csv` and figure out what one of the above arguments does.
+2. Use `read_csv` to load data file `data/plant_height/plantHeightSingleSpp.csv`
+3. Use `read_csv` to load data file `data/sydney_beaches/temperature.csv`
 
+When reading data, `read_csv` tries to guess column types. We can override this by specifying column types exactly.
 
-All characters
+Read everything as characters
+
 ```{r}
 read_csv("data/movie_profit/movie_profit.csv", 
          col_types = cols(.default = col_character())
 )
 ```
 
-Specify by variable:
+Specify by variable-by-variable:
 
 ```{r}
 read_csv("data/movie_profit/movie_profit.csv", 
@@ -154,13 +174,6 @@ read_delim("data/movie_profit/movie_profit.csv", ",")
 
 To load data from excel spreadsheets, try the `readxl` package.
 
-## Exercises
-
-1. Use `read_csv` to load data file `data/plant_height/plantHeightSingleSpp.csv`
-
-2. Use `read_csv` to load data file `data/sydney_beaches/temperature.csv`
-
-
 # Data manipulation with `dplyr` (Dan)
 
 Motivation:
@@ -169,42 +182,59 @@ Motivation:
 - High % of project is data wrangling
 - Many many many modern jobs are data wrangling
 
-Key ideas:
+**Exercise**: Together with your partner, come up with 3 types of change you may need to make on a dataset before it is ready for analysis.
 
-- Data is a noun
-- Actions on data are verbs  
 
-Main actions are verbs describing effect on data
 
-- `select` -> subset columns 
-- `filter` -> subset rows 
+
+`dplyr` used verbs to describe the actions we want to take on the data
+
+- `select`   -> subset columns 
+- `filter`   -> subset rows 
 - `arrange`  –> order rows
-- `rename`    –> rename variables
-- `mutate`  –> make new variables
-- `summarise`  –> summarise data
+- `rename`   –> rename variables
+- `mutate`   –> make new variables
+- `summarise`–> summarise data
 - `distinct` -> filter to each unique row
 
+Examples:
 
-**Exercises:**
+To select certain variables:
+
+```{r}
+select(movies, ???)
+```
+
+To filter to particular rows:
+
+```{r}
+filter(movies, distributor == "Universal")
+```
+
+To sort by certain variables:
+
+```{r}
+arrange(movies, distributor, production_budget)
+```
 
 ## Pipes
 
+The pipe is a bit of magic. It's written by `%>%` (Shift-Command-M on Mac or Shift-Control-M on PC ). We can use "the pipe" [%>%](http://magrittr.tidyverse.org/reference/pipe.html) to connect expressions
 
-## Use "the pipe" [%>%](http://magrittr.tidyverse.org/reference/pipe.html) to connect expressions
-
-* `%>%` "pipes" the **output** of the last expression as the **first input** of the next expression
-* If you use RStudio, you can type the pipe with Ctrl + Shift + M if you have a PC or Cmd + Shift + M if you have a Mac.
 * `%>%` is an **infix operator** -> expects commands on left & right
 * Comes from the [magrittr](http://magrittr.tidyverse.org/reference/pipe.html) package
+* `%>%` "pipes" the **output** of the last expression as the **first input** of the next expression
+* If you use RStudio, you can type the pipe with Ctrl + Shift + M if you have a PC or Cmd + Shift + M if you have a Mac.
 
+Examples:
 
 ```{r}
-data$distributor %>% unique()
+movies$distributor %>% unique()
 ```
 
 ```{r}
-data$distributor %>% unique() %>% length()
-data$distributor %>% n_distinct()
+movies$distributor %>% unique() %>% length()
+movies$distributor %>% n_distinct()
 ```
 
 But you can control the input position of the next function with `.`:
@@ -212,44 +242,46 @@ But you can control the input position of the next function with `.`:
 20 %>% seq(1, 4, length.out = .)
 ```
 
-## Use pipes to join data verbs to make a data sentence
 
 Tidyverse functions are written to work with pipes, i.e. most take the data as the first argument.
 
 ```{r}
-data %>% filter(distributor == "Universal")
+filter(movies, distributor == "Universal")
 ```
+
 is the same as
 
 ```{r}
-filter(data, distributor == "Universal")
+movies %>% filter(distributor == "Universal")
 ```
 
-
+This means we can use pipes to join data verbs to make a data sentence. 
 
 ```{r}
-data %>%
+movies %>%
   filter(distributor == "Universal") %>%
   select(movie, mpaa_rating)
 ```
 
-
 **Exercises:** Apply the `dplyr` package and your new data wrangling skills to the movies dataset to 
 
 
-1. Create a subset of the dataset consisting of only movies with budget < XXX
-2. As above and only variables `XXX`, `XXX`, and `Longitude`
-3. As above but with only one record per XXXX
-3. As above but with data sorted by `XXXX`
-4. Mutate a column to calculate XXX
+1. Create a subset of the dataset consisting of only movies distributed by `Walt Disney`
+2. As above and only including variables `movie`, `worldwide_gross`, and `production_budget`
+3. As above but with data sorted alphabetically by `movie`
+4.  As above but with an additional column return given by `worldwide_gross/production_budget`
+
+```{r}
+
+```
 
 # Imagine your plot (Will)
 
 # Intro to data visualisation with `ggplot2` (Dony)
 
-See slides in "slides/datavis_with_ggplot2.Rmd"
+See slides in "slides/datavis_with_ggplot2.html"
 
-**Examples from the slides**
+**Examples from the slides:**
 
 Read and inspect the data
 ```{r}
@@ -269,6 +301,7 @@ ggplot(movies,         # the data
 
 
 Q1 And put some colour on...
+
 ```{r }
 ggplot(movies,                        # the data
        aes(x = genre, fill = genre))+ # what to plot
@@ -277,6 +310,7 @@ ggplot(movies,                        # the data
 ```
 
 Q2 What genres are more expensive to produce?
+
 ```{r}
 ggplot(movies, aes(x = genre, y = production_budget))+
   geom_boxplot()
@@ -299,34 +333,50 @@ ggplot(movies,aes(x = genre, y = worldwide_gross))+
 ```
 
 
-**Exercise**:
-Try to answer these questions below by making some relevant figures
+**Exercises**: Try to answer these questions below by making some relevant figures
 
-**Q1 Are there more cheap films?**
+1. Are there more cheap films?
 
  - Hint: create a histogram-plot with production_budget at the x-axis
+
+```{r}
+
+```
+ 
    
-**Q2 What genres make the highest return on investment?**
+2. What genres make the highest return on investment?
 
  - Hints
    - calculate the ratio of worldwide gross profit and production budget
    - create a box-plot with x-axis representing the genre and y-axis representing the ratio
    - Rescale y-axis to log scale
+
+```{r}
+
+```
    
-**Q3 What genres make the highest return on investment?**
+3. What genres make the highest return on investment?
 
  - Hints
    - create a scatter plot with with the x-axis representing the production_budget and the y-axis representing the worldwide_gross profit
    - Rescale the x- and y-axis to log scale
    - add regression line with `stat_smooth()`
 
+```{r}
+
+```
+
+----
 
 # Introduction to gapminder data (Dan)
 
+For day 2's exercises, we're going to use the famous gapminder dataset, maintained at [gapminder.org](http://gapminder.org)
 
-https://github.com/jennybc/gapminder
+**Exercise**: With your partner, review the `README` for the data at `data/gapminder/readme.md` to see the variables included. 
+
 
 # Tidy Data concept (Dony)
+
 - What is tidy data?
 - Converting from long to wide data
 - see slides in slides/tidy_data_and_pivot_tables.pdf
@@ -378,21 +428,18 @@ le_wide <- pivot_wider(data = le_long,           #the data
 View(le_wide) 
 ```
 
-**Exercise**:
+**Exercises**:
 
 Make these data tidy:
- - data\gapminder\children_per_woman_total_fertility.csv
- - data\gapminder\income_per_person_gdppercapita_ppp_inflation_adjusted.csv
 
+- `data\gapminder\children_per_woman_total_fertility.csv`
+- `data\gapminder\income_per_person_gdppercapita_ppp_inflation_adjusted.csv`
 
 
 # Advanced data manipulation with `dplyr` (Dan)
 
-- join
-- group_by (summarise, mutate), 
 
-
-**Exercise**:
+## Joining tables
 
 Now using join and pipes, we can built a big table of data containing all variables
 
@@ -434,16 +481,18 @@ filter(data, is.na(continent)) %>% pull(country) %>% unique()
 
 ```
 
+## Group_by (summarise, mutate)
 
-What to do when your big pipe thingo doesn't work?
+
+## What to do when your big pipe thingo doesn't work?
 
 
 # Advanced data visualisation with `ggplot2` (Will)
 
-This session will show you some more advanaced plotting techniques, building on the basic plots from Day 1 and using the gapminder data
+This session will show you some more advanced plotting techniques, building on the basic plots from Day 1 and using the gapminder data
 
 
-## Adjusting labels, sclaes, paletters
+## Adjusting labels, scales, palettes
 
 Is now achieved via the `scales` packages
 
@@ -503,6 +552,9 @@ Can use lines `geom_smooth` to fit lines
 ## Multiple plot layouts with `patchwork`
 
 
+
+--------
+
 # Data wrangling & visualisation challenge (Dan)
 
 
@@ -550,9 +602,7 @@ data %>%
 
 # Reproducible research with Rmarkdown
 
-**Exercises:**
-
-Discuss with your partner 
+**Exercises:** Discuss with your partner 
 
 - what is meant by Reproducible research?
 - what can you do do make your research reproducible?

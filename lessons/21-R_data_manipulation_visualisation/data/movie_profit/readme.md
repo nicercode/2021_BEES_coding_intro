@@ -19,4 +19,3 @@ Header | Description
 `distributor` | The distribution company
 `mpaa_rating` | Appropriate age rating by the US-based rating agency
 `genre` | Film category
-
