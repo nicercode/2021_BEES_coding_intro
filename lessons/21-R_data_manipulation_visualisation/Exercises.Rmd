@@ -271,6 +271,7 @@ movies %>%
 3. As above but with data sorted alphabetically by `movie`
 4.  As above but with an additional column return given by `worldwide_gross/production_budget`
 
+
 ```{r}
 
 ```
@@ -284,6 +285,7 @@ See slides in "slides/datavis_with_ggplot2.html"
 **Examples from the slides:**
 
 Read and inspect the data
+
 ```{r}
 library(tidyverse)
 movies <- read_csv("data/movie_profit/movie_profit.csv")
@@ -379,9 +381,10 @@ For day 2's exercises, we're going to use the famous gapminder dataset, maintain
 
 - What is tidy data?
 - Converting from long to wide data
-- see slides in slides/tidy_data_and_pivot_tables.pdf
+- see slides in `slides/tidy_data_and_pivot_tables.pdf`
 
-Read and inspect the structure of life_expectancy_years.csv
+Read and inspect the structure of `life_expectancy_years.csv`
+
 ```{r}
 library(tidyverse)
 le <- read_csv("data/gapminder/life_expectancy_years.csv") # read the worldwide life expectancy data
@@ -393,6 +396,7 @@ View(le) #An overview of the data
 
 
 Make the 'life expectancy' data tidy with `dplyr::pivot_longer( )`
+
 ```{r}
 le_long<- 
   pivot_longer(data = le, # the data
@@ -410,6 +414,7 @@ View(le_long)
 ```
 
 Make a figure of life expectancy trend over time
+
 ```{r}
  ggplot(le_long,                                   #data
  aes(x = year, y = life_exp, group = country)) +   #aesthetics
@@ -438,8 +443,81 @@ Make these data tidy:
 
 # Advanced data manipulation with `dplyr` (Dan)
 
+We're now going to focus in on some more advanced features of dplyr. First, we need to load a series of tables and use `pivot_longer` to reorgaise them. 
+
+```{r}
+# Fertility
+data_fertility <- read_csv("data/gapminder/children_per_woman_total_fertility.csv") %>%   
+  pivot_longer(-country, names_to = "year", values_to = "fertility")
+  
+# Population
+data_population <- read_csv("data/gapminder/population_total.csv") %>%
+  pivot_longer(-country, names_to = "year", values_to = "population")
+
+# gdp per capita
+data_gdp <- read_csv("data/gapminder/income_per_person_gdppercapita_ppp_inflation_adjusted.csv") %>%   
+  pivot_longer(-country, names_to = "year", values_to = "gdp_per_capita")
+
+# life expectancy
+data_life_exp <- read_csv("data/gapminder/life_expectancy_years.csv") %>%
+  pivot_longer(-country, names_to = "year", values_to = "life_expectancy")
+
+# continents
+data_continent <-  read_csv("data/gapminder/continents.csv")
+  
+```
+
+But wouldn't it be nice to merge these into a single dataset?
+
+That's where `dplyr`s collection of `join` functions come in  
 
 ## Joining tables
+
+https://dplyr.tidyverse.org/reference/join.html
+
+There's three broad types of joins
+
+1. Mutating joins combine variables from the two data.frames
+2. Filtering joins keep cases from the left-hand data.frame
+3. Nesting joins create a list column of data.frames
+
+We're going to focus here on one type of Mutating join:
+
+- `left_join()`: return all rows from x, and all columns from x and y. Rows in x with no match in y will have NA values in the new columns. If there are multiple matches between x and y, all combinations of the matches are returned.
+
+The key to making a join work is to indetify the variable from each table that link the tables together. 
+
+Let's say we want add infomration about each countried continent into `data_population`
+
+```{r}
+left_join(data_population, data_continent, by="country")
+```
+
+Note that
+
+- the order of tables matters
+- it still works without the "by" argument, because it guesses which columns are in common
+- you don't need to have the same named columns but this makes life much easier.
+
+We can also join by two variables 
+
+```{r}
+left_join(data_population, data_fertility)
+```
+
+or
+
+```{r}
+left_join(data_population, data_fertility, by = c("country", "year"))
+```
+
+**Exercise:** 
+
+1. Join the two data frames `data_population` and `data_life_exp`
+2. Join the three data frames `data_population`, `data_life_exp` and `data_continent`
+
+
+----
 
 Now using join and pipes, we can built a big table of data containing all variables
 
@@ -449,22 +527,22 @@ data <-
   read_csv("data/gapminder/children_per_woman_total_fertility.csv") %>%   
   pivot_longer(-country, names_to = "year", values_to = "fertility") %>%
   # Add in population
-  left_join(by=c("country", "year"),
-            read_csv("data/gapminder/population_total.csv") %>%
+  left_join(
+    read_csv("data/gapminder/population_total.csv") %>%
               pivot_longer(-country, names_to = "year", values_to = "population")
   ) %>%
   # Add in gdp per capita
-  left_join(by=c("country", "year"),
-            read_csv("data/gapminder/income_per_person_gdppercapita_ppp_inflation_adjusted.csv") %>%   
+  left_join(
+    read_csv("data/gapminder/income_per_person_gdppercapita_ppp_inflation_adjusted.csv") %>%   
               pivot_longer(-country, names_to = "year", values_to = "gdp_per_capita")
   ) %>%
   # Add in life expectancy
-  left_join(by=c("country", "year"),
-            read_csv("data/gapminder/life_expectancy_years.csv") %>%
+  left_join(
+    read_csv("data/gapminder/life_expectancy_years.csv") %>%
               pivot_longer(-country, names_to = "year", values_to = "life_expectancy")
   ) %>%
   # Add in life continent
-  left_join(by="country",
+  left_join(
     read_csv("data/gapminder/continents.csv")
   ) %>% 
   # reorganise data
