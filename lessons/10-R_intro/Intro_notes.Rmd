@@ -1,7 +1,7 @@
 ---
 title: "Introduction to R"
-author: "Instructors: Daniel Falster & Will Cornwell"
-date: "17/12/2018"
+author: "Instructors: Will Cornwell"
+date: "27/1/2020"
 output: html_document
 editor_options: 
   chunk_output_type: console
@@ -11,11 +11,8 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# A quick demo of some things you can do
 
-(Dan, 9:30-10:00)
-
-What is R
+# What is R
 
 - R consists of writing code
 - Why write code?
@@ -29,18 +26,16 @@ Demonstration of data analysis -- using the Sydney Beaches dataset
 
 #  The Rstudio environment 
 
-(Will, 10:00-10:30)
-
 Rstudio 
 
-- into to panels panels
+- into to panels
 
 Writing code
 
 - Code vs console vs Rmd
 - Rmarkdown (code chunks, markdown)
 
-Packages
+# Packages
 
 
 - Install package by using `install.packages("package-name")`
@@ -50,8 +45,6 @@ Packages
 - Possible to install packages from places other than cran (e.g. github, r-forge, local computer)
   - ways to install
 
-**Exercises:** Install R (>3.5), Rstudio (1.1.463), and the `tidyverse` packages
-
 Good instructions [here if needed](https://datacarpentry.org/R-ecology-lesson/#setup_instructions)
 
 # Doing a full analysis yourself
@@ -60,17 +53,15 @@ Good instructions [here if needed](https://datacarpentry.org/R-ecology-lesson/#s
 ?read_csv
 
 ```
-(Will, 10:30-11:00)
+
 
 **Exercises:** Download course materials and knit demo. Go to the folder `lessons/10-R_intro/` and open the file `Intro_demo.Rmd` Make sure everyone can knit the demo. Take time to fix any issues that arise.
   
-# Morning tea
+# Reading data in and writing it out
 
-(11:00-11:30)
+
 
 # Assigning objects
-
-(Dan, 11:30-12:00)
 
 Code vs console vs Rmd
 
@@ -90,11 +81,9 @@ snakes          # and so does typing the name of the object
 ```
 
 <- vs = (outside vs inside function calls)
--> vs <- (-> works more naturally)
 
-use `rm()` to delete objects
 
-Style
+# Style
 
 - the [tidyverse style guide](https://style.tidyverse.org/)
   - likes `_` between names
@@ -134,16 +123,46 @@ Use `read_csv` to load csv file
 - Loaded data need to be assigned as objects
 - `read_csv` (in the tidyverse) is generally better than `read.csv`
 
-**Exercises:**
+# Extract one column ($) 
 
-1. Load the file `10-R_intro/data/sydneybeaches.csv` into R and save as a variable called `data_beaches`
-2. Create a csv file from either Excel or Google Sheets
-3. Open your csv file in the Rstudio editor (or another text editor)
+ $ can also be used in assignment 
 
-```{r}
-x <- TRUE
-class(x)
-```
+# Exercise 3: Add a column of worldwide net profit
+
+ Subsetting by columns (select)
+
+# Exercise 4: 
+  
+ 1. Subset by columns to only movie title and worldwide net profit
+ 2. write this new dataframe to a file
+
+# Logicals in R ( == < > | ! ) 
+
+# characters in R ""
+
+# Subset by rows (filter)
+
+# Taking summary statistics: using function(...)
+
+# Exercise 5:
+
+ what's the mean of the worldwide gross for comedies?
+
+#  Exercise 6: 
+  
+ what's the mean of the worldwide gross for R-rated comedies? 
+
+#  Exercise 7: 
+
+ what's the sd of the worldwide gross for Universal comedies? 
+
+#  Exercise 8: 
+
+ how many movies are in this database with a production budget of greater than $10,000,000? 
+
+#  Exercise 9: 
+
+ what percentage of movies in the database lost money (worldwide_gross - production_budget)? 
 
 
 
@@ -157,129 +176,6 @@ A few resources for loading other file types
 - [datapasta](https://cran.r-project.org/web/packages/datapasta/): when copying and pasting data from the web
 - [googlesheets4](https://googlesheets4.tidyverse.org/): for reading data from google sheets
 
-# Lunch 
-
-(12:30 - 13:30)
-
-# Object types I
-
-(Will, 13:30-14:30)
-
-- data frame
-   - columns
-   - $
-- vector
-   - []
-   - :
-- data types
-  - character
-  - integer
-  - numeric
-  - boolean
-  - dates
-- variables
-- matrix
-- lists
-  - non-table structures
-  - calling via names, numbers
-
-
-
-
-**Exercises:**
-
-create a new column in the data_beaches data frame and change the units of Enterococci from cfu_per100ml to Enterococci_cfu_per_10ml
-
-the Enterococci_cfu_per_100ml variable to Enterococci_cfu_per_10ml
-
-```{r}
-data_beaches <- read_csv("data/sydneybeaches.csv")
-dim(data_beaches)
-
-data_beaches[,1:3]
-sort(unique(data_beaches$Site),decreasing = TRUE)
-```
-# Exploring data: useful vocabulary
-
-(Dan, 14:30-15:00)
-
-We're now going to check out a bunch of really useful R functions and see how they work, to explore some data in the "Sydney Beaches" data set. 
-
-First load the data from `data/sydneybeaches.csv` and save as `data_beaches`
-
-
-To look at columns of numeric data, these functions can be helpful:
-
-- min, max, range, sum, length, mean, sd
-
-To look at columns of categorical data, these functions can be helpful:
-
-- unique, sort, length
-
-These functions can be used on whole dataframes
-
-- nrow
-- dim
-- colSum, rowSum
-
-**Exercises:**
-
-1. Load the beaches data, then 
-  - extract the column `Enterococci_cfu_per_100ml` and save as a new variable
-  - find the min and max count
-  - find the mean
-  - find the mean of the first 100 records
-2. Using the same data, extract the column `Site` and save as a new variable
-  - find all unique values
-  - find all unique values and sort them
-3. using the whole dataframe
-  - How many rows and columns does it have
-  - Make a new dataset using only the first 10 rows
-  - Make a new dataset using only the first 3 columns
-
-# Afternoon tea
-
-(15:00 - 15:30)
-
-# More complicated functions and how to use them 
-
-(Dan. 15:30-16:00)
-
-Investigate function structure, using the function `lm` as an example
-
-- function structure
-  - name
-  - body
-  - arguments
-- investigating structure of function f 
-  - `args(f)`
-  - `body(f)` or just `f`
-  - return value
-- ?help
-- named vs ordered arguments
-- default arguments
-
-```{r}
-model_fit<-lm(iris$Sepal.Length~iris$Petal.Length)
-```
-
-
-
-# Q & A 
-
-(16:00 - 16:30)
-
-**Exercises:**
-
-# Optional extras
-
-(if time permits)
-
-Where to get help
-
-- google
-- stack overflow
-- reproducible examples
 
 
 # Resources
