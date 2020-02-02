@@ -121,9 +121,3 @@ R can be downloaded [here](https://cran.r-project.org/).
 
 The Desktop version of RStudio can be downloaded [here](https://www.rstudio.com/products/rstudio/download/#download).
 
-
-## For instructors
-
-Notes for Instructors are included within the file [Instructor.md](Instructor.md).
-
-

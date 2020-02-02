@@ -12,12 +12,6 @@ Gear to bring:
 - cheatsheets
 - stickynotes
 
-Room setup:
-
-
-
-Working with demonstrators:
-
 
 # Writing exercises & solutions
 
