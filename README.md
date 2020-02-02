@@ -4,7 +4,9 @@ This repository contains content for a 5-day course for new PHD students (and ot
 
 Details for this session are as follows:
 
-- **Dates**: Monday 04 February to Thursday 07 February (9.00am to 5.00pm)
+- **Dates**: 
+  - Monday 03 February to Tuesday 04 February (9.00am to 5.00pm) - Data Manipulation and Visualisation
+  - Monday 10 and Tuesday 11 February – Introduction to design and analysis + Introduction to linear modelling
 - **Audience**: New HDR or Hons students in BEES
 - **Venue**: BEES Teaching Lab 3, Ground Floor D26
 - **What to bring**: your laptop
@@ -26,7 +28,7 @@ Getting started with R
 - Getting data in and out of R - R objects and classes
 - Packages
 
-### Days 2-3 Project management, data manipulation & data visualisation [ Daniel Falster, Will Cornwell, Dony Indiatro ]
+### Days 2-3 Project management, data manipulation & data visualisation [ Daniel Falster, Will Cornwell, Dony Indiarto ]
 
 Topics
 
