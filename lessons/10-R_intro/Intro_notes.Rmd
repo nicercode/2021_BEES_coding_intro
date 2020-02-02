@@ -11,52 +11,6 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Welcome
-
-(Dan, 9:00-9:30)
-
-Logistics
-
-- nametags: sticker and desk
-- Sticky notes for help
-- Work in pairs
-  - help each other: Peer to peer is most efficient way of learning
-
-Getting to know you:
-
-- Whose used R before: <6 months, up to 2 years, more than 2 years
-- Who has used a different language (e.g. Python)
-- Discuss with partner: best & worst experience, goals, worries
-
-Aims of this course:
-
-- Introduction to R & Rstudio
-- Getting data in and out of R 
-- R objects and data types
-- Packages
-- Functions
-- Organising your materials in Projects
-- Data manipulation
-- Data visualisation
-
-Expectations
-
-- We are practising scientists, also trained as instructors for software and data carpentry
-  - here to guide your learning
-  - it's *one* way to do it, not the only way
-- We will show you the key ingredients for data analysis
-  - we can't turn you into crack analysts in 2 days
-  - start of a journey. Hopefully a fun one!
-- We aim for boot camp to be inclusive
-  - it's a diverse crowd, everyone has complimentary skills and experiences
-  - there is no dumb question
-  - anti-social behaviour not welcome
-- Live coding
-  - We're going to do a lot of live coding -> why?
-  - Materials will be circulated, but we don't have fully worked files for you. There are lots of these already available (see Resources sections), including our own website: [Environmental Computing](http://environmentalcomputing.net/) 
-  - Use the circulated files to take notes as you follow along
-  - We'll circulate our files after 
-
 # A quick demo of some things you can do
 
 (Dan, 9:30-10:00)

@@ -1,5 +1,12 @@
 # Notes for instructors
 
+Links to material
+
+http://bit.ly/2020_bees_reg (download all)
+http://bit.ly/2020_bees_reg_live
+https://www.dropbox.com/sh/elgtkif3j43ccg4/AADuv6GmLfU1PvclahFvCsqda?dl=1
+
+
 Gear to bring:
 
 - cheatsheets

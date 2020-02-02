@@ -9,45 +9,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Welcome
-
-Logistics
-
-- nametags: sticker and desk
-- post it  notes, 
-
-Getting to know you:
-
-- who is new from yesterday
-- who has used R
-- best & worst experience, worries, why here
-
-Aims of this course:
-
-- Introduction to R & Rstudio
-- Getting data in and out of R 
-- R objects and data types
-- Packages
-- Functions
-- Organising your materials in Projects
-- Data manipulation
-- Data visualisation
-
-Brief recap from yesterday
-
-- R & Rstudio
-- Rmd files
-- packages
-- loading data
-- assigning variables
-- object types 
-- exploring data
-- functions
-
-# Project management
-
-(Dan, 9:30-10:30)
-
 Motivation
 
 - Life is complicated, and I used to be in pain, but now I live a blissful peaceful happy existence with no worries aside from feeding unicorns.
