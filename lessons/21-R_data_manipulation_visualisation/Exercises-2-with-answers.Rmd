@@ -10,8 +10,9 @@ output: html_document
 
 For day 2's exercises, we're going to use the famous gapminder dataset, maintained at [gapminder.org](http://gapminder.org)
 
-**Exercise**: With your partner, review the `README` for the data at `data/gapminder/readme.md` to see the variables included. 
+This dataset tells a grand story about human development across countries, and was made famous in TED talks by Hans Rolsing -- eg. see https://www.ted.com/talks/hans_rosling_the_best_stats_you_ve_ever_seen#t-126589 (start 2:10)
 
+**Exercise**: With your partner, review the `README` for the data at `data/gapminder/readme.md` to see the variables included. 
 
 # Tidy Data concept (Dony)
 
@@ -77,9 +78,21 @@ Make these data tidy:
 - `data\gapminder\income_per_person_gdppercapita_ppp_inflation_adjusted.csv`
 
 
+```{r}
+
+data_fertility <- 
+  read_csv("data/gapminder/children_per_woman_total_fertility.csv") %>%   
+  pivot_longer(-country, names_to = "year", values_to = "fertility")
+
+data_gdp <- read_csv("data/gapminder/income_per_person_gdppercapita_ppp_inflation_adjusted.csv") %>%   
+  pivot_longer(-country, names_to = "year", values_to = "gdp_per_capita")
+
+```
+
+
 # Advanced data manipulation with `dplyr` (Dan)
 
-We're now going to focus in on some more advanced features of dplyr. First, we need to load a series of tables and use `pivot_longer` to reorgaise them. 
+We're now going to focus in on some more advanced features of dplyr. First, we need to load a series of tables and use `pivot_longer` to reorganise them. 
 
 ```{r}
 # Fertility
@@ -121,9 +134,9 @@ We're going to focus here on one type of Mutating join:
 
 - `left_join()`: return all rows from x, and all columns from x and y. Rows in x with no match in y will have NA values in the new columns. If there are multiple matches between x and y, all combinations of the matches are returned.
 
-The key to making a join work is to indetify the variable from each table that link the tables together. 
+The key to making a join work is to identify the variable from each table that link the tables together. 
 
-Let's say we want add infomration about each countried continent into `data_population`
+Let's say we want add information about each countries continent into `data_population`
 
 ```{r}
 left_join(data_population, data_continent, by="country")
@@ -150,12 +163,43 @@ left_join(data_population, data_fertility, by = c("country", "year"))
 **Exercise:** 
 
 1. Join the two data frames `data_population` and `data_life_exp`
-2. Join the three data frames `data_population`, `data_life_exp` and `data_continent`
+
+```{r}
+left_join(data_population, data_life_exp)
+
+```
+
+2. Join the three data frames `data_population`, `data_life_exp` and `data_continent`. 
+  - hint: the join functions can only handle one table at a time
+  - Optional: reorder so that continent is the first variable
+
+```{r}
+data_population %>% 
+  left_join(data_life_exp) %>%
+  left_join( data_continent) %>% 
+  select(continent, country, year, everything())
+```
 
 
 ----
 
 Now using join and pipes, we can built a big table of data containing all variables
+
+```{r}
+data <- 
+  data_fertility %>% 
+  left_join( data_population) %>% 
+  left_join( data_gdp ) %>% 
+  left_join(data_life_exp) %>%
+  left_join(data_continent) %>% 
+  # reorganise data
+  select(continent, country, year, everything()) %>% 
+  arrange(continent, country, year) %>% 
+  mutate(year = as.integer(year))
+
+```
+
+I'd porbably read in the csv tables and join them straight in, without saving as intermiedate objects
 
 ```{r}
 
@@ -187,18 +231,203 @@ data <-
   mutate(year = as.integer(year))
 ```
 
-What about Na's?
+Now we're going to do some analysis on this dataset using `dplyr`. 
 
+## Refresher
+
+First let's refresh some of the commands we learnt yesterday: `select`, `filter`, `rename`, `arrange`, `mutate`. 
+
+**Exercises:**
+
+1. Your collaborator asks for a copy of the dataset with only data from Europe since 1900, with variables `country`, `year`, `fertility`, `population`. Use pipes and dplyr commands to create a csv to send them. 
+  - Hint: the command `write_csv` will save a table and works with the pipe.
+  
+  
 ```{r}
-filter(data, is.na(continent))
-filter(data, is.na(continent)) %>% pull(country) %>% unique()
+data %>% 
+  filter(year > 1900, continent == "Europe") %>% 
+  select(country, year, fertility, population) %>% 
+  write_csv("output/europe.csv")
 
 ```
 
-## Group_by (summarise, mutate)
+
+2. The journal where you are submitting your paper wants a table summarising the dataset, giving the 
+  - number of countries & continents
+  - time frame
+  - mean of vairables fertility and life_expectancy
+  - hints: the functions summarise and n_distinct will be useful
+
+```{r}
+data %>%
+  summarise(
+    start = min(year),
+    end = max(year),
+    countries  = n_distinct(country),
+    fertility = mean(fertility),
+    life_expectancy = mean(life_expectancy)
+  )
+```
 
 
-## What to do when your big pipe thingo doesn't work?
+Your answer should look like this:
+
+```
+  start   end countries fertility life_expectancy
+  1800   2018       184      5.40            43.0
+```
+
+3. Try the same as above, but with answers for each continent including in the data
+  - you won't be able to solve this, without material from the next section. But think about what you would in principle like to do.
+
+
+```{r}
+
+```
+
+## Group_by 
+
+When you want to run an opertion on subgroups in the data, we turn to `dplyr's` `group_by` command. This turbocharges other commands like `summarise` & `mutate`. 
+
+Let's revisit the challenge above: The journal where you are submitting your paper wants a table summarising the dataset, giving **for each continent** the 
+  - number of countries
+  - time frame
+  - mean of vairables fertility and life_expectancy
+  - hints: the functions summarise and n_distinct will be useful
+
+
+```{r}
+data %>%
+  group_by(continent) %>% 
+  summarise(
+    start = min(year),
+    end = max(year),
+    countries  = n_distinct(country),
+    fertility = mean(fertility),
+    life_expectancy = mean(life_expectancy)
+  )
+```
+
+Group_by can also be used to calculate mutations at the group level. Let's image you wanted to caluclate each countries population as a percentage of its current population. 
+
+```{r}
+data2 <- 
+  data %>%
+  group_by(country) %>% 
+  mutate(
+    population_percent = population / last(population) 
+  ) %>%
+  ungroup() %>%
+  select(-fertility, -gdp_per_capita, -life_expectancy )
+```
+
+
+Note, when creating a new dataset it is also important to remove the grouping variable using `ungroup`
+
+
+
+**Exercise**: Use the comands `group_by`  command to
+
+1. Calculate average values of life_expectancy and population for each country in the period 1990-1999
+  - hint: you'll also need `filter` and `summarise`
+
+```{r}
+data %>%
+  filter(year >= 1990, year < 2000) %>%
+  group_by(country) %>%
+  summarise(
+    population = mean(population),
+    life_expectancy = mean(life_expectancy)
+  )
+```
+
+Your answer should took like this:
+
+```
+# A tibble: 184 x 3
+   country             population life_expectancy
+   <chr>                    <dbl>           <dbl>
+ 1 Afghanistan           16210000            51.2
+ 2 Albania                3164000            73.9
+ 3 Algeria               28520000            72.3
+ ...
+```
+
+
+
+2. Calculate average values of life_expectancy and population for each country in the period 1990-1999
+  - hint: you'll also need `filter` and `summarise`
+
+```{r}
+data %>%
+  filter(year >= 1990, year < 2000) %>%
+  group_by(country) %>%
+  summarise(
+    population = mean(population),
+    life_expectancy = mean(life_expectancy)
+  )
+```
+
+Your answer should took like this:
+
+```
+# A tibble: 184 x 3
+   country             population life_expectancy
+   <chr>                    <dbl>           <dbl>
+ 1 Afghanistan           16210000            51.2
+ 2 Albania                3164000            73.9
+ 3 Algeria               28520000            72.3
+ ...
+```
+
+
+## Handling NA's
+
+Now we'll briefly look at what to do when you need to 
+
+
+First, let's identify where we have missing data. The function complete.cases is handy:
+
+```{r}
+complete.cases(data)
+```
+
+We can then use filter to select the rows
+
+
+```{r}
+i <- complete.cases(data)
+data %>% filter(!i)
+```
+
+Looks liek some NA's in continent. Let's find which countries
+```{r}
+data %>% 
+  filter(is.na(continent)) %>% 
+  select(country) %>% 
+  distinct() %>%
+  pull(country)
+```
+
+Now let's fix some of this
+
+```{r}
+data2 <- 
+  data %>%
+  mutate(continent = ifelse(country == "Russia", "Europe", continent),
+         continent = ifelse(is.na(continent), "Islands", continent)
+  )
+```
+
+Instead of an ifelse, we could also use the na_replace function
+
+```{r}
+
+data2 <- 
+  data %>%
+  mutate(continent = ifelse(country == "Russia", "Europe", continent)) %>%
+  replace_na(list(continent="Islands"))
+```
 
 
 # Advanced data visualisation with `ggplot2` (Will)
@@ -396,14 +625,9 @@ data %>%
 
 # Reproducible research (Dan)
 
-
-# Reproducible research with Rmarkdown
-
 **Exercises:** Discuss with your partner 
 
 - what is meant by Reproducible research?
-- what can you do do make your research reproducible?
 - who benefits from reproducible research?
-
-## Keys to reproducible research
+- what can you do do make your research reproducible?
 
