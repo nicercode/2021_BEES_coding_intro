@@ -20,10 +20,6 @@ knitr::opts_chunk$set(echo = TRUE)
 - Code vs console
 - Different clients -- Rstudio
 
-Demonstration of data analysis -- using the Sydney Beaches dataset
-
-- see the file Intro_demo.Rmd
-
 #  The Rstudio environment 
 
 Rstudio 
