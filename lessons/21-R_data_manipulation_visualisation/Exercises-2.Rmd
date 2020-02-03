@@ -25,9 +25,9 @@ Read and inspect the structure of `life_expectancy_years.csv`
 library(tidyverse)
 le <- read_csv("data/gapminder/life_expectancy_years.csv") # read the worldwide life expectancy data
 
-skimr::skim(le) #summarise using the `skimr
+#skimr::skim(le) #summarise using the `skimr
 
-View(le) #An overview of the data
+#View(le) #An overview of the data
 ```
 
 
@@ -206,85 +206,138 @@ filter(data, is.na(continent)) %>% pull(country) %>% unique()
 This session will show you some more advanced plotting techniques, building on the basic plots from Day 1 and using the gapminder data
 
 
-## Adjusting labels, scales, palettes
+## Color schemes
 
-Is now achieved via the `scales` packages
+### Continuous color and discrete color
+
+### Colorblindness
+
+https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
 
 ```{r}
-library(scales)
+library(viridis)
+library(ggplot2)
+ggplot(data.frame(x = rnorm(10000), y = rnorm(10000)), aes(x = x, y = y)) +
+  geom_hex() + coord_fixed() +
+  scale_fill_viridis(option="D") + theme_bw()
+```
+
+
+
+```{r}
+p <- ggplot(mtcars, aes(wt, mpg))
+p + geom_point(size=4, aes(colour = factor(cyl))) +
+    scale_color_viridis(discrete=TRUE) +
+    theme_bw()
+
 ```
 
 
 ```{r}
-data %>% 
-  filter(year==1900) %>%
-  ggplot(aes(gdp_per_capita, life_expectancy, colour = continent, size=sqrt(population))) + 
-  geom_point() + 
-  scale_x_log10() + scale_y_log10() +
-  labs(x = "GDP per capita ($)", y = "life expectancy (yr)") + 
-  theme_classic()
+library(ggsci)
+ggplot(subset(diamonds, carat >= 2.2),
+       aes(x = table, y = price, colour = cut)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "loess", alpha = 0.1, size = 1, span = 1,se=FALSE) +
+  theme_bw() + scale_color_npg()
+
+
 ```
+```{r}
+
+ggplot(subset(diamonds, carat >= 2.2),
+       aes(x = table, y = price, colour = cut)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "loess", alpha = 0.1, size = 1, span = 1,se=FALSE) +
+  theme_bw() + scale_color_aaas()
+
+```
+
+## one other thing about font size
+
+```{r}
+ggplot(subset(diamonds, carat >= 2.2),
+       aes(x = table, y = price, colour = cut)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "loess", alpha = 0.1, size = 1, span = 1,se=FALSE) +
+  theme_bw() + scale_color_aaas()+
+  theme(text = element_text(size=18)) 
+```
+
+
+
+## Practice dplyr and ggplot 1
+
+1. Filter to only data from the year 1900
+
+2. make a scatter plot with 1) gdp_per_capita as the x-axis 2) life_expectancy as the y-axis 3) continent as the colour of the points, 4) population as the size of the points
+
+3. modify the axes to be be more informative
+
+4. use the theme you think looks best
+
+5. make the font size of the axes 18 (for a presentation)
+
+```{r}
+
+```
+
+## One more logical
+
+```{r}
+ "a" %in% c("b","c","e","g")
+```
+```{r}
+ "a" %in% c("b","c","e","g","a")
+```
+
+
 
 ## Facets
 
+1. Filter to data from three years:  1800, 1850,1900, 1950,2000
+
+2. Remove countries that have NA for continent
+
+3. make a scatter plot with 1) year as the x-axis 2) life expectancy as the y-axis 3) log10(population) as the colour of the points with viridis as the color scheme 
+
+4. facet by continent
 
 ```{r}
-data %>% 
-  filter(year %in% seq(1800, 2020, by =20)) %>%
-  ggplot(aes(gdp_per_capita, life_expectancy, colour = continent, size=population)) + 
-  theme_classic()+
-  geom_point(alpha = 0.7, show.legend = FALSE) +
-  scale_x_log10() + scale_y_log10() +
-  scale_size(range = c(2, 12)) +
-  labs(x = "GDP per capita ($)", y = "life expectancy (yr)") + 
-  theme_classic() +
-  facet_wrap(~year)
+
 ```
 
-## Themes
+
+## Custom Themes
 
 
 Can add a theme onto plot
 
 ```{r}
-
-+ theme_classic()
+mynamestheme <- theme( 
+                  axis.title = element_text(family = "Helvetica", size = (15), colour = "steelblue4"),
+                  axis.text = element_text(family = "Courier", colour = "cornflowerblue", size = (15)),
+                  legend.text = element_text(family = "Helvetica", size = (15), colour = "pink"),
+                  legend.title = element_text(family = "Helvetica", size = (15), colour = "green",face="italic"),
+                  legend.position="left")
+  
+a + mynamestheme 
 ```
 
-Can also set default theme
+### Does the correlation between gdp and fertility get stronger or weaker through time?
+
+
+1. filter year to only values for 1800,1850, 1900, 1950, and 2000
+
+2. filter out values without a continent entry
+
+3. make a scatter plot with x axis = gdp_per_capita and y axis = fertility, colour based on continent (log scale the x-axis, use a discrete color scale)
+
+4. facet by year
 
 ```{r}
-theme_set()
+
 ```
-
-
-## Adding fitted lines
-
-Can use lines `geom_smooth` to fit lines
-
-
-## Multiple plot layouts with `patchwork`
-
-
-
---------
-
-# Data wrangling & visualisation challenge (Dan)
-
-
-# ggplot in talks (Dan)
-	
-# ggplot extensions (Will)
-	
-Base R vs ggplot
-
-Other packages that build on ggplot
-
-- hexbinplot
-- ggbeeswarm
-- plotly
-- gganimate
-
 
 ### Animations with gganimate
 

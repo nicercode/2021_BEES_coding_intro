@@ -16,7 +16,7 @@ Getting to know you:
 - how long have you used R (anyone not used it?)
 - everyone stand up
 	- turn to person next to you: Introduce yourself, favourite animal, hardest thing you've found about using R
-	- other-side: a favourite activity, why your here
+	- other-side: a favourite activity, What % of your time you expect to spend in the field/lab or at the computer
 
 
 Expectations

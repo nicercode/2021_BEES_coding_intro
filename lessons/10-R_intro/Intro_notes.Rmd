@@ -56,9 +56,6 @@ Good instructions [here if needed](https://datacarpentry.org/R-ecology-lesson/#s
 
 
 **Exercises:** Download course materials and knit demo. Go to the folder `lessons/10-R_intro/` and open the file `Intro_demo.Rmd` Make sure everyone can knit the demo. Take time to fix any issues that arise.
-  
-# Reading data in and writing it out
-
 
 
 # Assigning objects
@@ -103,8 +100,6 @@ snakes          # and so does typing the name of the object
 
 # Loading data
 
-(Dan, 12:00-12:30)
-
 Where might you need to load data from (consider both sources and file types)? (Discuss with partner)
 
 Tables are a special type
@@ -122,6 +117,12 @@ Use `read_csv` to load csv file
 - options for parsing 
 - Loaded data need to be assigned as objects
 - `read_csv` (in the tidyverse) is generally better than `read.csv`
+
+
+```{r}
+library(tidyverse)
+movies <- read_csv("data/movie_profit/movie_profit.csv")
+```
 
 # Extract one column ($) 
 

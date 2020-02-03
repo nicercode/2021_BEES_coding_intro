@@ -367,3 +367,5 @@ ggplot(movies,aes(x = genre, y = worldwide_gross))+
 ```{r}
 
 ```
+
+## What to do when your big pipe thingo doesn't work?
