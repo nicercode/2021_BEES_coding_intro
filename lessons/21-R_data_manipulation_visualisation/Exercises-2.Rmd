@@ -10,7 +10,7 @@ output: html_document
 
 For day 2's exercises, we're going to use the famous gapminder dataset, maintained at [gapminder.org](http://gapminder.org)
 
-This dataset tells a grand story about human development across countries, and was made famous in TED talks by Hans Rolsing -- eg. see https://www.ted.com/talks/hans_rosling_the_best_stats_you_ve_ever_seen#t-126589 (start 2:10)
+This dataset tells a grand story about human development across countries, and was made famous in TED talks by Hans Rosling -- eg. see https://www.ted.com/talks/hans_rosling_the_best_stats_you_ve_ever_seen#t-126589 (start 2:10)
 
 **Exercise**: With your partner, review the `README` for the data at `data/gapminder/readme.md` to see the variables included. 
 
@@ -186,7 +186,7 @@ data <-
 
 ```
 
-I'd porbably read in the csv tables and join them straight in, without saving as intermiedate objects
+I'd probably read in the csv tables and join them straight in, without saving as intermediate objects
 
 ```{r}
 
@@ -239,7 +239,7 @@ First let's refresh some of the commands we learnt yesterday: `select`, `filter`
 2. The journal where you are submitting your paper wants a table summarising the dataset, giving the 
   - number of countries & continents
   - time frame
-  - mean of vairables fertility and life_expectancy
+  - mean of variables fertility and life_expectancy
   - hints: the functions summarise and n_distinct will be useful
 
 ```{r}
@@ -264,12 +264,12 @@ Your answer should look like this:
 
 ## Group_by 
 
-When you want to run an opertion on subgroups in the data, we turn to `dplyr's` `group_by` command. This turbocharges other commands like `summarise` & `mutate`. 
+When you want to run an operation on subgroups in the data, we turn to `dplyr's` `group_by` command. This turbo-charges other commands like `summarise` & `mutate`. 
 
 Let's revisit the challenge above: The journal where you are submitting your paper wants a table summarising the dataset, giving **for each continent** the 
   - number of countries
   - time frame
-  - mean of vairables fertility and life_expectancy
+  - mean of variables fertility and life_expectancy
   - hints: the functions summarise and n_distinct will be useful
 
 
@@ -285,7 +285,7 @@ data %>%
   )
 ```
 
-Group_by can also be used to calculate mutations at the group level. Let's image you wanted to caluclate each countries population as a percentage of its current population. 
+Group_by can also be used to calculate mutations at the group level. Let's image you wanted to calculate each countries population as a percentage of its current population. 
 
 ```{r}
 data2 <- 
@@ -303,7 +303,7 @@ Note, when creating a new dataset it is also important to remove the grouping va
 
 
 
-**Exercise**: Use the comands `group_by`  command to
+**Exercise**: Use the commands `group_by`  command to
 
 1. Calculate average values of life_expectancy and population for each country in the period 1990-1999
   - hint: you'll also need `filter` and `summarise`
@@ -365,7 +365,7 @@ i <- complete.cases(data)
 data %>% filter(!i)
 ```
 
-Looks liek some NA's in continent. Let's find which countries
+Looks like some NA's in continent. Let's find which countries
 ```{r}
 data %>% 
   filter(is.na(continent)) %>% 
@@ -384,7 +384,7 @@ data2 <-
   )
 ```
 
-Instead of an ifelse, we could also use the na_replace function
+Instead of an ifelse, we could also use the `replace_na` function
 
 ```{r}
 
@@ -400,11 +400,11 @@ data2 <-
 This session will show you some more advanced plotting techniques, building on the basic plots from Day 1 and using the gapminder data
 
 
-## Color schemes
+## Colour schemes
 
-### Continuous color and discrete color
+### Continuous colour and discrete colour
 
-### Colorblindness
+### Colour-blindness
 
 https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
 
