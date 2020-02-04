@@ -87,6 +87,11 @@ library(tidyverse)
 
 **Exercise**: Make sure you can load the `tidyverse`.
 
+```{r}
+library(tidyverse)
+```
+
+
 
 ## What is a `tibble`? 
 
@@ -134,6 +139,17 @@ Has a bunch of extra arguments: guess_max, trim_ws, skip, na
 1. Review the help for `read_csv` and figure out what one of the above arguments does.
 2. Use `read_csv` to load data file `data/plant_height/plantHeightSingleSpp.csv`
 3. Use `read_csv` to load data file `data/sydney_beaches/temperature.csv`
+
+```{r}
+#2. Use `read_csv` to load data file `data/plant_height/plantHeightSingleSpp.csv`
+read_csv("data/plant_height/plantHeightSingleSpp.csv")
+```
+
+```{r}
+#3. Use `read_csv` to load data file `data/sydney_beaches/temperature.csv`
+read_csv("data/sydney_beaches/temperature.csv")
+```
+
 
 When reading data, `read_csv` tries to guess column types. We can override this by specifying column types exactly.
 
@@ -202,7 +218,7 @@ Examples:
 To select certain variables:
 
 ```{r}
-select(movies, ???)
+select(movies, genre)
 ```
 
 To filter to particular rows:
@@ -273,6 +289,21 @@ movies %>%
 
 
 ```{r}
+# . Create a subset of the dataset consisting of only movies distributed by `Atlantic`
+m1 <- movies %>% 
+   filter(distributor=="Lionsgate")
+   
+# 2. As above and only including variables `movie`, `worldwide_gross`, and `production_budget`
+m2 <- m1 %>% 
+   select('movie', 'worldwide_gross', 'production_budget')
+
+# 3. As above but with data sorted alphabetically by `movie`
+m3 <- m2 %>% 
+   arrange(movie)
+
+# 4.  As above but with an additional column return given by `worldwide_gross/production_budget`
+m3 %>% 
+   mutate(ratio = worldwide_gross/production_budget)
 
 ```
 
@@ -342,7 +373,8 @@ ggplot(movies,aes(x = genre, y = worldwide_gross))+
  - Hint: create a histogram-plot with production_budget at the x-axis
 
 ```{r}
-
+ggplot(movies, aes(x = production_budget)) +
+  geom_histogram()
 ```
  
    
@@ -354,10 +386,14 @@ ggplot(movies,aes(x = genre, y = worldwide_gross))+
    - Rescale y-axis to log scale
 
 ```{r}
+movies_ratio <- movies %>% mutate(ratio=worldwide_gross/production_budget)
 
+ggplot(movies_ratio,aes(x = genre, y = ratio)) +
+  geom_boxplot() +
+   scale_y_log10()
 ```
    
-3. What genres make the highest return on investment?
+3. Do expensive movies make more (gross) profit?
 
  - Hints
    - create a scatter plot with with the x-axis representing the production_budget and the y-axis representing the worldwide_gross profit
@@ -365,7 +401,46 @@ ggplot(movies,aes(x = genre, y = worldwide_gross))+
    - add regression line with `stat_smooth()`
 
 ```{r}
+# calculate the ratio of worldwide gross profit and production budget
 
+movies_clean <- movies %>% filter(worldwide_gross!=0)
+
+ggplot(movies_clean, aes(x = production_budget, y = worldwide_gross)) +
+  geom_point(alpha=0.5) +
+  stat_smooth(method = "lm", col = "red", se = FALSE)+
+  scale_x_log10() + scale_y_log10()
 ```
 
 ## What to do when your big pipe thingo doesn't work?
+```{r}
+#load tidyverse
+library(tidyverse)
+#or make sure 'maggritr'
+library(magrittr)
+```
+
+
+# Customisation: facet_wrap
+```{r}
+library(scales) #  scales: library for customising labels and ticks
+
+# calculate profit
+movies_profit <- movies %>% 
+   mutate(profit = worldwide_gross - production_budget)
+
+
+ggplot(movies_profit, aes(x = production_budget, y = profit, color=mpaa_rating)) + # set category/color as mpaa_rating
+   geom_point(alpha = .2) + # alpha: set transparency to .2 or 20%
+   stat_smooth(method = "lm", col="red", se=FALSE) + # add linear regression model
+   facet_wrap(~genre) + # split figures by genre
+    scale_x_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))) + # log transform x axis and display number in math notation
+   scale_y_continuous(labels = comma) + # log transform y axis and display number in natural notation
+   theme_bw() + # set theme
+   xlab("Production budget in US$") + # change x label
+   ylab("Profit in US$") + # change y label
+   theme(legend.position = "none") # remove the legend (mpaa_rating)
+   
+```
+
