@@ -420,9 +420,16 @@ library(magrittr)
 ```
 
 
-# Customisation: facet_wrap
+# Customisation: 
+
+**Exrecise**: Brain storm how to improve this plot
+
+## scales and axes
+
+We can uses the scales package for customising labels and ticks
+
 ```{r}
-library(scales) #  scales: library for customising labels and ticks
+library(scales) #  
 
 # calculate profit
 movies_profit <- movies %>% 
@@ -432,7 +439,6 @@ movies_profit <- movies %>%
 ggplot(movies_profit, aes(x = production_budget, y = profit, color=mpaa_rating)) + # set category/color as mpaa_rating
    geom_point(alpha = .2) + # alpha: set transparency to .2 or 20%
    stat_smooth(method = "lm", col="red", se=FALSE) + # add linear regression model
-   facet_wrap(~genre) + # split figures by genre
     scale_x_log10(
    breaks = scales::trans_breaks("log10", function(x) 10^x),
    labels = scales::trans_format("log10", scales::math_format(10^.x))) + # log transform x axis and display number in math notation
@@ -444,3 +450,52 @@ ggplot(movies_profit, aes(x = production_budget, y = profit, color=mpaa_rating))
    
 ```
 
+
+## facet_wrap
+
+Add a single line to split by 
+
+```{r}
+
+ggplot(movies_profit, aes(x = production_budget, y = profit, color=mpaa_rating)) + # set category/color as mpaa_rating
+   geom_point(alpha = .2) + # alpha: set transparency to .2 or 20%
+   stat_smooth(method = "lm", col="red", se=FALSE) + # add linear regression model
+    scale_x_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))) + # log transform x axis and display number in math notation
+   scale_y_continuous(labels = comma) + # log transform y axis and display number in natural notation
+   theme_bw() + # set theme
+   xlab("Production budget in US$") + # change x label
+   ylab("Profit in US$") + # change y label
+   theme(legend.position = "none") + # remove the legend (mpaa_rating)
+   facet_wrap(~genre)  # split figures by genre
+  
+```
+
+
+## plotly
+
+The package plotly can be used to make plots interactive.
+
+First save the plot as an object and add a fiEld for label:
+
+```{r}
+
+p <- ggplot(movies_profit, aes(x = production_budget, y = profit, color=mpaa_rating, label = movie)) + # set category/color as mpaa_rating
+   geom_point(alpha = .2) + # alpha: set transparency to .2 or 20%
+   facet_wrap(~genre) + # split figures by genre
+    scale_x_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))) + # log transform x axis and display number in math notation
+   scale_y_continuous(labels = comma) + # log transform y axis and display number in natural notation
+   theme_bw() + # set theme
+   xlab("Production budget in US$") + # change x label
+   ylab("Profit in US$") # change y label
+```
+
+It is then very easy to turn this into an interactive plot -- you'll need to click on "Viewer" rather than "Plots". You can hover over the points to see the deatils of each.
+
+```{r}
+library(plotly)
+ggplotly(p)
+```
