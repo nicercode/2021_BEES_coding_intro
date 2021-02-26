@@ -11,8 +11,11 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Welcome (Will)
 
-# What is R
+- Breakouts
+
+# What is R (Will)
 
 - R consists of writing code
 - Why write code?
@@ -20,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - Code vs console
 - Different clients -- Rstudio
 
-#  The Rstudio environment 
+#  The Rstudio environment (Fonti)
 
 Rstudio 
 
@@ -31,8 +34,17 @@ Writing code
 - Code vs console vs Rmd
 - Rmarkdown (code chunks, markdown)
 
-# Packages
 
+# Qucik demo (Fonti)
+
+```{r}
+library(ggplot2)
+
+(fonti to write demo)
+
+```
+
+# Packages (Will)
 
 - Install package by using `install.packages("package-name")`
 - Update packages by using `update.packages("package-name")`
@@ -43,18 +55,7 @@ Writing code
 
 Good instructions [here if needed](https://datacarpentry.org/R-ecology-lesson/#setup_instructions)
 
-# Doing a full analysis yourself
-
-```{r}
-?read_csv
-
-```
-
-
-**Exercises:** Download course materials and knit demo. Go to the folder `lessons/10-R_intro/` and open the file `Intro_demo.Rmd` Make sure everyone can knit the demo. Take time to fix any issues that arise.
-
-
-# Assigning objects
+# Assigning objects (Aniko)
 
 Code vs console vs Rmd
 
@@ -75,8 +76,7 @@ snakes          # and so does typing the name of the object
 
 <- vs = (outside vs inside function calls)
 
-
-# Style
+# Style (Fonti)
 
 - the [tidyverse style guide](https://style.tidyverse.org/)
   - likes `_` between names
@@ -86,15 +86,13 @@ snakes          # and so does typing the name of the object
 
 1. Make a new variable containing the number 13
 2. Make a new variable 1345 times the variable above (doing the calculation in code)
-3. Make new variables containing the name of you and your partner 
+3. Make new variables containing the name of you and your buddy 
 
-**Resources:**
+```{r}
 
-- ["Making new variables" on environmentalcomputing](http://environmentalcomputing.net/making-new-variables/)
-- ["Creating R objects" on DataCarpentry](https://datacarpentry.org/R-ecology-lesson/01-intro-to-r.html)
-- ["Software carpentry"'s intor to RStudio'](http://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro/index.html)
+```
 
-# Loading data
+# Loading data (Aniko)
 
 Where might you need to load data from (consider both sources and file types)? (Discuss with partner)
 
@@ -116,66 +114,112 @@ Use `read_csv` to load csv file
 
 
 ```{r}
-library(tidyverse)
-movies <- read_csv("data/movie_profit/movie_profit.csv")
+movies <- read.csv("data/movie_profit/movie_profit.csv")
 ```
 
-# Extract one column ($) 
+**Exercise:**
+
+- explore the movies dataset. What variables are there, what's in it?
+
+# Accessing Data (Aniko)
+
+## Extract one column ($) 
 
  $ can also be used in assignment 
 
-# Exercise 3: Add a column of worldwide net profit
+## Exercise 3: Add a column of worldwide net profit
 
  Subsetting by columns (select)
 
-# Exercise 4: 
+## Exercise 4: 
   
  1. Subset by columns to only movie title and worldwide net profit
  2. write this new dataframe to a file
 
-# Logicals in R ( == < > | ! ) 
+## Logicals in R ( == < > | ! )
 
-# characters in R ""
+```{r}
 
-# Subset by rows (filter)
+```
 
-# Taking summary statistics: using function(...)
+## characters in R ""
 
-# Exercise 5:
+```{r}
+
+```
+
+## Subset by rows (filter)
+
+```{r}
+
+```
+
+# Using builtin functions(...) 
+
+## Taking summary statistics , e.g min, max
+
+```{r}
+
+```
+
+# Practice
+
+## Exercise 5:
 
  what's the mean of the worldwide gross for comedies?
 
-#  Exercise 6: 
+```{r}
+
+```
+
+##  Exercise 6: 
   
  what's the mean of the worldwide gross for R-rated comedies? 
 
-#  Exercise 7: 
+```{r}
+
+```
+
+
+##  Exercise 7: 
 
  what's the sd of the worldwide gross for Universal comedies? 
 
-#  Exercise 8: 
+```{r}
+
+```
+
+
+##  Exercise 8: 
 
  how many movies are in this database with a production budget of greater than $10,000,000? 
 
-#  Exercise 9: 
+```{r}
+
+```
+
+##  Exercise 9: 
 
  what percentage of movies in the database lost money (worldwide_gross - production_budget)? 
 
+```{r}
+
+```
+
+# Resources
 
 
-**Resources:**
+Creating and manipulating variables
 
-You can likely load most data types into R
+- ["Making new variables" on environmentalcomputing](http://environmentalcomputing.net/making-new-variables/)
+- ["Creating R objects" on DataCarpentry](https://datacarpentry.org/R-ecology-lesson/01-intro-to-r.html)
+- ["Software carpentry"'s intor to RStudio'](http://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro/index.html)
 
 A few resources for loading other file types
 
 - [readxl](https://readxl.tidyverse.org/reference/read_excel.html): Reading data direct from Excel
 - [datapasta](https://cran.r-project.org/web/packages/datapasta/): when copying and pasting data from the web
 - [googlesheets4](https://googlesheets4.tidyverse.org/): for reading data from google sheets
-
-
-
-# Resources
 
 Online courses:
 

@@ -5,7 +5,7 @@ date: "Feb 2020"
 output: html_document
 ---
 
-# Introduction to using Rmarkdown (Rmd)
+# Introduction to using Rmarkdown (Aniko)
 
 - File extension `*.Rmd`
 - Can be notebook or markdown
@@ -34,7 +34,7 @@ The Rstudio interface makes it easy to work with both Rmarkdown (`*.Rmd`) and ma
 
 **Exercise**:  Create a new R markdown document (File -> New -> R Markdown, choose HTML). Add some text, then some code. Run the code chunks. Compile into an html file.   
 
-# Introduction to movies dataset (Dan)
+# Introduction to movies dataset (Fonti)
 
 For today's exercises we're using a data on movie production, from the ["Tidy Tuesday" collection](https://github.com/rfordatascience/tidytuesday). 
 
@@ -63,7 +63,7 @@ skimr::skim(movies)
 **Exercise**: With your partner, review the `README` for the data at `data/movie_profit/readme.md` to see the variables included. 
 
 
-# What is the tidyverse? (Dan)
+# What is the tidyverse? (Will)
 
 * The [Tidyverse](http://tidyverse.org) is the name given to suite of R packages designed for seamless data analysis
 * Designed to help you fall into a **"Pit of Success"**
@@ -115,80 +115,57 @@ Tibbles have extra functionality:
 movies
 ```
 
-# Reading data with `readr` (Dan)
+# Reading data (Aniko)
 
 Where possible, we recommend using 
 
 - `csv` files (common separated files) to store data
-- the `readr` package to read and write data
-
-Why `readr`?
-
-* Fast
-* Won't convert strings to factors
-* Can control how columns are parsed
 
 ```{r}
-movies <- read_csv("data/movie_profit/movie_profit.csv")
+movies <- read.csv("data/movie_profit/movie_profit.csv")
 ```
 
-Has a bunch of extra arguments: guess_max, trim_ws, skip, na
+Has a bunch of extra arguments: skip, check.names
 
 **Exercises**: 
 
-1. Review the help for `read_csv` and figure out what one of the above arguments does.
-2. Use `read_csv` to load data file `data/plant_height/plantHeightSingleSpp.csv`
-3. Use `read_csv` to load data file `data/sydney_beaches/temperature.csv`
+1. Review the help for `read.csv` and figure out what one of the above arguments does.
+2. Use `read.csv` to load data file `data/plant_height/plantHeightSingleSpp.csv`
+3. Use `read.csv` to load data file `data/sydney_beaches/temperature.csv`
 
 ```{r}
-#2. Use `read_csv` to load data file `data/plant_height/plantHeightSingleSpp.csv`
-read_csv("data/plant_height/plantHeightSingleSpp.csv")
+#2. Use `read.csv` to load data file `data/plant_height/plantHeightSingleSpp.csv`
+read.csv("data/plant_height/plantHeightSingleSpp.csv")
 ```
 
 ```{r}
-#3. Use `read_csv` to load data file `data/sydney_beaches/temperature.csv`
-read_csv("data/sydney_beaches/temperature.csv")
+#3. Use `read.csv` to load data file `data/sydney_beaches/temperature.csv`
+read.csv("data/sydney_beaches/temperature.csv")
 ```
 
 
-When reading data, `read_csv` tries to guess column types. We can override this by specifying column types exactly.
+When reading data, `read.csv` tries to guess column types. We can override this by specifying column types exactly.
 
 Read everything as characters
 
 ```{r}
-read_csv("data/movie_profit/movie_profit.csv", 
-         col_types = cols(.default = col_character())
-)
-```
-
-Specify by variable-by-variable:
-
-```{r}
-read_csv("data/movie_profit/movie_profit.csv", 
-         col_types = cols(
-           X1 = col_integer(),
-           release_date = col_character(),
-           movie = col_character(),
-           production_budget = col_double(),
-           domestic_gross = col_double(),
-           worldwide_gross = col_double(),
-           distributor = col_character(),
-           mpaa_rating = col_character(),
-           genre = col_character()
-         )
-)
+read.csv("data/movie_profit/movie_profit.csv", colClasses = "character")
 ```
 
 Also other variants
 
-- `read_tsv`: load tab-separated data
-- `read_delim`: load file by specifying the delimiter
+- `read.delim`: load file by specifying the delimiter
 
 ```{r}
-read_delim("data/movie_profit/movie_profit.csv", ",")
+read.delim("data/movie_profit/movie_profit.csv", sep=",")
 ```
 
 To load data from excel spreadsheets, try the `readxl` package.
+
+```{r}
+Example here 
+```
+
 
 # Data manipulation with `dplyr` (Dan)
 
@@ -285,7 +262,7 @@ movies %>%
 1. Create a subset of the dataset consisting of only movies distributed by `Walt Disney`
 2. As above and only including variables `movie`, `worldwide_gross`, and `production_budget`
 3. As above but with data sorted alphabetically by `movie`
-4.  As above but with an additional column return given by `worldwide_gross/production_budget`
+4. As above but with an additional column return given by `worldwide_gross/production_budget`
 
 
 ```{r}
@@ -309,7 +286,9 @@ m3 %>%
 
 # Imagine your plot (Will)
 
-# Intro to data visualisation with `ggplot2` (Dony)
+https://www.data-to-viz.com
+
+# Intro to data visualisation with `ggplot2` (Fonti)
 
 See slides in "slides/datavis_with_ggplot2.html"
 
@@ -422,7 +401,7 @@ library(magrittr)
 
 # Customisation: 
 
-**Exrecise**: Brain storm how to improve this plot
+**Exercise**: Brain storm how to improve this plot
 
 ## scales and axes
 

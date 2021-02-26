@@ -6,7 +6,7 @@ output: html_document
 ---
 
 
-# Introduction to gapminder data (Dan)
+# Introduction to gapminder data (Will)
 
 For day 2's exercises, we're going to use the famous gapminder dataset, maintained at [gapminder.org](http://gapminder.org)
 
@@ -80,17 +80,10 @@ Make these data tidy:
 
 ```{r}
 
-data_fertility <- 
-  read_csv("data/gapminder/children_per_woman_total_fertility.csv") %>%   
-  pivot_longer(-country, names_to = "year", values_to = "fertility")
-
-data_gdp <- read_csv("data/gapminder/income_per_person_gdppercapita_ppp_inflation_adjusted.csv") %>%   
-  pivot_longer(-country, names_to = "year", values_to = "gdp_per_capita")
-
 ```
 
 
-# Advanced data manipulation with `dplyr` (Dan)
+# Advanced data manipulation with `dplyr` (Fonti, Daniel)
 
 We're now going to focus in on some more advanced features of dplyr. First, we need to load a series of tables and use `pivot_longer` to reorganise them. 
 
@@ -165,19 +158,13 @@ left_join(data_population, data_fertility, by = c("country", "year"))
 1. Join the two data frames `data_population` and `data_life_exp`
 
 ```{r}
-left_join(data_population, data_life_exp)
 
 ```
 
-2. Join the three data frames `data_population`, `data_life_exp` and `data_continent`. 
-  - hint: the join functions can only handle one table at a time
-  - Optional: reorder so that continent is the first variable
+2. Join the three data frames `data_population`, `data_life_exp` and `data_continent`
 
 ```{r}
-data_population %>% 
-  left_join(data_life_exp) %>%
-  left_join( data_continent) %>% 
-  select(continent, country, year, everything())
+
 ```
 
 
@@ -188,8 +175,8 @@ Now using join and pipes, we can built a big table of data containing all variab
 ```{r}
 data <- 
   data_fertility %>% 
-  left_join( data_population) %>% 
-  left_join( data_gdp ) %>% 
+  left_join(data_population) %>% 
+  left_join(data_gdp) %>% 
   left_join(data_life_exp) %>%
   left_join(data_continent) %>% 
   # reorganise data
@@ -244,10 +231,7 @@ First let's refresh some of the commands we learnt yesterday: `select`, `filter`
   
   
 ```{r}
-data %>% 
-  filter(year > 1900, continent == "Europe") %>% 
-  select(country, year, fertility, population) %>% 
-  write_csv("output/europe.csv")
+
 
 ```
 
@@ -259,14 +243,7 @@ data %>%
   - hints: the functions summarise and n_distinct will be useful
 
 ```{r}
-data %>%
-  summarise(
-    start = min(year),
-    end = max(year),
-    countries  = n_distinct(country),
-    fertility = mean(fertility),
-    life_expectancy = mean(life_expectancy)
-  )
+
 ```
 
 
@@ -279,11 +256,11 @@ Your answer should look like this:
 
 3. Try the same as above, but with answers for each continent including in the data
   - you won't be able to solve this, without material from the next section. But think about what you would in principle like to do.
-
-
+  
 ```{r}
 
 ```
+  
 
 ## Group_by 
 
@@ -332,13 +309,7 @@ Note, when creating a new dataset it is also important to remove the grouping va
   - hint: you'll also need `filter` and `summarise`
 
 ```{r}
-data %>%
-  filter(year >= 1990, year < 2000) %>%
-  group_by(country) %>%
-  summarise(
-    population = mean(population),
-    life_expectancy = mean(life_expectancy)
-  )
+
 ```
 
 Your answer should took like this:
@@ -359,13 +330,7 @@ Your answer should took like this:
   - hint: you'll also need `filter` and `summarise`
 
 ```{r}
-data %>%
-  filter(year >= 1990, year < 2000) %>%
-  group_by(country) %>%
-  summarise(
-    population = mean(population),
-    life_expectancy = mean(life_expectancy)
-  )
+
 ```
 
 Your answer should took like this:
@@ -400,7 +365,7 @@ i <- complete.cases(data)
 data %>% filter(!i)
 ```
 
-Looks liek some NA's in continent. Let's find which countries
+Looks like some NA's in continent. Let's find which countries
 ```{r}
 data %>% 
   filter(is.na(continent)) %>% 
@@ -430,7 +395,7 @@ data2 <-
 ```
 
 
-# Advanced data visualisation with `ggplot2` (Will)
+# Advanced data visualisation with `ggplot2` (Aniko)
 
 This session will show you some more advanced plotting techniques, building on the basic plots from Day 1 and using the gapminder data
 
@@ -508,13 +473,7 @@ ggplot(subset(diamonds, carat >= 2.2),
 5. make the font size of the axes 18 (for a presentation)
 
 ```{r}
-a<-data %>% 
-  filter(year==1900) %>%
-  ggplot(aes(gdp_per_capita, life_expectancy, colour = continent, size=population,label=country)) + 
-  geom_point() + 
-  scale_x_log10() + scale_y_log10() +
-  labs(x = "GDP per capita ($)", y = "life expectancy (yr)") + theme_classic() +
-  theme(text = element_text(size=18)) 
+
 ```
 
 ## One more logical
@@ -534,25 +493,12 @@ a<-data %>%
 
 2. Remove countries that have NA for continent
 
-3. make a scatter plot with 1) year as the x-axis 2) life expectancy as the y-axis 3) log10(population) as the colour of the points with viridis as the colour scheme 
+3. make a scatter plot with 1) year as the x-axis 2) life expectancy as the y-axis 3) log10(population) as the colour of the points with viridis as the color scheme 
 
 4. facet by continent
 
 ```{r}
-data %>% 
-  filter(year %in% c(1800,1850,1900,1950,2000)) %>%
-  filter(!is.na(continent)) %>%
-  ggplot(aes(year, life_expectancy, colour = log10(population))) + 
-  theme_classic()+
-  geom_point(alpha = 0.7) +
-  scale_x_log10() + 
-  scale_color_viridis()+
-  labs(x = "GDP per capita ($)", 
-       y = "life expectancy (yr)",
-       caption = "(based on data from gapminder)",
-       color= "Continent (log)") + 
-  theme_classic() +
-  facet_wrap(~continent)
+
 ```
 
 
@@ -584,18 +530,7 @@ a + mynamestheme
 4. facet by year
 
 ```{r}
-head(data)
 
-data %>% 
-  filter(year %in% c(1800,1850,1900,1950,2000)) %>%
-    filter(!is.na(continent)) %>%
-  ggplot(aes(gdp_per_capita, fertility, colour = continent)) + 
-  theme_classic()+
-  geom_point(alpha = 0.7) +
-  scale_x_log10() + 
-  scale_color_viridis(discrete = TRUE) + 
-  theme_classic() +
-  facet_wrap(~year)
 ```
 
 ### Animations with gganimate
