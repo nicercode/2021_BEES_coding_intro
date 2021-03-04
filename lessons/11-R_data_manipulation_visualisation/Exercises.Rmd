@@ -5,7 +5,7 @@ date: "Feb 2020"
 output: html_document
 ---
 
-# Introduction to using Rmarkdown (Rmd)
+# Introduction to using Rmarkdown (Aniko)
 
 - File extension `*.Rmd`
 - Can be notebook or markdown
@@ -34,7 +34,7 @@ The Rstudio interface makes it easy to work with both Rmarkdown (`*.Rmd`) and ma
 
 **Exercise**:  Create a new R markdown document (File -> New -> R Markdown, choose HTML). Add some text, then some code. Run the code chunks. Compile into an html file.   
 
-# Introduction to movies dataset (Dan)
+# Introduction to movies dataset (Fonti)
 
 For today's exercises we're using a data on movie production, from the ["Tidy Tuesday" collection](https://github.com/rfordatascience/tidytuesday). 
 
@@ -51,7 +51,7 @@ names(movies)
 An overview of the data
 
 ```{r}
-View(movies)
+#View(movies)
 ```
 
 or summarise using the `skimr` package:
@@ -63,7 +63,7 @@ skimr::skim(movies)
 **Exercise**: With your partner, review the `README` for the data at `data/movie_profit/readme.md` to see the variables included. 
 
 
-# What is the tidyverse? (Dan)
+# What is the tidyverse? (Will)
 
 * The [Tidyverse](http://tidyverse.org) is the name given to suite of R packages designed for seamless data analysis
 * Designed to help you fall into a **"Pit of Success"**
@@ -110,7 +110,7 @@ Tibbles have extra functionality:
 movies
 ```
 
-# Reading data with `readr` (Dan)
+# Reading data (Aniko)
 
 Where possible, we recommend using 
 
@@ -202,7 +202,7 @@ Examples:
 To select certain variables:
 
 ```{r}
-select(movies, ???)
+#select(movies, ???)
 ```
 
 To filter to particular rows:
@@ -278,7 +278,10 @@ movies %>%
 
 # Imagine your plot (Will)
 
-# Intro to data visualisation with `ggplot2` (Dony)
+https://www.data-to-viz.com
+
+
+# Intro to data visualisation with `ggplot2` (Fonti)
 
 See slides in "slides/datavis_with_ggplot2.html"
 
@@ -323,7 +326,7 @@ Q3 What genres make the highest profit?
 
 ```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(1)}
 ggplot(movies, aes(x = genre, y = worldwide_gross))+
-  geom_boxplot()
+   geom_boxplot()
 ```
 
 Q3 re-scale so we can see more variation...
