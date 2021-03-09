@@ -1,7 +1,7 @@
 ---
 title: "Managing projects with R"
-author: "Instructors: Daniel Falster & Will Cornwell"
-date: "17/12/2018"
+author: "Instructors: Daniel Falster"
+date: "10/03/2021"
 output: html_document
 ---
 
@@ -9,19 +9,17 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Motivation
+## Motivation
 
-- Life is complicated, and I used to be in pain, but now I live a blissful peaceful happy existence with no worries aside from feeding unicorns.
-- Top tip for happy coding
-	- structure for organising yourself
-	- not only way you can do it, but unless have other good ideas, consider adopting it
-- Most people tend to organize their projects like this:
+**Happy coder rule**: Managing your projects in a reproducible fashion doesn't just make your science reproducible, it makes your life easier. [@vsbuffalo](https://twitter.com/vsbuffalo/status/323638476153167872)
+
+Managing all the "stuff" in research is hard. But I live a blissful peaceful happy existence with no worries (aside from feeding unicorns). That's because i use tested strategies for staying organised.
+
+Most people tend to organize their projects like this:
 
 ![](http://swcarpentry.github.io/r-novice-gapminder/fig/bad_layout.png)
 
-<blockquote class="twitter-tweet"><p>Managing your projects in a reproducible fashion doesn't just make your science reproducible, it makes your life easier.</p>— Vince Buffalo (@vsbuffalo) <a href="https://twitter.com/vsbuffalo/status/323638476153167872">April 15, 2013</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+This is not a good strategy.
 
 A good project layout will ultimately make your life easier:
 
@@ -31,59 +29,114 @@ A good project layout will ultimately make your life easier:
 * It allows you to easily upload your code with your manuscript submission;
 * It makes it easier to pick the project back up after a break.
 
+## Finding files & R's working directory
 
-Path names
+Sanity starts with undersatding where R operating and what it can access.
 
-- You have to know where things are
-- Where on your computer: `getwd()`
-- What's in the folder: `dir()` 
-- Absolute versus relative paths
-	- Person 1: Describe how to get to level 5 of this building
-	- Person 2: Describe how to get to level 5 of this building, from the entrance to the uni on Anzac parade
+R works from the "working directory" -- the folder where it is currently located. 
 
 **Exercises:**
 
 1. Use the `getwd` to find the absolute path of the `folder`
 
+```{r}
+getwd()
+```
+
 2. Use the `dir` function to list contents of the folder you are in
-	- change one of the default arguments to return the full path name of the files
 
-3. Check a file exists using both absolute and relative paths, using the `file.exists` function
+```{r}
+dir()
+```
+
+3. Data not loading? Checking whether a file "exists" is a good way to check if R is pointing at the right spot. 
+
+```{r}
+filename <- "zz"
+file.exists(filename)
+```
+
+## A meaningful unit for organisation
+
+**Happy coder rule**: Projects are distinct & self contained
+
+A sensible "project" should contain all the "stuff" you need to execute your research.  
+At what scale (week, chapter, PhD, career) should we organise our materials? 
+
+**Discuss**: What is a meaningful unit for project?
+
+## Rstudio project files make life easier
+
+**Happy coder rules**: use Rstudio's project files, never use `setwd`
+
+**Exercises:**
+
+1. Open the project for this lesson, by selecting "R-projects.Rproj". Note you are now in a project.
+
+2. What is the root of your project as an absolute pathname
+
+```{r}
+getwd()
+```
+
+3. By clicking on the project icon in the top right of screen, open a project for the next lesson "R-data_manipulation.Proj". Check the working directory:
+
+```{r}
+getwd()
+```
+
+4. Again, using the project icon in the top right of screen, try switching between projects. The working directory and files should change.
 
 
-How do we organise materials?
+Checkout [Hadley Wickham on opening Rstudio projects](https://youtu.be/boKFxBniUH0) 
 
-- What is a meaningful unit for project? (A chapter or analysis)
-	- **Happy coder rule**: Projects are distinct & self contained
-	- start with a folder for project
 
-- Key parts: What sort of files do we have to deal with?
-	- README.md -- orients
-	- data/
-	- analysis.Rmd
-	- R/
-	- output/
+## Path names 
 
--	Path names:
-	- **Happy coder rule**: use relative paths
-		1. can move projects around and still use it
-		2. collaboration
+**Happy coder rules**: use relative paths, from project `root`. Never use absolute paths.
 
-- Rstudio project files
-	- opening projects
-	- **Happy coder rule**: use Rstduio's project files
-	- **Rule: never use setwd**
-	- [Hadley Wickham on opening Rstudio projects](https://youtu.be/boKFxBniUH0) 
 
-- More guidelines:
-	- use a consistent project structure
-	- everything in `data` should be read-only (and precious)
-	- everything in the folder `R` is a code for a function
-	- everything in `output` is disposable
-	- main R or Rmd script is simple and readable
-	- all Rmd files written to run from the top directory
-	- Use a file `readme.md` to give brief introduction
-		- might add another in the directory `data`
+Absolute versus relative paths
+
+- Person 1: Describe how to get to level 5 of this building, from level 1 (relative path, from level 1)
+- Person 2: Describe how to get to level 5 of this building, starting with lattidue and longitude (absolute path)
+
+**Exercises:**
+
+1. Try reading in the data file in the folder `data`, using a full path
+
+```{r}
+full_path <- file.path(getwd(), "data/plantHeightSingleSpp.csv")
+
+data <- read.csv(full_path)
+```
+
+Now try with relative path
+
+```{r}
+data <- read.csv("data/plantHeightSingleSpp.csv")
+```
+
+Note, if you operate from the project root, you can use relative paths for everything. This means
+
+- pathnames don't break when you move the project around
+- code will also run on other machines, including collaborators.
+
+## Within your projects, use a consistent folder structure
+
+**Happy coder rules**: use a prediatble and intuitaive folder structure
+
+"Where are the forks?"
+
+**Discuss**: What are the key parts of a project (i.e. file types and activties)
+
+- everything in `data` should be read-only (and precious)
+- everything in the folder `R` is a code for a function
+- everything in `output` is disposable
+- main R or Rmd script is simple and readable
+- all Rmd files written to run from the top directory
+- Use a file `readme.md` to give brief introduction
+- might add another in the directory `data`
 
 **Exercises:**
 
@@ -93,6 +146,4 @@ How do we organise materials?
 - Add an Rmd file like `Analysis.Rmd`
 - Create a folder called `data` and add a csv file to the folder 
 - Try closing and reopening Rstudio, switching between different projects. Use `getwd()` to see what folder you're in and `ls()` to see what's in memory 
-
-
 
