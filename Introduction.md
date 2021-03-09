@@ -10,14 +10,25 @@ Materials:
 
 - Install: R, Rstudio, tidyverse
 
+```
+install.packages("devtools")
+install.packages("broom")
+install.packages("tidyverse")
+install.packages("remotes")
+```
+
+Breakout rooms
+
+- one for each helper
+- also groups of 5
+
 Getting to know you:
 
 - who is new from last week
 - how long have you used R (anyone not used it?)
-- everyone stand up
-	- turn to person next to you: Introduce yourself, favourite animal, hardest thing you've found about using R
-	- other-side: a favourite activity, What % of your time you expect to spend in the field/lab or at the computer
-
+- in breakout rooms
+	- Introduce yourself, favourite animal, hardest thing you've found about using R
+  - a favourite activity, What % of your time you expect to spend in the field/lab or at the computer
 
 Expectations
 
@@ -38,7 +49,7 @@ Expectations
 
 - We try hard to move everyone along
 
-- raised hands - write your name on both
+- raised hands - I ened help
 
 - Live coding
   - We're going to do a lot of live coding -> why?
