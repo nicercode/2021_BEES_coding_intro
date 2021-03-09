@@ -1,13 +1,17 @@
 #!/bin/bash
 
-rm -rf public
+release=public/2021_bees_data_intro
+
+rm -rf $release
 mkdir public
-cp -r lessons public
-cp -r cheatsheets public
-cp -r slides public
-cp *.md public
-find public -name "TODO*" -delete
-find public -name "*answers*" -delete
-find public -name "*.Rproj.user*" -delete
-find public -name "*DS_*" -delete
-find public -name "*.key*" -delete
+mkdir $release
+
+cp -r lessons $release
+cp -r cheatsheets $release
+cp -r slides $release
+cp *.md $release
+find $release -name "TODO*" -delete
+find $release -name "*answers*" -delete
+find $release -name "*.Rproj.user*" -delete
+find $release -name "*DS_*" -delete
+find $release -name "*.key*" -delete
