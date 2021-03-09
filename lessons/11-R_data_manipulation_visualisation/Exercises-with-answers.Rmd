@@ -51,13 +51,14 @@ names(movies)
 An overview of the data
 
 ```{r}
-View(movies)
+#View(movies)
 ```
 
 or summarise using the `skimr` package:
 
 ```{r}
 skimr::skim(movies)
+str(movies)
 ```
 
 **Exercise**: With your partner, review the `README` for the data at `data/movie_profit/readme.md` to see the variables included. 
@@ -294,54 +295,291 @@ See slides in "slides/datavis_with_ggplot2.html"
 
 **Examples from the slides:**
 
-Read and inspect the data
+## An example
 
 ```{r}
-library(tidyverse)
-movies <- read_csv("data/movie_profit/movie_profit.csv")
-glimpse(movies) # see every column in the data frame
+ggplot(data = movies, aes(x = genre, y = production_budget)) + 
+  geom_boxplot() 
 ```
 
-Q1 What are the most common genres? 
+## More data exploration plots
+```{r}
+#Density/Histograms
+ggplot(data = movies, aes(x = log(domestic_gross))) + 
+  geom_histogram(aes(y = ..density..)) +
+  geom_density() 
+
+#Scatter plots for exploring relationships
+ggplot(data = movies, aes(x = production_budget, y = domestic_gross)) +   geom_point(alpha = 0.5)
+
+data_summary <- function(x) {
+   m <- mean(x)
+   ymin <- m-sd(x)
+   ymax <- m+sd(x)
+   return(c(y=m,ymin=ymin,ymax=ymax))
+}
+
+#Violin plots with customised function
+ggplot(data = movies, aes(x = genre, y = production_budget)) + 
+  geom_violin(trim = F) + 
+  geom_point(colour = "navy", size = 1, alpha = 0.1) + 
+  stat_summary(fun.data="data_summary", col = "black") 
+```
+
+## Why plot: Communicate science, results
+```{r}
+#Barplot production budget by Top 6 most common distributors
+top_6 <- movies %>% tabyl(distributor) %>% arrange(-n) %>% 
+  filter(n >= 240) %>% pull(distributor)
+
+A <- movies %>% filter(distributor %in% top_6) %>% 
+ggplot(aes(x = reorder(distributor, -production_budget, sum), y = production_budget, fill = distributor)) + 
+  geom_col() + 
+  ylab("Production budget (USD)") + 
+  xlab("Distribution companies") + 
+  scale_fill_manual(values = c("#A42820", "#5F5647", "#3F5151", "#4E2A1E", "#550307", "#0C1707")) + 
+  coord_flip() + 
+  theme_bw() + 
+  theme(legend.position = "none")
+A
+
+#Side by side plot of domestic gross and worldwide gross of Top 6 most common distributors
+distributor_long <- movies %>%
+  filter(distributor %in% top_6) %>% 
+  select(distributor, domestic_gross, worldwide_gross) %>% 
+  pivot_longer(cols = 2:3, names_to = "type")
+
+B <- ggplot(distributor_long, aes(x = reorder(distributor, -value, sum), y = value, fill = type)) + 
+  geom_col(position = "dodge") +
+  ylab("Gross income (USD)") + 
+  xlab("Distribution companies") + 
+  scale_fill_manual(values = c("#550307", "#0C1707"), name = "Type of income", labels = c("Domestic", "Worldwide")) + 
+  coord_flip() + 
+  theme_bw() + 
+  theme(legend.position = "bottom",
+        legend.title = element_text(size = 10),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank())
+B
+
+#Plot release date by production budget
+#Set release date as a date
+movies <- movies %>% 
+  mutate(release_date = mdy(release_date))
+
+C <- ggplot(data = movies, aes(x = release_date, y = production_budget)) + 
+  geom_point(alpha = 0.4, colour = "#0C1707") + 
+  xlab("Release Date (Year)") + 
+  ylab("Production budget (USD)") + 
+  theme_bw() 
+C
+
+#Production cost and worldwide gross
+D <- ggplot(data = movies, aes(x = production_budget, y = worldwide_gross)) + 
+  geom_point(alpha = 0.4, colour = "#0C1707") + 
+  geom_point(data = movies %>% filter(production_budget > 150000000 & worldwide_gross > 1000000000), colour = "#A42820") +
+  geom_text(data = movies %>% filter(production_budget > 150000000 & worldwide_gross > 1000000000), aes(label = movie), size = 3, hjust = 1.1) + 
+  geom_point(data = movies %>% filter(production_budget < 50000000 & worldwide_gross > 787000000), colour = "#5F5647") + 
+  geom_text(data = movies %>% filter(production_budget  < 50000000 & worldwide_gross > 787000000), aes(label = movie), size = 3, hjust = -0.1) + 
+  geom_point(data = movies %>% filter(production_budget < 100000000 & worldwide_gross > 1150000000), colour = "gold") + 
+  geom_text(data = movies %>% filter(production_budget < 100000000 & worldwide_gross > 1150000000), aes(label = movie), size = 3, hjust = -0.2) + 
+  ylab("Worldwide gross (USD)") + 
+  xlab("Production budget (USD)") + 
+  theme_bw() 
+D
+
+(A + B + C) / D
+```
+
+
+## Summarise and plot
 
 ```{r}
-ggplot(movies,         # the data
-       aes(x= genre))+ # what to plot
-  geom_bar()           # type of plot
+mpaa_rating_means <- movies %>% 
+  filter(! is.na(mpaa_rating)) %>% 
+  group_by(mpaa_rating) %>% 
+  summarise(mean_worldwide_gross = mean(worldwide_gross),
+            se_worldwide_gross = sd(worldwide_gross)/sqrt(length(worldwide_gross)),
+            lower_worldwide_gross = mean_worldwide_gross - se_worldwide_gross,
+            upper_worldwide_gross = mean_worldwide_gross + se_worldwide_gross) 
 
+head(mpaa_rating_means)
+
+ggplot(data = mpaa_rating_means, aes(x = mpaa_rating, y = mean_worldwide_gross)) + 
+  geom_col() + 
+  geom_errorbar(aes(ymin = lower_worldwide_gross, 
+                    ymax = upper_worldwide_gross),
+                width = 0.2)
+  
 ```
 
-
-Q1 And put some colour on...
-
-```{r }
-ggplot(movies,                        # the data
-       aes(x = genre, fill = genre))+ # what to plot
-  geom_bar()                          # type of plot
-
-```
-
-Q2 What genres are more expensive to produce?
+## Customise "Accessorising"
 
 ```{r}
-ggplot(movies, aes(x = genre, y = production_budget))+
-  geom_boxplot()
+#Colour themes
+ggplot(data = movies, aes(x = genre, y = production_budget)) + 
+  geom_boxplot() + 
+  theme_classic() 
+
+ggplot(data = movies, aes(x = genre, y = production_budget)) + 
+  geom_boxplot() + 
+  theme_bw() 
+
+ggplot(data = movies, aes(x = genre, y = production_budget)) + 
+  geom_boxplot() + 
+  theme_dark() 
+
+ggplot(data = movies, aes(x = genre, y = production_budget)) + 
+  geom_boxplot() + 
+  theme_void() 
 ```
 
-
-Q3 What genres make the highest profit?
-
-```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(1)}
-ggplot(movies, aes(x = genre, y = worldwide_gross))+
-  geom_boxplot()
-```
-
-Q3 re-scale so we can see more variation...
-
-```{r fig.height=3, message=FALSE, warning=FALSE, dev='svg', highlight.output=c(3)}
-ggplot(movies,aes(x = genre, y = worldwide_gross))+
+```{r}
+#Axis labels
+ggplot(data = movies, aes(x = genre, y = production_budget)) + 
   geom_boxplot() +
-  scale_y_log10()
+  ylab("Production budget (USD)") + 
+  xlab("Genre") + 
+  theme_bw() 
+
+#Axis labels, colour, points and size/type face/font
+ggplot(data = movies, aes(x = genre, y = production_budget, fill = genre)) + 
+  geom_boxplot(outlier.colour = "red", size = 1.2) +
+  ylab("Production budget (USD)") + 
+  xlab("Genre") + 
+  theme_bw() + 
+  theme(axis.title.x = element_text(family = "Times", face = "bold.italic", size = 12),
+        axis.title.y = element_text(family = "Times", face = "bold.italic", size = 12))
+```
+
+## Create your own theme - do it once and do it right
+
+```{r}
+thesis_theme <- theme_bw() + 
+  theme(axis.title.x = element_text(family = "Calibri", face = "bold", size = 16),
+        axis.title.y = element_text(family = "Calibri", face = "bold", size = 16),
+        axis.text.x = element_text(family = "Calibri" , size = 12),
+        axis.text.y = element_text(family = "Calibri", size = 12),
+        strip.text = element_text(family = "Calibri", size = 12))
+
+ggplot(data = movies, aes(x = genre, y = production_budget)) + 
+  geom_boxplot() +
+  ylab("Production budget (USD)") + 
+  xlab("Genre") + 
+  thesis_theme
+```
+
+## A ecostatistician's tool box: 
+### Facet wraps
+```{r}
+top6_plot <- movies %>% filter(distributor %in% top_6 & !is.na(mpaa_rating)) %>% 
+  ggplot(data = ., aes(x = production_budget, y = domestic_gross)) +  
+  geom_point() +
+  theme_bw()
+
+top6_plot + 
+  facet_wrap(~distributor) 
+
+top6_plot + 
+  facet_grid(distributor ~ genre) 
+```
+
+### Scientific labels
+https://robjhyndman.com/hyndsight/latex2exp/
+
+```{r}
+#Make some fake data
+n <- 25
+# the paramters
+beta_0 <- 0.0005 # the true intercept
+beta_1 <- 0.02 # the true slope
+sigma <- 0.03 # the true standard deviation
+
+temperature <- seq(20,60, by = 4)
+metabolic_rate <- beta_0 + beta_1*temperature + rnorm(temperature, sd=sigma)
+fake_data <- data_frame(temperature, metabolic_rate)
+
+ggplot(fake_data, aes(x = temperature, y = metabolic_rate)) + 
+  geom_point(size = 3) + 
+  scale_y_log10() +
+  ylab(TeX("log VCO_2 mL min^{-1}")) + 
+  xlab(TeX('Temperature ^{º}C')) + 
+  theme(axis.title.y = element_text(size = 30),
+        axis.title.x = element_text(size = 30))
+```
+
+### Add a bit of flair: colour schemes
+-Viridis, great for continuous data
+-Rcolourbrewer Colour blind friendly palettes
+-Wes Anderson palettes
+
+```{r}
+#Colour blind friendly
+library(RColorBrewer)
+display.brewer.all(colorblindFriendly = T)
+
+ggplot(data = movies, aes(x = genre, y = production_budget, fill = genre)) + 
+  geom_violin(trim = F, alpha = 0.7) + 
+  geom_point(colour = "white", size = 1, alpha = 0.1) + 
+  stat_summary(fun.data="data_summary", col = "black") + 
+  scale_fill_brewer(palette = "Dark2") + 
+  thesis_theme + 
+  ylab("Production budget (USD)") + 
+  xlab("Genres") +
+  theme(legend.position = "none")
+
+#Viridis
+library(viridisLite)
+
+ggplot(data = movies, aes(x = production_budget, y = worldwide_gross)) +
+  geom_hex() + 
+  scale_x_log10() + 
+  scale_y_log10() + 
+  scale_fill_viridis() + 
+  ylab("Production budget (USD)") + 
+  xlab("Worldwide gross (USD)") +
+  thesis_theme
+
+#Wes Andersson
+library(wesanderson)
+
+movies %>% filter(distributor %in% top_6) %>% 
+ggplot(aes(x = reorder(distributor, -production_budget, sum), y = production_budget, fill = distributor)) + 
+  geom_col() + 
+  ylab("Production budget (USD)") + 
+  xlab("Distribution companies") + 
+  scale_fill_manual(values = wes_palette("IsleofDogs1")) + 
+  coord_flip() + 
+  theme_bw() + 
+  theme(legend.position = "none")
+
+movies %>% filter(distributor %in% top_6) %>% 
+ggplot(aes(x = reorder(distributor, -production_budget, sum), y = production_budget, fill = distributor)) + 
+  geom_col() + 
+  ylab("Production budget (USD)") + 
+  xlab("Distribution companies") + 
+  scale_fill_manual(values = wes_palette("IsleofDogs1")) + 
+  coord_flip() + 
+  theme_bw() + 
+  theme(legend.position = "none")
+```
+
+### Arranging multiple plots
+https://patchwork.data-imaginist.com/
+```{r}
+#Install package
+install.packages('patchwork')
+library(patchwork)
+
+#Different layouts
+A / D 
+
+D / (A + C)
+
+(A + B + C) / D
+
+#Annotating
+(A + B) / D + plot_annotation(tag_levels = 'A')
 ```
 
 

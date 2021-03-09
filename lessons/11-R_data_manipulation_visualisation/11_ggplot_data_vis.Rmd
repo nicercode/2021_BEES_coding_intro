@@ -29,12 +29,12 @@ ggplot(data = movies, aes(x = genre, y = production_budget)) +
 ## More data exploration plots
 ```{r}
 #Density/Histograms
-ggplot(data = movies, aes(x = domestic_gross)) + 
-  geom_histogram(aes(y = ..density..), fill = "light blue") +
+ggplot(data = movies, aes(x = log(domestic_gross))) + 
+  geom_histogram(aes(y = ..density..)) +
   geom_density() 
 
 #Scatter plots for exploring relationships
-ggplot(data = movies, aes(x = production_budget, y = domestic_gross)) +   geom_point(alpha = 0.2) 
+ggplot(data = movies, aes(x = production_budget, y = domestic_gross)) +   geom_point(alpha = 0.5)
 
 data_summary <- function(x) {
    m <- mean(x)
@@ -46,13 +46,8 @@ data_summary <- function(x) {
 #Violin plots with customised function
 ggplot(data = movies, aes(x = genre, y = production_budget)) + 
   geom_violin(trim = F) + 
-  geom_point(colour = "light blue", size = 1, alpha = 0.1) + 
+  geom_point(colour = "navy", size = 1, alpha = 0.1) + 
   stat_summary(fun.data="data_summary", col = "black") 
-
-#Quick y axis transform
-ggplot(data = movies, aes(x = genre, y = production_budget)) + 
-  geom_boxplot() + 
-  scale_y_log10()
 ```
 
 ## Why plot: Communicate science, results
@@ -124,7 +119,22 @@ D
 ## Summarise and plot
 
 ```{r}
+mpaa_rating_means <- movies %>% 
+  filter(! is.na(mpaa_rating)) %>% 
+  group_by(mpaa_rating) %>% 
+  summarise(mean_worldwide_gross = mean(worldwide_gross),
+            se_worldwide_gross = sd(worldwide_gross)/sqrt(length(worldwide_gross)),
+            lower_worldwide_gross = mean_worldwide_gross - se_worldwide_gross,
+            upper_worldwide_gross = mean_worldwide_gross + se_worldwide_gross) 
 
+head(mpaa_rating_means)
+
+ggplot(data = mpaa_rating_means, aes(x = mpaa_rating, y = mean_worldwide_gross)) + 
+  geom_col() + 
+  geom_errorbar(aes(ymin = lower_worldwide_gross, 
+                    ymax = upper_worldwide_gross),
+                width = 0.2)
+  
 ```
 
 ## Customise "Accessorising"
@@ -156,9 +166,9 @@ ggplot(data = movies, aes(x = genre, y = production_budget)) +
   xlab("Genre") + 
   theme_bw() 
 
-#Axis label size/type face/font
-ggplot(data = movies, aes(x = genre, y = production_budget)) + 
-  geom_boxplot() +
+#Axis labels, colour, points and size/type face/font
+ggplot(data = movies, aes(x = genre, y = production_budget, fill = genre)) + 
+  geom_boxplot(outlier.colour = "red", size = 1.2) +
   ylab("Production budget (USD)") + 
   xlab("Genre") + 
   theme_bw() + 
@@ -186,13 +196,16 @@ ggplot(data = movies, aes(x = genre, y = production_budget)) +
 ## A ecostatistician's tool box: 
 ### Facet wraps
 ```{r}
-movies %>% filter(distributor %in% top_6) %>% 
+top6_plot <- movies %>% filter(distributor %in% top_6 & !is.na(mpaa_rating)) %>% 
   ggplot(data = ., aes(x = production_budget, y = domestic_gross)) +  
-  geom_point(alpha = 0.2) + 
-  facet_wrap(~distributor) + 
-  ylab("Production budget (USD)") + 
-  xlab("Genre") +
-  thesis_theme
+  geom_point() +
+  theme_bw()
+
+top6_plot + 
+  facet_wrap(~distributor) 
+
+top6_plot + 
+  facet_grid(distributor ~ genre) 
 ```
 
 ### Scientific labels
@@ -211,11 +224,12 @@ metabolic_rate <- beta_0 + beta_1*temperature + rnorm(temperature, sd=sigma)
 fake_data <- data_frame(temperature, metabolic_rate)
 
 ggplot(fake_data, aes(x = temperature, y = metabolic_rate)) + 
-  geom_point() + 
+  geom_point(size = 3) + 
   scale_y_log10() +
   ylab(TeX("log VCO_2 mL min^{-1}")) + 
-  xlab(TeX('Temperature ^{º}C'))
-
+  xlab(TeX('Temperature ^{º}C')) + 
+  theme(axis.title.y = element_text(size = 30),
+        axis.title.x = element_text(size = 30))
 ```
 
 ### Add a bit of flair: colour schemes
@@ -241,7 +255,7 @@ ggplot(data = movies, aes(x = genre, y = production_budget, fill = genre)) +
 #Viridis
 library(viridisLite)
 
-ggplot(data = movies, aes(x = production_budget, y = worldwide_gross)) + 
+ggplot(data = movies, aes(x = production_budget, y = worldwide_gross)) +
   geom_hex() + 
   scale_x_log10() + 
   scale_y_log10() + 
@@ -252,6 +266,16 @@ ggplot(data = movies, aes(x = production_budget, y = worldwide_gross)) +
 
 #Wes Andersson
 library(wesanderson)
+
+movies %>% filter(distributor %in% top_6) %>% 
+ggplot(aes(x = reorder(distributor, -production_budget, sum), y = production_budget, fill = distributor)) + 
+  geom_col() + 
+  ylab("Production budget (USD)") + 
+  xlab("Distribution companies") + 
+  scale_fill_manual(values = wes_palette("IsleofDogs1")) + 
+  coord_flip() + 
+  theme_bw() + 
+  theme(legend.position = "none")
 
 movies %>% filter(distributor %in% top_6) %>% 
 ggplot(aes(x = reorder(distributor, -production_budget, sum), y = production_budget, fill = distributor)) + 
