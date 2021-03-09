@@ -38,7 +38,7 @@ Expectations
 
 - We try hard to move everyone along
 
-- post it notes - write your name on both
+- raised hands - write your name on both
 
 - Live coding
   - We're going to do a lot of live coding -> why?
