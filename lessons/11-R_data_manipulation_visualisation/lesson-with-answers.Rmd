@@ -164,7 +164,7 @@ read.delim("data/movie_profit/movie_profit.csv", sep=",")
 To load data from excel spreadsheets, try the `readxl` package.
 
 ```{r}
-Example here 
+
 ```
 
 
@@ -327,6 +327,18 @@ ggplot(data = movies, aes(x = genre, y = production_budget)) +
 ```
 
 ## Why plot: Communicate science, results
+
+
+Load some extra packages
+
+```{r}
+library(janitor)
+library(lubridate)
+library(patchwork)
+library(viridis)
+```
+
+
 ```{r}
 #Barplot production budget by Top 6 most common distributors
 top_6 <- movies %>% tabyl(distributor) %>% arrange(-n) %>% 
@@ -502,8 +514,8 @@ fake_data <- data_frame(temperature, metabolic_rate)
 ggplot(fake_data, aes(x = temperature, y = metabolic_rate)) + 
   geom_point(size = 3) + 
   scale_y_log10() +
-  ylab(TeX("log VCO_2 mL min^{-1}")) + 
-  xlab(TeX('Temperature ^{º}C')) + 
+  ylab(expression(log~VCO_2~mL~min^{-1})) + 
+  xlab(expression(Temperature^{º}~C)) + 
   theme(axis.title.y = element_text(size = 30),
         axis.title.x = element_text(size = 30))
 ```
@@ -568,7 +580,7 @@ ggplot(aes(x = reorder(distributor, -production_budget, sum), y = production_bud
 https://patchwork.data-imaginist.com/
 ```{r}
 #Install package
-install.packages('patchwork')
+#install.packages('patchwork')
 library(patchwork)
 
 #Different layouts

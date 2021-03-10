@@ -319,9 +319,20 @@ ggplot(data = movies, aes(x = genre, y = production_budget)) +
 ```
 
 ## Why plot: Communicate science, results
+
+Load some extra packages
+
+```{r}
+library(janitor)
+library(lubridate)
+library(patchwork)
+library(viridis)
+```
+
+
 ```{r}
 #Barplot production budget by Top 6 most common distributors
-top_6 <- movies %>% tabyl(distributor) %>% arrange(-n) %>% 
+top_6 <- movies %>% janitor::tabyl(distributor) %>% arrange(-n) %>% 
   filter(n >= 240) %>% pull(distributor)
 
 A <- movies %>% filter(distributor %in% top_6) %>% 
@@ -336,12 +347,14 @@ ggplot(aes(x = reorder(distributor, -production_budget, sum), y = production_bud
 A
 
 #Side by side plot of domestic gross and worldwide gross of Top 6 most common distributors
-distributor_long <- movies %>%
+distributor_long <- 
+  movies %>%
   filter(distributor %in% top_6) %>% 
   select(distributor, domestic_gross, worldwide_gross) %>% 
   pivot_longer(cols = 2:3, names_to = "type")
 
-B <- ggplot(distributor_long, aes(x = reorder(distributor, -value, sum), y = value, fill = type)) + 
+B <- 
+  ggplot(distributor_long, aes(x = reorder(distributor, -value, sum), y = value, fill = type)) + 
   geom_col(position = "dodge") +
   ylab("Gross income (USD)") + 
   xlab("Distribution companies") + 
@@ -352,22 +365,27 @@ B <- ggplot(distributor_long, aes(x = reorder(distributor, -value, sum), y = val
         legend.title = element_text(size = 10),
         axis.title.y = element_blank(),
         axis.text.y = element_blank())
+
 B
 
 #Plot release date by production budget
 #Set release date as a date
-movies <- movies %>% 
-  mutate(release_date = mdy(release_date))
+movies <- 
+  movies %>% 
+  mutate(release_date = lubridate::mdy(release_date))
 
-C <- ggplot(data = movies, aes(x = release_date, y = production_budget)) + 
+C <- 
+  ggplot(data = movies, aes(x = release_date, y = production_budget)) + 
   geom_point(alpha = 0.4, colour = "#0C1707") + 
   xlab("Release Date (Year)") + 
   ylab("Production budget (USD)") + 
   theme_bw() 
+
 C
 
 #Production cost and worldwide gross
-D <- ggplot(data = movies, aes(x = production_budget, y = worldwide_gross)) + 
+D <- 
+  ggplot(data = movies, aes(x = production_budget, y = worldwide_gross)) + 
   geom_point(alpha = 0.4, colour = "#0C1707") + 
   geom_point(data = movies %>% filter(production_budget > 150000000 & worldwide_gross > 1000000000), colour = "#A42820") +
   geom_text(data = movies %>% filter(production_budget > 150000000 & worldwide_gross > 1000000000), aes(label = movie), size = 3, hjust = 1.1) + 
@@ -378,6 +396,7 @@ D <- ggplot(data = movies, aes(x = production_budget, y = worldwide_gross)) +
   ylab("Worldwide gross (USD)") + 
   xlab("Production budget (USD)") + 
   theme_bw() 
+
 D
 
 (A + B + C) / D
@@ -387,7 +406,8 @@ D
 ## Summarise and plot
 
 ```{r}
-mpaa_rating_means <- movies %>% 
+mpaa_rating_means <- 
+  movies %>% 
   filter(! is.na(mpaa_rating)) %>% 
   group_by(mpaa_rating) %>% 
   summarise(mean_worldwide_gross = mean(worldwide_gross),
@@ -447,7 +467,8 @@ ggplot(data = movies, aes(x = genre, y = production_budget, fill = genre)) +
 ## Create your own theme - do it once and do it right
 
 ```{r}
-thesis_theme <- theme_bw() + 
+thesis_theme <- 
+  theme_bw() + 
   theme(axis.title.x = element_text(family = "Calibri", face = "bold", size = 16),
         axis.title.y = element_text(family = "Calibri", face = "bold", size = 16),
         axis.text.x = element_text(family = "Calibri" , size = 12),
@@ -464,7 +485,8 @@ ggplot(data = movies, aes(x = genre, y = production_budget)) +
 ## A ecostatistician's tool box: 
 ### Facet wraps
 ```{r}
-top6_plot <- movies %>% filter(distributor %in% top_6 & !is.na(mpaa_rating)) %>% 
+top6_plot <- 
+  movies %>% filter(distributor %in% top_6 & !is.na(mpaa_rating)) %>% 
   ggplot(data = ., aes(x = production_budget, y = domestic_gross)) +  
   geom_point() +
   theme_bw()
@@ -494,8 +516,8 @@ fake_data <- data_frame(temperature, metabolic_rate)
 ggplot(fake_data, aes(x = temperature, y = metabolic_rate)) + 
   geom_point(size = 3) + 
   scale_y_log10() +
-  ylab(TeX("log VCO_2 mL min^{-1}")) + 
-  xlab(TeX('Temperature ^{º}C')) + 
+  ylab(expression(log~VCO_2~mL~min^{-1})) + 
+  xlab(expression(Temperature^{º}~C)) + 
   theme(axis.title.y = element_text(size = 30),
         axis.title.x = element_text(size = 30))
 ```
@@ -515,7 +537,6 @@ ggplot(data = movies, aes(x = genre, y = production_budget, fill = genre)) +
   geom_point(colour = "white", size = 1, alpha = 0.1) + 
   stat_summary(fun.data="data_summary", col = "black") + 
   scale_fill_brewer(palette = "Dark2") + 
-  thesis_theme + 
   ylab("Production budget (USD)") + 
   xlab("Genres") +
   theme(legend.position = "none")
@@ -560,7 +581,7 @@ ggplot(aes(x = reorder(distributor, -production_budget, sum), y = production_bud
 https://patchwork.data-imaginist.com/
 ```{r}
 #Install package
-install.packages('patchwork')
+#install.packages('patchwork')
 library(patchwork)
 
 #Different layouts
