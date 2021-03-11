@@ -346,6 +346,14 @@ This session will show you some more advanced plotting techniques, building on t
 
 ```
 
+
+2. Now plot same variables acorss all years, but for two countries:
+
+```{r}
+
+```
+
+
 ## Colour schemes
 
 ### Continuous colour and discrete colour

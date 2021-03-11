@@ -372,7 +372,17 @@ data %>%
   ggplot(aes(gdp_per_capita, fertility, col = continent)) + 
   geom_point() +
   scale_x_log10()
+```
 
+2. Now plot same variables acorss all years, but for two countries:
+
+```{r}
+data %>% 
+  filter(country %in%  c("Australia", "Angola")) %>%
+  ggplot(aes(gdp_per_capita, fertility, col = country)) + 
+  geom_line(col = "blue") + geom_point(size = .5, col = "darkblue") + 
+  theme_minimal()
+```
 ```
 
 ## Colour schemes
