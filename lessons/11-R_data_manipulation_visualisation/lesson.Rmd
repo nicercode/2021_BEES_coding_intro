@@ -3,6 +3,8 @@ title: "Data Manipulation and Visualization"
 author: "Instructors: Daniel Falster, Will Cornwell, Fonti Kar, Anikó Tóth, Dony Indiarto"
 date: "Feb 2020"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Introduction to using Rmarkdown (Aniko)
@@ -174,6 +176,12 @@ read_delim("data/movie_profit/movie_profit.csv", ",")
 
 To load data from excel spreadsheets, try the `readxl` package.
 
+
+```{r}
+library(readxl)
+read_xlsx("data/movie_profit/movie_profit.xlsx")
+```
+
 # Data manipulation with `dplyr` (Dan)
 
 Motivation:
@@ -202,20 +210,66 @@ Examples:
 To select certain variables:
 
 ```{r}
-#select(movies, ???)
+select(movies, movie, production_budget, distributor)
+select(movies, movie, everything())
+select(movies, movie, starts_with("pr"))
+select(movies, -starts_with("pr"))
 ```
 
 To filter to particular rows:
 
 ```{r}
+
+movies$distributor == "Universal"
+
 filter(movies, distributor == "Universal")
+filter(movies, distributor == "Universal", mpaa_rating == "PG")
 ```
+
 
 To sort by certain variables:
 
 ```{r}
 arrange(movies, distributor, production_budget)
+
+arrange(movies, distributor, desc(production_budget))
 ```
+
+
+To rename a variable:
+```{r}
+rename(movies, budget = production_budget)
+
+select(movies, movie, budget = production_budget)
+```
+
+Create a new variable:
+
+```{r}
+mutate(movies, 
+       log_budget = log10(production_budget)
+       )
+
+movies2 <- 
+  mutate(movies, 
+       log_budget = log10(production_budget)
+       )
+```
+
+
+```{r}
+summarise(movies,
+    n_movies = n_distinct(movie)
+    )
+
+movie_summary <- 
+  summarise(movies,
+    n_movies = n_distinct(movie),
+    n_distributor = n_distinct(distributor),
+    budget_max = max(production_budget)
+    )
+```
+
 
 ## Pipes
 
@@ -229,7 +283,11 @@ The pipe is a bit of magic. It's written by `%>%` (Shift-Command-M on Mac or Shi
 Examples:
 
 ```{r}
-movies$distributor %>% unique()
+length(unique(movies$distributor))
+
+movies$distributor %>% unique() 
+
+movies$distributor %>% unique() %>% length()
 ```
 
 ```{r}
@@ -258,43 +316,94 @@ movies %>% filter(distributor == "Universal")
 This means we can use pipes to join data verbs to make a data sentence. 
 
 ```{r}
-movies %>%
+movies2 <-
+  movies %>%
   filter(distributor == "Universal") %>%
-  select(movie, mpaa_rating)
+  select(movie, mpaa_rating) %>% 
+  arrange(mpaa_rating)
+
+movies %>% filter(distributor == "Universal") %>% select(movie, mpaa_rating) %>% arrange(mpaa_rating)
+
+# Not this
+movies %>% filter(distributor == "Universal")
 ```
+
+```{r}
+movies %>% 
+  filter(distributor == "Universal") %>% 
+  select(movie, mpaa_rating) %>% 
+  arrange(mpaa_rating)
+```
+
 
 **Exercises:** Apply the `dplyr` package and your new data wrangling skills to the movies dataset to 
 
-
 1. Create a subset of the dataset consisting of only movies distributed by `Walt Disney`
+
+```{r}
+movies %>% 
+  filter(distributor == "Walt Disney")
+```
+
+
 2. As above and only including variables `movie`, `worldwide_gross`, and `production_budget`
+
+```{r}
+
+movies %>% 
+  filter(distributor == "Walt Disney") %>% 
+  select(movie, worldwide_gross, production_budget)
+
+
+```
+
 3. As above but with data sorted alphabetically by `movie`
+
+```{r}
+movies %>% 
+  filter(distributor == "Walt Disney") %>% 
+  select(movie, worldwide_gross, production_budget) %>%
+  arrange(desc(movie))
+```
+
 4.  As above but with an additional column return given by `worldwide_gross/production_budget`
 
 
 ```{r}
+movies %>% 
+  filter(distributor == "Walt Disney") %>% 
+  select(movie, worldwide_gross, production_budget) %>%
+  arrange(movie) %>% 
+  mutate(return = worldwide_gross/production_budget)
 
 ```
 
-# Imagine your plot (Will)
+# Data visualisation
+
+## Imagine your plot (Will)
 
 https://www.data-to-viz.com
 
-
 # Intro to data visualisation with `ggplot2` (Fonti)
 
-See slides in "slides/datavis_with_ggplot2.html"
+See presentation in `slides` folder
 
-**Examples from the slides:**
+##Examples
 
-## An example
+Load some extra packages
+```{r}
+library(janitor)
+library(lubridate)
+library(patchwork)
+library(viridis)
+```
 
 ```{r}
 ggplot(data = movies, aes(x = genre, y = production_budget)) + 
   geom_boxplot() 
 ```
 
-## More data exploration plots
+More data exploration plots
 ```{r}
 #Density/Histograms
 ggplot(data = movies, aes(x = log(domestic_gross))) + 
@@ -318,21 +427,13 @@ ggplot(data = movies, aes(x = genre, y = production_budget)) +
   stat_summary(fun.data="data_summary", col = "black") 
 ```
 
-## Why plot: Communicate science, results
-
-Load some extra packages
-
-```{r}
-library(janitor)
-library(lubridate)
-library(patchwork)
-library(viridis)
-```
-
+Why plot: Communicate science, results
 
 ```{r}
 #Barplot production budget by Top 6 most common distributors
-top_6 <- movies %>% janitor::tabyl(distributor) %>% arrange(-n) %>% 
+top_6 <- 
+  movies %>% 
+  janitor::tabyl(distributor) %>% arrange(-n) %>% 
   filter(n >= 240) %>% pull(distributor)
 
 A <- movies %>% filter(distributor %in% top_6) %>% 
@@ -402,8 +503,7 @@ D
 (A + B + C) / D
 ```
 
-
-## Summarise and plot
+Summarise and plot
 
 ```{r}
 mpaa_rating_means <- 
@@ -425,8 +525,7 @@ ggplot(data = mpaa_rating_means, aes(x = mpaa_rating, y = mean_worldwide_gross))
   
 ```
 
-## Customise "Accessorising"
-
+Customise "Accessorising"
 ```{r}
 #Colour themes
 ggplot(data = movies, aes(x = genre, y = production_budget)) + 
@@ -504,7 +603,7 @@ https://robjhyndman.com/hyndsight/latex2exp/
 ```{r}
 #Make some fake data
 n <- 25
-# the paramters
+# the parameters
 beta_0 <- 0.0005 # the true intercept
 beta_1 <- 0.02 # the true slope
 sigma <- 0.03 # the true standard deviation
@@ -516,7 +615,7 @@ fake_data <- data_frame(temperature, metabolic_rate)
 ggplot(fake_data, aes(x = temperature, y = metabolic_rate)) + 
   geom_point(size = 3) + 
   scale_y_log10() +
-  ylab(expression(log~VCO_2~mL~min^{-1})) + 
+  ylab(expression(log~VCO[2]~mL~min^{-1})) + 
   xlab(expression(Temperature^{º}~C)) + 
   theme(axis.title.y = element_text(size = 30),
         axis.title.x = element_text(size = 30))
@@ -604,6 +703,10 @@ D / (A + C)
 
 ```{r}
 
+ggplot(movies, aes(production_budget)) +
+  geom_histogram() +
+  scale_x_log10()
+
 ```
  
    
@@ -616,6 +719,19 @@ D / (A + C)
 
 ```{r}
 
+movies2 <- movies %>% 
+  mutate(roi = worldwide_gross/ production_budget)
+
+ggplot(movies2, aes(x=genre, y = roi)) +
+  geom_boxplot() +
+  scale_y_log10()
+
+movies %>% 
+  mutate(roi = worldwide_gross/ production_budget) %>% 
+  ggplot(aes(x=genre, y = roi)) +
+  geom_boxplot() +
+  scale_y_log10()
+
 ```
    
 3. What genres make the highest return on investment?
@@ -626,6 +742,12 @@ D / (A + C)
    - add regression line with `stat_smooth()`
 
 ```{r}
+movies %>% 
+  ggplot(aes(x = production_budget, y = worldwide_gross)) +
+  geom_point(alpha = 0.2) +
+  scale_x_log10() + scale_y_log10() +
+  geom_smooth()
+
 
 ```
 

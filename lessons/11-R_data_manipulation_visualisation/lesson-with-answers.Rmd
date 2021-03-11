@@ -211,6 +211,12 @@ To sort by certain variables:
 arrange(movies, distributor, production_budget)
 ```
 
+Create a new variable:
+
+```{r}
+mutate(movies, log_budget = log10(production_budget))
+```
+
 ## Pipes
 
 The pipe is a bit of magic. It's written by `%>%` (Shift-Command-M on Mac or Shift-Control-M on PC ). We can use "the pipe" [%>%](http://magrittr.tidyverse.org/reference/pipe.html) to connect expressions
@@ -269,11 +275,11 @@ movies %>%
 ```{r}
 # . Create a subset of the dataset consisting of only movies distributed by `Atlantic`
 m1 <- movies %>% 
-   filter(distributor=="Lionsgate")
+   filter(distributor=="Atlantic")
    
 # 2. As above and only including variables `movie`, `worldwide_gross`, and `production_budget`
 m2 <- m1 %>% 
-   select('movie', 'worldwide_gross', 'production_budget')
+   select(movie, worldwide_gross, production_budget)
 
 # 3. As above but with data sorted alphabetically by `movie`
 m3 <- m2 %>% 
@@ -291,7 +297,7 @@ https://www.data-to-viz.com
 
 # Intro to data visualisation with `ggplot2` (Fonti)
 
-See slides in "slides/datavis_with_ggplot2.html"
+See presentation in `slides` folder
 
 **Examples from the slides:**
 

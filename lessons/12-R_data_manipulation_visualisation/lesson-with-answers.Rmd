@@ -1,6 +1,6 @@
 ---
 title: "Data Manipulation and Visualization (2)"
-author:"Daniel Falster, Will Cornwell, Fonti Kar, Anikó Tóth, Dony Indiarto"
+author: "Daniel Falster, Will Cornwell, Fonti Kar, Anikó Tóth, Dony Indiarto"
 date: "Feb 2021"
 output: html_document
 ---
@@ -47,7 +47,7 @@ le_long<-
                       #the name of the column made from the data stored in the cells
                       values_to = "life_exp") 
 
-View(le_long)
+#View(le_long)
 ```
 
 Make a figure of life expectancy trend over time
@@ -67,15 +67,15 @@ le_wide <- pivot_wider(data = le_long,           #the data
                         names_from = "year",     #column to get the column names from
                         values_from = "life_exp")#column to get the values from
 
-View(le_wide) 
+#View(le_wide) 
 ```
 
 **Exercises**:
 
 Make these data tidy:
 
-- `data\gapminder\children_per_woman_total_fertility.csv`
-- `data\gapminder\income_per_person_gdppercapita_ppp_inflation_adjusted.csv`
+- `data/gapminder/children_per_woman_total_fertility.csv`
+- `data/gapminder/income_per_person_gdppercapita_ppp_inflation_adjusted.csv`
 
 
 ```{r}
@@ -160,7 +160,7 @@ or
 left_join(data_population, data_fertility, by = c("country", "year"))
 ```
 
-**Exercise:** 
+### Exercise:
 
 1. Join the two data frames `data_population` and `data_life_exp`
 
@@ -188,8 +188,8 @@ Now using join and pipes, we can built a big table of data containing all variab
 ```{r}
 data <- 
   data_fertility %>% 
-  left_join( data_population) %>% 
-  left_join( data_gdp ) %>% 
+  left_join(data_population) %>% 
+  left_join(data_gdp) %>% 
   left_join(data_life_exp) %>%
   left_join(data_continent) %>% 
   # reorganise data
@@ -199,46 +199,13 @@ data <-
 
 ```
 
-I'd probably read in the csv tables and join them straight in, without saving as intermediate objects
+Next we're going to do some analysis on this dataset using `dplyr`. 
 
-```{r}
-
-data <- 
-  read_csv("data/gapminder/children_per_woman_total_fertility.csv") %>%   
-  pivot_longer(-country, names_to = "year", values_to = "fertility") %>%
-  # Add in population
-  left_join(
-    read_csv("data/gapminder/population_total.csv") %>%
-              pivot_longer(-country, names_to = "year", values_to = "population")
-  ) %>%
-  # Add in gdp per capita
-  left_join(
-    read_csv("data/gapminder/income_per_person_gdppercapita_ppp_inflation_adjusted.csv") %>%   
-              pivot_longer(-country, names_to = "year", values_to = "gdp_per_capita")
-  ) %>%
-  # Add in life expectancy
-  left_join(
-    read_csv("data/gapminder/life_expectancy_years.csv") %>%
-              pivot_longer(-country, names_to = "year", values_to = "life_expectancy")
-  ) %>%
-  # Add in life continent
-  left_join(
-    read_csv("data/gapminder/continents.csv")
-  ) %>% 
-  # reorganise data
-  select(continent, country, year, everything()) %>% 
-  arrange(continent, country, year) %>% 
-  mutate(year = as.integer(year))
-```
-
-Now we're going to do some analysis on this dataset using `dplyr`. 
-
-## Refresher
+## Dplyr refresher 
 
 First let's refresh some of the commands we learnt yesterday: `select`, `filter`, `rename`, `arrange`, `mutate`. 
 
-**Exercises:**
-
+### Excercise 
 1. Your collaborator asks for a copy of the dataset with only data from Europe since 1900, with variables `country`, `year`, `fertility`, `population`. Use pipes and dplyr commands to create a csv to send them. 
   - Hint: the command `write_csv` will save a table and works with the pipe.
   
@@ -247,7 +214,7 @@ First let's refresh some of the commands we learnt yesterday: `select`, `filter`
 data %>% 
   filter(year > 1900, continent == "Europe") %>% 
   select(country, year, fertility, population) %>% 
-  write_csv("output/europe.csv")
+  write_csv("output.csv")
 
 ```
 
@@ -325,8 +292,9 @@ data2 <-
 Note, when creating a new dataset it is also important to remove the grouping variable using `ungroup`
 
 
+### Exercise
 
-**Exercise**: Use the commands `group_by`  command to
+Use the commands `group_by`  command to
 
 1. Calculate average values of life_expectancy and population for each country in the period 1990-1999
   - hint: you'll also need `filter` and `summarise`
@@ -353,47 +321,17 @@ Your answer should took like this:
  ...
 ```
 
+## Handling NA's (missing data)
 
-
-2. Calculate average values of life_expectancy and population for each country in the period 1990-1999
-  - hint: you'll also need `filter` and `summarise`
-
-```{r}
-data %>%
-  filter(year >= 1990, year < 2000) %>%
-  group_by(country) %>%
-  summarise(
-    population = mean(population),
-    life_expectancy = mean(life_expectancy)
-  )
-```
-
-Your answer should took like this:
-
-```
-# A tibble: 184 x 3
-   country             population life_expectancy
-   <chr>                    <dbl>           <dbl>
- 1 Afghanistan           16210000            51.2
- 2 Albania                3164000            73.9
- 3 Algeria               28520000            72.3
- ...
-```
-
-
-## Handling NA's
-
-Now we'll briefly look at what to do when you need to 
-
+Now we'll briefly look at what to do when you need to locate and modify missing data.
 
 First, let's identify where we have missing data. The function complete.cases is handy:
 
 ```{r}
-complete.cases(data)
+i <- complete.cases(data)
 ```
 
 We can then use filter to select the rows
-
 
 ```{r}
 i <- complete.cases(data)
@@ -404,7 +342,7 @@ Looks liek some NA's in continent. Let's find which countries
 ```{r}
 data %>% 
   filter(is.na(continent)) %>% 
-  select(country) %>% 
+  select(country, continent) %>% 
   distinct() %>%
   pull(country)
 ```
@@ -412,28 +350,30 @@ data %>%
 Now let's fix some of this
 
 ```{r}
-data2 <- 
+data <- 
   data %>%
   mutate(continent = ifelse(country == "Russia", "Europe", continent),
          continent = ifelse(is.na(continent), "Islands", continent)
   )
 ```
 
-Instead of an ifelse, we could also use the `replace_na` function
+# Advanced data visualisation with `ggplot2` (Aniko)
+
+This session will show you some more advanced plotting techniques, building on the basic plots from Day 1 and using the gapminder data. But first, let'smake a basic plot. 
+
+## Exercise
+
+1. Filter data to only show year 1950. Then  make a scatter plot with 1) gdp_per_capita as the x-axis 2) fertility as the y-axis 3) continent as the colour of the points
 
 ```{r}
 
-data2 <- 
-  data %>%
-  mutate(continent = ifelse(country == "Russia", "Europe", continent)) %>%
-  replace_na(list(continent="Islands"))
+data %>% 
+  filter(year == 1950) %>%
+  ggplot(aes(gdp_per_capita, fertility, col = continent)) + 
+  geom_point() +
+  scale_x_log10()
+
 ```
-
-
-# Advanced data visualisation with `ggplot2` (Aniko)
-
-This session will show you some more advanced plotting techniques, building on the basic plots from Day 1 and using the gapminder data
-
 
 ## Colour schemes
 
@@ -445,159 +385,163 @@ https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
 
 ```{r}
 library(viridis)
-library(ggplot2)
-ggplot(data.frame(x = rnorm(10000), y = rnorm(10000)), aes(x = x, y = y)) +
+library(hexbin)
+
+tibble(x = rnorm(10000), y = rnorm(10000)) %>%
+  ggplot(aes(x = x, y = y)) +
   geom_hex() + coord_fixed() +
-  scale_fill_viridis(option="D") + theme_bw()
+  scale_fill_viridis(option="D")+ 
+  theme_bw()
 ```
 
 
 
 ```{r}
-p <- ggplot(mtcars, aes(wt, mpg))
-p + geom_point(size=4, aes(colour = factor(cyl))) +
-    scale_color_viridis(discrete=TRUE) +
-    theme_bw()
+p <- data %>% 
+  filter(year==1990) %>% 
+  ggplot(aes(life_expectancy, gdp_per_capita)) + 
+  geom_point(size=3, aes(colour = continent)) +
+  scale_y_log10() +
+  scale_color_viridis(discrete=TRUE) +
+  theme_bw()
 
+p
 ```
 
+There are many more themes, e.g. from `ggsci` package
 
+Nature Publishing Group
 ```{r}
 library(ggsci)
-ggplot(subset(diamonds, carat >= 2.2),
-       aes(x = table, y = price, colour = cut)) +
-  geom_point(alpha = 0.7) +
-  geom_smooth(method = "loess", alpha = 0.1, size = 1, span = 1,se=FALSE) +
-  theme_bw() + scale_color_npg()
 
-
-```
-```{r}
-
-ggplot(subset(diamonds, carat >= 2.2),
-       aes(x = table, y = price, colour = cut)) +
-  geom_point(alpha = 0.7) +
-  geom_smooth(method = "loess", alpha = 0.1, size = 1, span = 1,se=FALSE) +
-  theme_bw() + scale_color_aaas()
-
+p + scale_color_npg()
 ```
 
-## one other thing about font size
-
+A different theme (American Academy of Science):
 ```{r}
-ggplot(subset(diamonds, carat >= 2.2),
-       aes(x = table, y = price, colour = cut)) +
-  geom_point(alpha = 0.7) +
-  geom_smooth(method = "loess", alpha = 0.1, size = 1, span = 1,se=FALSE) +
-  theme_bw() + scale_color_aaas()+
-  theme(text = element_text(size=18)) 
+p + scale_color_aaas()
 ```
 
+## Font size
 
-
-## Practice dplyr and ggplot 1
-
-1. Filter to only data from the year 1900
-
-2. make a scatter plot with 1) gdp_per_capita as the x-axis 2) life_expectancy as the y-axis 3) continent as the colour of the points, 4) population as the size of the points
-
-3. modify the axes to be be more informative
-
-4. use the theme you think looks best
-
-5. make the font size of the axes 18 (for a presentation)
+Change all the font sizes
 
 ```{r}
-a<-data %>% 
-  filter(year==1900) %>%
-  ggplot(aes(gdp_per_capita, life_expectancy, colour = continent, size=population,label=country)) + 
+p + scale_color_aaas() +
+theme(text = element_text(size=18)) 
+```
+
+Change just axis titles
+```{r}
+p + scale_color_aaas() +
+theme(axis.title = element_text(size=18)) 
+```
+
+### Exercise
+
+1. Filter the data to include data only from the year 1990. Then  make a scatter plot with 1) gdp_per_capita as the x-axis 2) fertility as the y-axis 3) continent as the colour of the points
+
+```{r}
+data %>% 
+  filter(year==1990) %>%
+  ggplot(aes(gdp_per_capita, fertility, colour = continent)) + 
+  geom_point()
+```
+
+2. Now change plot to make 
+  - population as the size of the points
+  - modify the axes to be be more informative
+  - use the theme you think looks best
+  - make the font size of the axes 18 (for a presentation)
+
+```{r}
+data %>% 
+  filter(year==1990) %>%
+  ggplot(aes(gdp_per_capita, fertility, colour = continent, size=population)) + 
   geom_point() + 
   scale_x_log10() + scale_y_log10() +
-  labs(x = "GDP per capita ($)", y = "life expectancy (yr)") + theme_classic() +
-  theme(text = element_text(size=18)) 
+  labs(x = "GDP per capita ($)", y = "life expectancy (yr)") + 
+  theme_classic() +
+  theme(axis.title = element_text(size=18)) 
 ```
-
-## One more logical
-
-```{r}
- "a" %in% c("b","c","e","g")
-```
-```{r}
- "a" %in% c("b","c","e","g","a")
-```
-
-
 
 ## Facets (Will)
 
-1. Filter to data from three years:  1800, 1850, 1900, 1950, 2000
+1. Filter to data from three years:  1800, 1850,1900, 1950,2000
 
 2. Remove countries that have NA for continent
 
-3. make a scatter plot with 1) year as the x-axis 2) life expectancy as the y-axis 3) log10(population) as the colour of the points with viridis as the colour scheme 
+3. make a scatter plot with 1) year as the x-axis 2) life expectancy as the y-axis 3) log10(population) as the colour of the points with viridis as the color scheme 
+
+```{r}
+p <- data %>% 
+  drop_na(continent) %>% 
+  filter(year %in% c(1800, 1850,1900, 1950, 2000)) %>%
+  ggplot(aes(
+    x = year,
+    y = life_expectancy
+  )) +
+  geom_smooth(se =FALSE, alpha = 0.5, method = "lm", size = 0.5)+
+  geom_point(alpha = 0.1 )+
+  scale_x_log10()+
+  scale_color_viridis(trans = "log10") +
+  theme_minimal() +
+  xlab("Year") + ylab("Life expectancy (Year)")
+
+p
+```
 
 4. facet by continent
 
 ```{r}
-data %>% 
-  filter(year %in% c(1800,1850,1900,1950,2000)) %>%
-  filter(!is.na(continent)) %>%
-  ggplot(aes(year, life_expectancy, colour = log10(population))) + 
-  theme_classic()+
-  geom_point(alpha = 0.7) +
-  scale_x_log10() + 
-  scale_color_viridis()+
-  labs(x = "GDP per capita ($)", 
-       y = "life expectancy (yr)",
-       caption = "(based on data from gapminder)",
-       color= "Continent (log)") + 
-  theme_classic() +
-  facet_wrap(~continent)
+p +  facet_wrap(continent ~ .)
 ```
 
 
 ## Custom Themes
 
-
 Can add a theme onto plot
 
 ```{r}
-mynamestheme <- theme( 
-                  axis.title = element_text(family = "Helvetica", size = (15), colour = "steelblue4"),
-                  axis.text = element_text(family = "Courier", colour = "cornflowerblue", size = (15)),
-                  legend.text = element_text(family = "Helvetica", size = (15), colour = "pink"),
-                  legend.title = element_text(family = "Helvetica", size = (15), colour = "green",face="italic"),
-                  legend.position="left")
+my_theme <- 
+  theme( 
+    axis.title = element_text(family = "Helvetica", size = (15), colour = "steelblue4"),
+    axis.text = element_text(family = "Courier", colour = "cornflowerblue", size = (15)),
+    legend.text = element_text(family = "Helvetica", size = (15), colour = "pink"),
+    legend.title = element_text(family = "Helvetica", size = (15), colour = "green",face="italic"),
+    legend.position="left")
   
-a + mynamestheme 
+p + my_theme 
 ```
 
-### Does the correlation between gdp and fertility get stronger or weaker through time?
+### Exercise
 
+Does the correlation between gdp and fertility get stronger or weaker through time?
 
 1. filter year to only values for 1800,1850, 1900, 1950, and 2000
-
 2. filter out values without a continent entry
-
 3. make a scatter plot with x axis = gdp_per_capita and y axis = fertility, colour based on continent (log scale the x-axis, use a discrete color scale)
-
 4. facet by year
 
-```{r}
-head(data)
 
+One solution:
+
+```{r}
 data %>% 
-  filter(year %in% c(1800,1850,1900,1950,2000)) %>%
-    filter(!is.na(continent)) %>%
+  filter(
+    year %in% c(1800,1850,1900,1950,2000),
+    !is.na(continent)) %>%
   ggplot(aes(gdp_per_capita, fertility, colour = continent)) + 
   theme_classic()+
-  geom_point(alpha = 0.7) +
-  scale_x_log10() + 
+  geom_point(alpha = 0.7) + 
   scale_color_viridis(discrete = TRUE) + 
+  geom_smooth(aes(col="mean"), se =FALSE, alpha = 0.5, method = "lm", size = 0.5) +
+  scale_x_log10() +
+  xlab("GDP percapita (USD)") + 
+  ylab("Life expectancy (Year)") +
   theme_classic() +
   facet_wrap(~year)
 ```
-
 
 # Reproducible research (Dan)
 
